@@ -31,7 +31,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${poppins.variable}`}>
       <body>
-        <div className="page">
+        <div className="max-w-[1440px] mx-auto">
           <NextIntlClientProvider messages={messages}>
             <Header/>
             {children}
