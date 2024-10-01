@@ -4,6 +4,14 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { getTranslations } from 'next-intl/server'
 import Header from '@/components/header'
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-poppins',
+  weight: ['400', '500', '600', '700', '800']
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -21,12 +29,14 @@ export default async function LocaleLayout({
   //  const t = await getTranslations('HomePage')
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={`${poppins.variable}`}>
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <Header/>
-          {children}
-        </NextIntlClientProvider>
+        <div className="page">
+          <NextIntlClientProvider messages={messages}>
+            <Header/>
+            {children}
+          </NextIntlClientProvider>
+        </div>
       </body>
     </html>
   )
