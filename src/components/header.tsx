@@ -2,12 +2,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FC } from 'react'
 
-import facebookIcon from '/public/image/svg/facebook.svg'
-import instagramIcon from '/public/image/svg/instagram.svg'
-import logo from '/public/image/svg/logo.svg'
-import telIcon from '/public/image/svg/tel.svg'
-import searchIcon from '/public/image/svg/search.svg'
-import cartIcon from '/public/image/svg/bin.svg'
+import facebookIcon from '/public/image/icon/facebook.svg'
+import instagramIcon from '/public/image/icon/instagram.svg'
+import logo from '/public/image/icon/logo.svg'
+import telIcon from '/public/image/icon/tel.svg'
+import searchIcon from '/public/image/icon/search.svg'
+import cartIcon from '/public/image/icon/bin.svg'
 
 const Header: FC = () => {
   return (
@@ -46,28 +46,28 @@ const Header: FC = () => {
             <Link href="#!" className='justify-self-center'>Доставка</Link>
           </nav>
           <div className="row-start-2 flex items-center gap-x-3 self-end text-base font-medium">
-            <Image src={telIcon} alt="tel" width={24} height={24} />
+            <Image src={telIcon} alt="tel icon" width={24} height={24} />
             <Link href="tel:+380123456789">+380123456789</Link>
           </div>
           <div className="flex items-center gap-x-6 self-center justify-self-end">
             <div className="text-sm">
-              <input
-                type="radio"
-                name="lang"
-                className="header-input"
-                id="el1"
-              />
-              <label className="header-label cursor-pointer" htmlFor="el1">
+              <label className="has-[:checked]:font-bold cursor-pointer">
+                <input
+                  type="radio"
+                  name="lang"
+                  className="hidden"
+                  id="el1"
+                />
                 UA
               </label>
-              <span> / </span>
-              <input
-                type="radio"
-                name="lang"
-                className="header-input"
-                id="el2"
-              />
-              <label className="header-label cursor-pointer" htmlFor="el2">
+              <span className='font-semibold'>&#8201;/&#8201;</span>
+              <label className="has-[:checked]:font-bold cursor-pointer">
+                <input
+                  type="radio"
+                  name="lang"
+                  className="hidden"
+                  id="el2"
+                />
                 EN
               </label>
             </div>

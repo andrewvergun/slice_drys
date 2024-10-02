@@ -21,10 +21,4 @@ nav a {
 }
 
 @layer utilities {
-  .header-input {
-    display: none;
-  }
-  .header-input:checked + .header-label {
-    font-weight: 700;
-  }
 }
