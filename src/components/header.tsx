@@ -8,6 +8,7 @@ import logo from '/public/image/icon/logo.svg'
 import telIcon from '/public/image/icon/tel.svg'
 import searchIcon from '/public/image/icon/search.svg'
 import cartIcon from '/public/image/icon/bin.svg'
+import Lang from './lang'
 
 const Header: FC = () => {
   return (
@@ -50,27 +51,7 @@ const Header: FC = () => {
             <Link href="tel:+380123456789">+380123456789</Link>
           </div>
           <div className="flex items-center gap-x-6 self-center justify-self-end">
-            <div className="text-sm">
-              <label className="has-[:checked]:font-bold cursor-pointer">
-                <input
-                  type="radio"
-                  name="lang"
-                  className="hidden"
-                  id="el1"
-                />
-                UA
-              </label>
-              <span className='font-semibold'>&#8201;/&#8201;</span>
-              <label className="has-[:checked]:font-bold cursor-pointer">
-                <input
-                  type="radio"
-                  name="lang"
-                  className="hidden"
-                  id="el2"
-                />
-                EN
-              </label>
-            </div>
+            <Lang/>
             <div className="flex gap-x-6">
               <Image
                 src={searchIcon}
