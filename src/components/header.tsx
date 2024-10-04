@@ -2,12 +2,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FC } from 'react'
 
-import facebookIcon from '/public/image/icon/facebook.svg'
-import instagramIcon from '/public/image/icon/instagram.svg'
-import logo from '/public/image/icon/logo.svg'
-import telIcon from '/public/image/icon/tel.svg'
-import searchIcon from '/public/image/icon/search.svg'
-import cartIcon from '/public/image/icon/bin.svg'
+import facebookIcon from '/public/icons/facebook.svg'
+import instagramIcon from '/public/icons/instagram.svg'
+import logo from '/public/icons/logo.svg'
+import telIcon from '/public/icons/tel.svg'
+import searchIcon from '/public/icons/search.svg'
+import cartIcon from '/public/icons/bin.svg'
 import Lang from './lang'
 
 const Header: FC = () => {
@@ -16,12 +16,12 @@ const Header: FC = () => {
       <div className="px-24 box-border">
         <div className="grid grid-cols-[1fr_2fr_1fr_1fr] grid-rows-2 h-40 border-b border-[#e4e4e4] pb-6">
           <nav className="grid grid-cols-[135px_97px_65px_48px] justify-items-center items-center gap-x-2 text-xl">
-            <Link href="#!">Головна </Link>
+            <Link href="#!"  className='justify-self-start'>Головна </Link>
             <Link href="#!">Каталог</Link>
             <Link href="#!">Блог</Link>
             <Link href="#!" className='justify-self-end'>Опт</Link>
           </nav>
-          <div className="row-start-2 flex justify-end gap-x-5 self-end">
+          <div className="row-start-2 flex justify-end gap-x-5 ">
             <Image
               src={facebookIcon}
               alt="facebook icon"
@@ -48,7 +48,7 @@ const Header: FC = () => {
           </nav>
           <div className="row-start-2 flex items-center gap-x-3 self-end text-base font-medium">
             <Image src={telIcon} alt="tel icon" width={24} height={24} />
-            <Link href="tel:+380123456789">+380123456789</Link>
+            <Link href="tel:+380123456789" className='hover:text-[#A90909] hover:skew-x-[-10deg]'>+380123456789</Link>
           </div>
           <div className="flex items-center gap-x-6 self-center justify-self-end">
             <Lang/>
@@ -70,7 +70,8 @@ const Header: FC = () => {
             </div>
           </div>
           <div className="row-start-2 self-end justify-self-end">
-            <button className="h-[50px] w-[180px] rounded-sm bg-[#0F0F0F] text-[#FBFBFB] hover:font-semibold">
+            <button className="h-[50px] w-[180px] rounded-sm bg-[#0F0F0F] text-[#FBFBFB]
+                hover:font-semibold hover:bg-[#A90909] hover:skew-x-[-10deg]">
               Замовити
             </button>
           </div>
