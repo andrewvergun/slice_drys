@@ -9,29 +9,14 @@ export default function NotFound() {
 
   return (
     <html lang="en">
-      <body
-        style={{
-          backgroundColor: '#f0f0f0',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100vh',
-        }}
-      >
-        <div style={{ textAlign: 'center' }}>
-          <h1 style={{ fontSize: '6rem', color: '#333' }}>404</h1>
-          <p style={{ fontSize: '2rem', color: '#333' }}>
+      <body className='bg-[#f0f0f0] flex items-center justify-center h-screen'>
+        <div className='text-center'>
+          <h1 className='text-8xl text-[#333] '>404</h1>
+          <p className='text-4xl text-[#333]'>
             Oops! The page you are looking for does not exist.
           </p>
           <button
-            style={{
-              backgroundColor: '#333',
-              color: '#fff',
-              padding: '0.5rem 1rem',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-            }}
+            className='bg-[#333] text-[#fff] py-2 px-4 border-none rounded cursor-pointer'
             onClick={() => changeLanguageHandler('/')}
           >
             Go Back Home
