@@ -9,19 +9,13 @@ const Lang: FC = () => {
 
   return (
     <div className="text-sm">
-      <Link
-        href="/uk"
-        className={path === "/uk" ? 'font-bold' : 'font-normal'}
-      >
+      <Link href="/uk" className={path === '/uk' ? 'font-bold' : 'font-normal'}>
         UA
       </Link>
 
       <span className="text-xl font-semibold">&#8201;/&#8201;</span>
-      
-      <Link
-        href="/en"
-        className={path === "/en" ? 'font-bold' : 'font-normal'}
-      >
+
+      <Link href="/en" className={path === '/en' ? 'font-bold' : 'font-normal'}>
         EN
       </Link>
     </div>

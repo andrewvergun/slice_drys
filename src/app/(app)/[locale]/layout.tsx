@@ -4,13 +4,13 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { getTranslations } from 'next-intl/server'
 import Header from '@/components/header'
-import { Poppins } from "next/font/google";
+import { Poppins } from 'next/font/google'
 
 const poppins = Poppins({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-poppins',
-  weight: ['400', '500', '600', '700', '800']
+  weight: ['400', '500', '600', '700', '800'],
 })
 
 export const metadata: Metadata = {
@@ -31,9 +31,9 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${poppins.variable}`}>
       <body>
-        <div className="max-w-[1440px] mx-auto">
+        <div className="mx-auto max-w-[1440px]">
           <NextIntlClientProvider messages={messages}>
-            <Header/>
+            <Header />
             {children}
           </NextIntlClientProvider>
         </div>
