@@ -16,8 +16,9 @@ const Header: FC = () => {
       <div className="box-border px-24">
         <div className="grid h-40 grid-cols-[1fr_2fr_1fr_1fr] grid-rows-2 border-b border-[#e4e4e4] pb-6">
           <nav className="grid grid-cols-[135px_97px_65px_48px] items-center justify-items-center gap-x-2 text-xl">
-            <Link href="#!" className="justify-self-start">
-              Головна{' '}
+            <Link href="#!" className="justify-self-start flex items-center gap-x-4">
+              <div>Головна</div>
+              <div className='rotate-90'>&#10095;</div>
             </Link>
             <Link href="#!">Каталог</Link>
             <Link href="#!">Блог</Link>
@@ -81,7 +82,7 @@ const Header: FC = () => {
             </div>
           </div>
           <div className="row-start-2 self-end justify-self-end">
-            <button className="h-[50px] w-[180px] rounded-sm bg-[#0F0F0F] text-[#FBFBFB] hover:skew-x-[-10deg] hover:bg-[#A90909] hover:font-semibold">
+            <button className="h-[50px] w-[180px] rounded-sm bg-[#0F0F0F] text-[#FBFBFB] duration-300 hover:skew-x-[-10deg] hover:bg-[#A90909] hover:font-semibold">
               Замовити
             </button>
           </div>
