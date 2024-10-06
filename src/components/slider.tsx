@@ -3,13 +3,14 @@ import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { gsap } from 'gsap'
 import { cn } from '@/utils/cn'
+import Image from 'next/image'
 
 export const Slider = () => {
   const sliderLinks = [
-    { name: 'М’ясо', link: '/products/meat.tsx#product' },
-    { name: 'Фрукти', link: '/products/fruits' },
-    { name: 'Овочі', link: '/products/vegetables' },
-    { name: 'Мікс', link: '/products/mix' },
+    { name: 'М’ЯСО', link: '/products/meat.tsx#product' },
+    { name: 'ФРУКТИ', link: '/products/fruits' },
+    { name: 'ОВОЧІ', link: '/products/vegetables' },
+    { name: 'МІКСИ', link: '/products/mix' },
   ]
 
   const sliders = [
@@ -53,65 +54,91 @@ export const Slider = () => {
       },
     })
 
-    setHoveredIndex(index) // Зберігаємо індекс ховеру
+    setHoveredIndex(index)
   }
 
   return (
     <>
-      <h1 ref={titleRef} className="text-3xl font-bold">
+      <h1 ref={titleRef} className="mt-11 text-[64px] font-bold">
         {sliders[currentIndex].title}
       </h1>
-      <nav className="flex justify-around">
+      <nav className="mt-[50px] flex justify-around">
         {sliderLinks.map((item, index) => (
-          <Link
-            href={item.link}
-            key={item.name}
-            className="relative flex size-[180px] items-center justify-center rounded-full text-[20px] text-[#9B9B9B] transition-colors duration-300"
-            onMouseEnter={() => handleMouseEnter(index)}
-          >
-            <div
+          <div key={item.name} className="relative">
+            <Link
+              href={item.link}
               className={cn(
-                'z-20 text-[36px] blur-0 hover:text-[#A90909]',
-                hoveredIndex === index && 'text-[#A90909]',
+                'relative z-20 flex size-[180px] items-center justify-center rounded-full text-[20px] text-[#9B9B9B] transition-colors duration-300',
+                index === 0 && 'absolute -ml-[12px] mt-[50px] rotate-[-42deg]',
+                index === 1 &&
+                  'absolute -ml-[102px] -mt-[75px] rotate-[-17deg]',
+                index === 2 && 'absolute -mt-[43px] rotate-[26deg]',
+                index === 3 &&
+                  'absolute -right-[38px] mt-[80px] rotate-[49deg]',
               )}
+              onMouseEnter={() => handleMouseEnter(index)}
             >
-              {item.name}
-            </div>
-            <div
-              className={cn(
-                'opacity-1 absolute h-full w-full bg-red/30 blur-2xl',
-                hoveredIndex !== index && 'opacity-0',
-              )}
-            />
-          </Link>
+              <div
+                className={cn(
+                  'z-20 text-[36px] blur-0 hover:text-[#A90909]',
+                  hoveredIndex === index && 'text-[#A90909]',
+                )}
+              >
+                <svg
+                  width="200"
+                  height="200"
+                  viewBox="0 0 300 300"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <path
+                      id="curve"
+                      d="M 50,150 A 350,350 0 0,1 250,150"
+                      fill="transparent"
+                      stroke="transparent"
+                    />
+                  </defs>
+
+                  <text
+                    fill={hoveredIndex === index ? 'red' : 'black'}
+                    font-size="36"
+                    font-family="Arial"
+                    letter-spacing="2"
+                  >
+                    <textPath
+                      href="#curve"
+                      startOffset="50%"
+                      text-anchor="middle"
+                    >
+                      {item.name}
+                    </textPath>
+                  </text>
+                </svg>
+              </div>
+              <div
+                className={cn(
+                  'absolute mt-5 size-5 rounded-full bg-[#E4E4E4]',
+                  hoveredIndex === index && 'bg-red',
+                )}
+              />
+              <div
+                className={cn(
+                  'opacity-1 absolute h-full w-full bg-red/30 blur-2xl',
+                  hoveredIndex !== index && 'opacity-0',
+                )}
+              />
+            </Link>
+          </div>
         ))}
       </nav>
-      <div className="mx-auto flex items-center justify-center">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="1106"
-          height="553"
-          viewBox="0 0 1106 553"
-          fill="none"
-        >
-          <path
-            d="M1105 553C1105 406.601 1046.84 266.197 943.323 162.677C839.803 59.157 699.4 1.00001 553 1C406.601 0.999989 266.197 59.157 162.677 162.677C59.157 266.197 1.00002 406.6 1 553"
-            stroke="url(#paint0_linear_158_1319)"
-          />
-          <defs>
-            <linearGradient
-              id="paint0_linear_158_1319"
-              x1="1078.5"
-              y1="527"
-              x2="116"
-              y2="229.5"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#9B9B9B" stopOpacity="0.1" />
-              <stop offset="0.961123" stopColor="#A90909" />
-            </linearGradient>
-          </defs>
-        </svg>
+      <div className="relative mx-auto h-[552px] w-full max-w-[1104px]">
+        <Image src="/icons/slider-line.svg" fill={true} alt="slider" />
+        <Image
+          src="/icons/slider-line-down.svg"
+          className="mt-[33px] px-[62px]"
+          fill={true}
+          alt="slider"
+        />
       </div>
     </>
   )
