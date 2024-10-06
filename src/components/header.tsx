@@ -24,7 +24,7 @@ const Header: FC = () => {
     gsap.fromTo(
       headerRef.current,
       { yPercent: -200, opacity: 0 },
-      { yPercent: 0, opacity: 1, delay: 1, duration: 1 },
+      { yPercent: 0, opacity: 1, delay: 0.3, duration: 0.5 },
     )
   })
 

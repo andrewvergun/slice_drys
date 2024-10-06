@@ -16,7 +16,7 @@ export default function Info({ title }: Props) {
     gsap.fromTo(
       infoRef.current,
       { yPercent: -100, opacity: 0 },
-      { yPercent: 0, opacity: 1, duration: 1 },
+      { yPercent: 0, opacity: 1, duration: 0.3 },
     )
   })
 

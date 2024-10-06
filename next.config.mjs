@@ -1,18 +1,18 @@
-import createNextIntlPlugin from "next-intl/plugin";
-const withNextIntl = createNextIntlPlugin();
+import createNextIntlPlugin from 'next-intl/plugin'
+const withNextIntl = createNextIntlPlugin()
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-        formats: ["image/webp"],
-        remotePatterns: [
-        {
-            protocol: "https",
-            hostname: "res.cloudinary.com",
-            port: "",
-        },
-        ],
-    },
-};
+  images: {
+    formats: ['image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        port: '',
+      },
+    ],
+  },
+}
 
-export default withNextIntl(nextConfig);
+export default withNextIntl(nextConfig)
