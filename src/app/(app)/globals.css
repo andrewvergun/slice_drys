@@ -17,7 +17,7 @@ body {
 }
 
 nav a {
-  @apply hover:font-semibold;
+  @apply hover:text-red duration-300;
 }
 
 @layer utilities {
