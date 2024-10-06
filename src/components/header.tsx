@@ -17,23 +17,29 @@ import Info from './header-info'
 
 gsap.registerPlugin(useGSAP)
 
-
 const Header: FC = () => {
   const headerRef = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
-    gsap.fromTo(headerRef.current, { yPercent: -200 }, { yPercent: 0, delay: 1, duration: 1 })
+    gsap.fromTo(
+      headerRef.current,
+      { yPercent: -200 },
+      { yPercent: 0, delay: 1, duration: 1 },
+    )
   })
 
   return (
     <header>
-      <Info title='Безкоштовна доставка від 1000 грн.' />
-      <div ref={headerRef} className="box-border max-w-[1240px] mx-auto mt-8">
+      <Info title="Безкоштовна доставка від 1000 грн." />
+      <div ref={headerRef} className="mx-auto mt-8 box-border max-w-[1240px]">
         <div className="grid h-40 grid-cols-[1fr_2fr_1fr_1fr] grid-rows-2 border-b border-[#e4e4e4] pb-6">
           <nav className="grid grid-cols-[135px_97px_65px_48px] items-center justify-items-center gap-x-2 text-xl">
-            <Link href="#!" className="justify-self-start flex items-center gap-x-4">
+            <Link
+              href="#!"
+              className="flex items-center gap-x-4 justify-self-start"
+            >
               <div>Головна</div>
-              <div className='rotate-90'>&#10095;</div>
+              <div className="rotate-90">&#10095;</div>
             </Link>
             <Link href="#!">Каталог</Link>
             <Link href="#!">Блог</Link>
@@ -72,7 +78,7 @@ const Header: FC = () => {
             <Image src={telIcon} alt="tel icon" width={24} height={24} />
             <Link
               href="tel:+380123456789"
-              className="hover:skew-x-[-10deg] hover:text-red duration-300"
+              className="duration-300 hover:skew-x-[-10deg] hover:text-red"
             >
               +380123456789
             </Link>
