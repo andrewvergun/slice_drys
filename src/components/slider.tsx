@@ -4,7 +4,7 @@ export const Slider = () => {
   const sliderLinks = [
     {
       name: 'М’ясо',
-      link: '/products/meat',
+      link: '/products/meat#product',
     },
     {
       name: 'Фрукти',
