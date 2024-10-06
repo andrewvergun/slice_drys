@@ -1,5 +1,13 @@
 import type { Config } from "tailwindcss";
 
+import colors from 'tailwindcss/colors';
+const constants = {
+  white: '#FBFBFB',
+  black: '#0F0F0F',
+  red: '#A90909',
+}
+
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -7,7 +15,15 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    colors: {
+      transparent: colors.transparent,
+      ...constants
+    },
     extend: {
+      screens: {
+        'lap': { 'max': '991px' },
+        'mob': { 'max': '767px' },
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
