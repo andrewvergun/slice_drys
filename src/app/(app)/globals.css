@@ -22,6 +22,6 @@ nav a {
 
 @layer utilities {
   .open {
-    transform: translateX(0);
+    @apply translate-x-0;
   }
 }

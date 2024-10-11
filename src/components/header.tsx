@@ -35,9 +35,9 @@ const Header: FC = () => {
 
   useEffect(() => {
     if (isOpenBurger) {
-      burgerRef.current?.classList.add('translate-x-0')
+      burgerRef.current?.classList.add('open')
     } else {
-      burgerRef.current?.classList.remove('translate-x-0')
+      burgerRef.current?.classList.remove('open')
     }
   })
 
