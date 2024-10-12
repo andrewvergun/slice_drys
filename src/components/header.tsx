@@ -17,6 +17,7 @@ import Info from './header-info'
 import Hamburger from './hamburger'
 import ListBox from './lilstbox'
 import HamburgerMenu from './hamburger-menu'
+import Burger from './burger'
 
 gsap.registerPlugin(useGSAP)
 
@@ -53,7 +54,7 @@ const Header: FC = () => {
       <Info title="Безкоштовна доставка від 1000 грн." />
       <div ref={headerRef} className="mx-auto mt-8 box-border max-w-[1240px]">
         <div className="grid h-40 grid-cols-[1fr_2fr_1fr_1fr] grid-rows-2 border-b border-[#e4e4e4] pb-6
-                        lap:grid-cols-3 lap:h-28 lap:px-5">
+                        lap:grid-cols-3 lap:h-24 lap:px-5 lap:pb-[10px]">
 
           <nav className="grid grid-cols-[135px_97px_65px_48px] items-center justify-items-center gap-x-2 text-xl
                           lap:hidden">
@@ -70,12 +71,15 @@ const Header: FC = () => {
           </nav>
 
 
-          <Hamburger
+          {/* <Hamburger
             onHandleOpenBurger={handleOpenBurger}
             className='hidden
-                                lap:block lap:row-start-1 lap:row-end-3 lap:justify-self-start lap:self-center' />
+            lap:block lap:row-start-1 lap:row-end-3 lap:justify-self-start lap:self-center' /> */}
 
-          <HamburgerMenu burgerRef={burgerRef} onHandleCloseBurger={handleCloseBurger} />
+          {/* <HamburgerMenu burgerRef={burgerRef} onHandleCloseBurger={handleCloseBurger} /> */}
+
+
+          <Burger/>
 
 
           <div className="row-start-2 flex justify-end gap-x-5
