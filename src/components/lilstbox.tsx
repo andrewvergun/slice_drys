@@ -20,9 +20,11 @@ export default function ListBox() {
 
   return (
     <Listbox value={selectedPerson} onChange={setSelectedPerson}>
-      <ListboxButton className="flex gap-x-3 hover:text-red">
+      <ListboxButton className="relative flex gap-x-3 hover:text-red">
         {selectedPerson.link}
-        <div className="rotate-90">&#10095;</div>
+        <div className="absolute right-[-24px] top-[1px] rotate-90">
+          &#10095;
+        </div>
       </ListboxButton>
       <ListboxOptions
         anchor="bottom start"
