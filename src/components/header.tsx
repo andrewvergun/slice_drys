@@ -14,7 +14,8 @@ import searchIcon from '/public/icons/search.svg'
 import cartIcon from '/public/icons/bin.svg'
 import Lang from './lang'
 import Info from './header-info'
-import Hamburger from './hamburger'
+import ListBox from './lilstbox'
+import HamburgerMenu from './hamburger-menu'
 
 gsap.registerPlugin(useGSAP)
 
@@ -25,7 +26,7 @@ const Header: FC = () => {
     gsap.fromTo(
       headerRef.current,
       { yPercent: -200, opacity: 0 },
-      { yPercent: 0, opacity: 1, delay: 0.3, duration: 0.5 },
+      { yPercent: 0, opacity: 1, delay: 0.1, duration: 0.5 },
     )
   })
 
@@ -34,18 +35,15 @@ const Header: FC = () => {
       <Info title="Безкоштовна доставка від 1000 грн." />
       <div ref={headerRef} className="mx-auto mt-8 box-border max-w-[1240px]">
         <div className="grid h-40 grid-cols-[1fr_2fr_1fr_1fr] grid-rows-2 border-b border-[#e4e4e4] pb-6
-                        lap:grid-cols-3 
-                        mob:h-28">
+                        lap:grid-cols-3 lap:h-24 lap:px-5 lap:pb-[10px]">
 
           <nav className="grid grid-cols-[135px_97px_65px_48px] items-center justify-items-center gap-x-2 text-xl
                           lap:hidden">
-            <Link
-              href="#!"
-              className="flex items-center gap-x-4 justify-self-start"
-            >
-              <div>Головна</div>
-              <div className="rotate-90">&#10095;</div>
-            </Link>
+
+            <div className="flex items-center gap-x-4 justify-self-start">
+              <ListBox />
+            </div>
+
             <Link href="#!">Каталог</Link>
             <Link href="#!">Блог</Link>
             <Link href="#!" className="justify-self-end">
@@ -53,8 +51,7 @@ const Header: FC = () => {
             </Link>
           </nav>
 
-          <Hamburger className='hidden
-                                lap:block lap:row-start-1 lap:row-end-3 lap:justify-self-center lap:self-center' />
+          <HamburgerMenu/>
 
           <div className="row-start-2 flex justify-end gap-x-5
                           lap:hidden">
@@ -75,8 +72,7 @@ const Header: FC = () => {
           </div>
 
           <div className="row-start-1 row-end-3 mr-[22%] self-end justify-self-end
-                          lap:col-start-2 lap:mr-0 lap:justify-self-center
-                          mob:w-[64px]">
+                          lap:col-start-2 lap:mr-0 lap:justify-self-center lap:w-[64px]">
             <Link href="/">
               <Image src={logo} alt="slice drus icon" width={100} height={86} />
             </Link>
@@ -100,7 +96,7 @@ const Header: FC = () => {
             </Link>
           </div>
           <div className="flex items-center gap-x-6 self-center justify-self-end
-                          lap:col-start-3 lap:justify-self-center">
+                          lap:col-start-3 lap:justify-self-end">
             <div className='lap:hidden'>
               <Lang />
             </div>
@@ -122,9 +118,9 @@ const Header: FC = () => {
             </div>
           </div>
           <div className="row-start-2 self-end justify-self-end
-                          lap:col-start-3 lap:justify-self-center">
+                          lap:col-start-3 lap:justify-self-end">
             <button className="h-[50px] w-[180px] rounded-sm bg-black text-white duration-300 hover:skew-x-[-10deg] hover:bg-red hover:font-semibold
-                               mob:w-[100px] mob:h-[38px]">
+                               lap:w-[100px] lap:h-[38px]">
               Замовити
             </button>
           </div>

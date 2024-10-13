@@ -5,6 +5,7 @@ const constants = {
   white: '#FBFBFB',
   black: '#0F0F0F',
   red: '#A90909',
+  light_gray: '#E4E4E4',
 }
 
 
