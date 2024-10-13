@@ -54,9 +54,14 @@ export default function HamburgerMenu() {
             </div>
           </MenuItem>
           <MenuItem>
-            <Link href="#">
-              <Image src={cartIcon} alt="cart icon" />
-            </Link>
+            <Field className="relative">
+              <Link href="#">
+                <Image src={cartIcon} alt="cart icon" />
+              </Link>
+              <span className="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-red text-xs text-white">
+                1
+              </span>
+            </Field>
           </MenuItem>
         </MenuSection>
 
@@ -204,7 +209,7 @@ export default function HamburgerMenu() {
               <Input
                 name="search"
                 type="text"
-                className="h-8 w-full max-w-56 rounded-sm"
+                className="h-8 w-56 rounded-sm"
               />
               <Image
                 src={searchIcon}
