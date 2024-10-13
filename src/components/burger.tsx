@@ -10,6 +10,8 @@ import {
   DisclosureButton,
   DisclosurePanel,
   MenuSeparator,
+  Input,
+  Field,
 } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 
@@ -18,6 +20,10 @@ import Hamburger from './hamburger'
 import closeIcon from '/public/icons/close.svg'
 import logo from '/public/icons/logo.svg'
 import cartIcon from '/public/icons/bin.svg'
+import facebookIcon from '/public/icons/facebook.svg'
+import instagramIcon from '/public/icons/instagram.svg'
+import telIcon from '/public/icons/tel.svg'
+import searchIcon from '/public/icons/search.svg'
 
 export default function Burger() {
   return (
@@ -25,10 +31,11 @@ export default function Burger() {
       <MenuButton className="fixed left-5 top-8 z-50">
         <Hamburger className="hidden lap:block" />
       </MenuButton>
+
       <MenuItems
         anchor="bottom"
         transition
-        className="bottom-0 right-0 z-40 origin-top bg-light_gray pt-3 transition duration-200 ease-out [--anchor-gap:-52px] data-[closed]:scale-95 data-[closed]:opacity-0"
+        className="bottom-0 right-0 z-40 origin-top bg-light_gray pb-6 pt-3 transition duration-200 ease-out [--anchor-gap:-52px] data-[closed]:scale-95 data-[closed]:opacity-0"
       >
         <MenuSection className="grid grid-cols-[2fr_1fr_1fr_auto] items-center px-5">
           <MenuItem>
@@ -56,34 +63,22 @@ export default function Burger() {
         <MenuSection className="px-8 pt-5">
           <div className="pb-4 font-semibold">Каталог</div>
           <MenuItem>
-            <Link
-              className="block w-min py-4 transition duration-300 hover:text-red"
-              href="#"
-            >
+            <Link className="block w-min py-4" href="#">
               М’ясо
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link
-              className="block w-min py-4 transition duration-300 hover:text-red"
-              href="#"
-            >
+            <Link className="block w-min py-4" href="#">
               Фрукти
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link
-              className="block w-min py-4 transition duration-300 hover:text-red"
-              href="#"
-            >
+            <Link className="block w-min py-4" href="#">
               Овочі
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link
-              className="block w-min py-4 transition duration-300 hover:text-red"
-              href="#"
-            >
+            <Link className="block w-min py-4" href="#">
               Мікси
             </Link>
           </MenuItem>
@@ -101,11 +96,7 @@ export default function Burger() {
             >
               <MenuItem>
                 {({ close }) => (
-                  <Link
-                    href="#"
-                    onClick={close}
-                    className='duration-300" block px-3 py-4 transition hover:text-red'
-                  >
+                  <Link href="#" onClick={close} className="block px-3 py-4">
                     Популярне
                   </Link>
                 )}
@@ -113,11 +104,7 @@ export default function Burger() {
               <MenuSeparator className="my-1 h-px bg-light_gray" />
               <MenuItem>
                 {({ close }) => (
-                  <Link
-                    href="#"
-                    onClick={close}
-                    className='duration-300" block px-3 py-4 transition hover:text-red'
-                  >
+                  <Link href="#" onClick={close} className="block px-3 py-4">
                     Про нас
                   </Link>
                 )}
@@ -125,11 +112,7 @@ export default function Burger() {
               <MenuSeparator className="my-1 h-px bg-light_gray" />
               <MenuItem>
                 {({ close }) => (
-                  <Link
-                    href="#"
-                    onClick={close}
-                    className='duration-300" block px-3 py-4 transition hover:text-red'
-                  >
+                  <Link href="#" onClick={close} className="block px-3 py-4">
                     Акції
                   </Link>
                 )}
@@ -137,11 +120,7 @@ export default function Burger() {
               <MenuSeparator className="my-1 h-px bg-light_gray" />
               <MenuItem>
                 {({ close }) => (
-                  <Link
-                    href="#"
-                    onClick={close}
-                    className='duration-300" block px-3 py-4 transition hover:text-red'
-                  >
+                  <Link href="#" onClick={close} className="block px-3 py-4">
                     Відгуки
                   </Link>
                 )}
@@ -149,11 +128,7 @@ export default function Burger() {
               <MenuSeparator className="my-1 h-px bg-light_gray" />
               <MenuItem>
                 {({ close }) => (
-                  <Link
-                    href="#"
-                    onClick={close}
-                    className='duration-300" block px-3 py-4 transition hover:text-red'
-                  >
+                  <Link href="#" onClick={close} className="block px-3 py-4">
                     FAQ
                   </Link>
                 )}
@@ -161,7 +136,92 @@ export default function Burger() {
             </DisclosurePanel>
           </Disclosure>
         </MenuSection>
-        <div>aaaaaaaaa</div>
+
+        <MenuSection className="px-8 pt-2">
+          <MenuItem>
+            <Link className="block w-min py-4" href="#">
+              Блог
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link className="block w-min py-4" href="#">
+              Опт
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link className="block w-min py-4" href="#">
+              Контакти
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link className="block w-min py-4" href="#">
+              Доставка
+            </Link>
+          </MenuItem>
+        </MenuSection>
+
+        <MenuSection className="flex justify-center gap-x-5 pt-5">
+          <MenuItem>
+            <Link href="#">
+              <Image
+                src={facebookIcon}
+                alt="facebook icon"
+                width={32}
+                height={32}
+                className="cursor-pointer"
+              />
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link href="#">
+              <Image
+                src={instagramIcon}
+                alt="insta icon"
+                width={32}
+                height={32}
+                className="cursor-pointer"
+              />
+            </Link>
+          </MenuItem>
+        </MenuSection>
+
+        <MenuSection className="flex justify-center gap-x-3 pt-5">
+          <Image src={telIcon} alt="tel icon" width={24} height={24} />
+          <MenuItem>
+            <Link href="tel:+380123456789" className="font-medium">
+              +380123456789
+            </Link>
+          </MenuItem>
+        </MenuSection>
+
+        <MenuSection className="px-8 pt-5">
+          <form
+            action="/logout"
+            method="post"
+            className="flex justify-center gap-x-4"
+          >
+            <Field className="relative">
+              <Input
+                name="search"
+                type="text"
+                className="h-8 w-full max-w-56 rounded-sm"
+              />
+              <Image
+                src={searchIcon}
+                alt="search icon"
+                className="absolute right-1 top-0"
+              />
+            </Field>
+            <MenuItem>
+              <button
+                type="submit"
+                className="block h-8 w-[88px] bg-black text-center text-white"
+              >
+                Шукати
+              </button>
+            </MenuItem>
+          </form>
+        </MenuSection>
       </MenuItems>
     </Menu>
   )
