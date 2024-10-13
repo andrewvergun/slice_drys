@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import { FC } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -14,17 +14,13 @@ import searchIcon from '/public/icons/search.svg'
 import cartIcon from '/public/icons/bin.svg'
 import Lang from './lang'
 import Info from './header-info'
-import Hamburger from './hamburger'
 import ListBox from './lilstbox'
 import HamburgerMenu from './hamburger-menu'
-import Burger from './burger'
 
 gsap.registerPlugin(useGSAP)
 
 const Header: FC = () => {
   const headerRef = useRef<HTMLDivElement>(null)
-  const burgerRef = useRef<HTMLDivElement>()
-  const [isOpenBurger, setIsOpenBurger] = useState(false)
 
   useGSAP(() => {
     gsap.fromTo(
@@ -33,21 +29,6 @@ const Header: FC = () => {
       { yPercent: 0, opacity: 1, delay: 0.1, duration: 0.5 },
     )
   })
-
-  useEffect(() => {
-    if (isOpenBurger) {
-      burgerRef.current?.classList.add('open')
-    } else {
-      burgerRef.current?.classList.remove('open')
-    }
-  })
-
-  const handleOpenBurger = () => {
-    setIsOpenBurger(true)
-  }
-  const handleCloseBurger = () => {
-    setIsOpenBurger(false)
-  }
 
   return (
     <header>
@@ -70,17 +51,7 @@ const Header: FC = () => {
             </Link>
           </nav>
 
-
-          {/* <Hamburger
-            onHandleOpenBurger={handleOpenBurger}
-            className='hidden
-            lap:block lap:row-start-1 lap:row-end-3 lap:justify-self-start lap:self-center' /> */}
-
-          {/* <HamburgerMenu burgerRef={burgerRef} onHandleCloseBurger={handleCloseBurger} /> */}
-
-
-          <Burger/>
-
+          <HamburgerMenu/>
 
           <div className="row-start-2 flex justify-end gap-x-5
                           lap:hidden">
