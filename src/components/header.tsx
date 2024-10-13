@@ -34,12 +34,8 @@ const Header: FC = () => {
     <header>
       <Info title="Безкоштовна доставка від 1000 грн." />
       <div ref={headerRef} className="mx-auto mt-8 box-border max-w-[1240px]">
-        <div className="grid h-40 grid-cols-[1fr_2fr_1fr_1fr] grid-rows-2 border-b border-[#e4e4e4] pb-6
-                        lap:grid-cols-3 lap:h-24 lap:px-5 lap:pb-[10px]">
-
-          <nav className="grid grid-cols-[135px_97px_65px_48px] items-center justify-items-center gap-x-2 text-xl
-                          lap:hidden">
-
+        <div className="grid h-40 grid-cols-[1fr_2fr_1fr_1fr] grid-rows-2 border-b border-[#e4e4e4] pb-6 lap:h-24 lap:grid-cols-3 lap:px-5 lap:pb-[10px]">
+          <nav className="grid grid-cols-[135px_97px_65px_48px] items-center justify-items-center gap-x-2 text-xl lap:hidden">
             <div className="flex items-center gap-x-4 justify-self-start">
               <ListBox />
             </div>
@@ -51,10 +47,9 @@ const Header: FC = () => {
             </Link>
           </nav>
 
-          <HamburgerMenu/>
+          <HamburgerMenu />
 
-          <div className="row-start-2 flex justify-end gap-x-5
-                          lap:hidden">
+          <div className="row-start-2 flex justify-end gap-x-5 lap:hidden">
             <Image
               src={facebookIcon}
               alt="facebook icon"
@@ -71,22 +66,19 @@ const Header: FC = () => {
             />
           </div>
 
-          <div className="row-start-1 row-end-3 mr-[22%] self-end justify-self-end
-                          lap:col-start-2 lap:mr-0 lap:justify-self-center lap:w-[64px]">
+          <div className="row-start-1 row-end-3 mr-[22%] self-end justify-self-end lap:col-start-2 lap:mr-0 lap:w-[64px] lap:justify-self-center">
             <Link href="/">
               <Image src={logo} alt="slice drus icon" width={100} height={86} />
             </Link>
           </div>
 
-          <nav className="grid grid-cols-[100px_110px] items-center gap-x-2 text-xl
-                          lap:hidden">
+          <nav className="grid grid-cols-[100px_110px] items-center gap-x-2 text-xl lap:hidden">
             <Link href="#!">Контакти </Link>
             <Link href="#!" className="justify-self-center">
               Доставка
             </Link>
           </nav>
-          <div className="row-start-2 flex items-center gap-x-3 self-end text-base font-medium
-                          lap:hidden">
+          <div className="row-start-2 flex items-center gap-x-3 self-end text-base font-medium lap:hidden">
             <Image src={telIcon} alt="tel icon" width={24} height={24} />
             <Link
               href="tel:+380123456789"
@@ -95,9 +87,8 @@ const Header: FC = () => {
               +380123456789
             </Link>
           </div>
-          <div className="flex items-center gap-x-6 self-center justify-self-end
-                          lap:col-start-3 lap:justify-self-end">
-            <div className='lap:hidden'>
+          <div className="flex items-center gap-x-6 self-center justify-self-end lap:col-start-3 lap:justify-self-end">
+            <div className="lap:hidden">
               <Lang />
             </div>
             <div className="flex gap-x-6">
@@ -117,10 +108,8 @@ const Header: FC = () => {
               />
             </div>
           </div>
-          <div className="row-start-2 self-end justify-self-end
-                          lap:col-start-3 lap:justify-self-end">
-            <button className="h-[50px] w-[180px] rounded-sm bg-black text-white duration-300 hover:skew-x-[-10deg] hover:bg-red hover:font-semibold
-                               lap:w-[100px] lap:h-[38px]">
+          <div className="row-start-2 self-end justify-self-end lap:col-start-3 lap:justify-self-end">
+            <button className="h-[50px] w-[180px] rounded-sm bg-black text-white duration-300 hover:skew-x-[-10deg] hover:bg-red hover:font-semibold lap:h-[38px] lap:w-[100px]">
               Замовити
             </button>
           </div>

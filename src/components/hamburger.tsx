@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import { cn } from '@/utils/cn'
 
 type Props = {
@@ -6,14 +6,17 @@ type Props = {
 }
 
 export default function Hamburger({ className }: Props) {
-  const [opened, setOpened] = useState(false);
+  const [opened, setOpened] = useState(false)
 
   return (
     <div
-      className={cn(`tham tham-e-squeeze tham-w-10 lap:tham-w-8`, className, { 'tham-active': opened })}>
+      className={cn(`tham tham-e-squeeze tham-w-10 lap:tham-w-8`, className, {
+        'tham-active': opened,
+      })}
+    >
       <div className="tham-box">
         <div className="tham-inner" />
       </div>
     </div>
-  );
+  )
 }

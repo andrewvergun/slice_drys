@@ -1,4 +1,9 @@
-import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from '@headlessui/react'
 import { useState } from 'react'
 
 const list = [
@@ -14,26 +19,25 @@ export default function ListBox() {
   const [selectedPerson, setSelectedPerson] = useState(list[0])
 
   return (
-
-
     <Listbox value={selectedPerson} onChange={setSelectedPerson}>
-      <ListboxButton className='flex gap-x-3 hover:text-red'>
+      <ListboxButton className="flex gap-x-3 hover:text-red">
         {selectedPerson.link}
         <div className="rotate-90">&#10095;</div>
       </ListboxButton>
-      <ListboxOptions anchor="bottom start" className='border rounded-sm p-3 bg-light_gray w-48 '>
+      <ListboxOptions
+        anchor="bottom start"
+        className="w-48 rounded-sm border bg-light_gray p-3"
+      >
         {list.map((string) => (
           <ListboxOption
             key={string.id}
             value={string}
-            className="data-[focus]:bg-blue-500 text-xl cursor-pointer"
+            className="data-[focus]:bg-blue-500 cursor-pointer text-xl"
           >
             {string.link}
           </ListboxOption>
         ))}
       </ListboxOptions>
     </Listbox>
-
-
   )
 }
