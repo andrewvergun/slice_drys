@@ -14,6 +14,7 @@ import {
   Field,
 } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
+import { useEffect, useState } from 'react'
 
 import Lang from './lang'
 import Hamburger from './hamburger'
@@ -26,10 +27,20 @@ import telIcon from '/public/icons/tel.svg'
 import searchIcon from '/public/icons/search.svg'
 
 export default function HamburgerMenu() {
+  const [isScroll, setIsScroll] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (isScroll) {
+      document.body.classList.add('no-scroll')
+    } else {
+      document.body.classList.remove('no-scroll')
+    }
+  }, [isScroll])
+
   return (
     <Menu>
       <MenuButton className="fixed left-5 top-8 z-50">
-        <Hamburger className="hidden lap:block" />
+        <Hamburger className="hidden lap:block" setIsScroll={setIsScroll} />
       </MenuButton>
 
       <MenuItems
@@ -39,7 +50,7 @@ export default function HamburgerMenu() {
       >
         <MenuSection className="grid grid-cols-[2fr_1fr_1fr_auto] items-center px-5">
           <MenuItem>
-            <button>
+            <button onClick={() => setIsScroll(false)}>
               <Image src={closeIcon} alt="close icon" />
             </button>
           </MenuItem>
