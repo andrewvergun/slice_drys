@@ -104,7 +104,7 @@ export default function HamburgerMenu() {
           <Disclosure>
             <DisclosureButton className="group flex items-center gap-x-3 pb-4 font-semibold">
               Головна
-              <ChevronDownIcon className="size-5 fill-black group-data-[open]:rotate-180 group-data-[hover]:fill-black" />
+              <ChevronDownIcon className="size-5 fill-black group-data-[open]:rotate-180" />
             </DisclosureButton>
             <DisclosurePanel
               transition

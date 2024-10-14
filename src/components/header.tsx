@@ -33,7 +33,10 @@ const Header: FC = () => {
   return (
     <header>
       <Info title="Безкоштовна доставка від 1000 грн." />
-      <div ref={headerRef} className="mx-auto mt-8 box-border max-w-[1240px]">
+      <div
+        ref={headerRef}
+        className="mx-auto mt-8 box-border max-w-[1240px] px-5"
+      >
         <div className="grid h-40 grid-cols-[1fr_2fr_1fr_1fr] grid-rows-2 border-b border-[#e4e4e4] pb-6 lap:h-24 lap:grid-cols-3 lap:px-5 lap:pb-[10px]">
           <nav className="grid grid-cols-[135px_97px_65px_48px] items-center justify-items-center gap-x-2 text-xl lap:hidden">
             <div className="flex items-center gap-x-4 justify-self-start">
