@@ -1,9 +1,9 @@
 import { cn } from '@/utils/cn'
 
 type Props = {
-  type: 'submit' | 'reset' | 'button' | undefined,
-  text: string,
-  className: string,
+  type: 'submit' | 'reset' | 'button' | undefined
+  text: string
+  className: string
 }
 
 export default function Button({ type, text, className }: Props) {

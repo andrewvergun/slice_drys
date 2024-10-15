@@ -5,7 +5,7 @@ import cartIcon from '/public/icons/bin.svg'
 
 export default function CartIcon() {
   return (
-    <div className='relative'>
+    <div className="relative">
       <Link href="#">
         <Image src={cartIcon} alt="cart icon" />
       </Link>

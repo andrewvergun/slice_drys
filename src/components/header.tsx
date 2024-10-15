@@ -40,7 +40,7 @@ const Header: FC = () => {
           <nav className="grid grid-cols-4 items-center justify-items-center gap-x-2 text-xl lap:hidden">
             {headerLinks?.map((link) => {
               return (
-                <Link href="#!" className="block px-5 py-2">
+                <Link key={link.id} href="#!" className="block px-5 py-2">
                   {link.link}
                 </Link>
               )
