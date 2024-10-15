@@ -79,8 +79,9 @@ export default function HamburgerMenu() {
           {headerLinks?.map((link) => {
             return (
               <MenuItem>
-                <Link className="block w-min py-4" href="#">
+                <Link className="group relative block w-min py-4" href="#">
                   {link.link}
+                  <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
                 </Link>
               </MenuItem>
             )
@@ -123,8 +124,9 @@ export default function HamburgerMenu() {
           {hamburgerLinksOther?.map((link) => {
             return (
               <MenuItem>
-                <Link className="block w-min py-4" href="#">
+                <Link className="group relative block w-min py-4" href="#">
                   {link.link}
+                  <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
                 </Link>
               </MenuItem>
             )
