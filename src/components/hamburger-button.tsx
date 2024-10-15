@@ -8,7 +8,7 @@ type Props = {
   setIsScroll: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function Hamburger({ className, setIsScroll }: Props) {
+export default function HamburgerButton({ className, setIsScroll }: Props) {
   const [opened, setOpened] = useState(false)
 
   return (
