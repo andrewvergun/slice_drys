@@ -104,11 +104,10 @@ export default function HamburgerMenu() {
             >
               {hamburgerLinksMain?.map((link) => {
                 return (
-                  <>
+                  <div key={link.id}>
                     <MenuItem>
                       {({ close }) => (
                         <Link
-                          key={link.id}
                           href="#"
                           onClick={close}
                           className="block px-3 py-4"
@@ -118,7 +117,7 @@ export default function HamburgerMenu() {
                       )}
                     </MenuItem>
                     <MenuSeparator className="my-1 h-px bg-light_gray" />
-                  </>
+                  </div>
                 )
               })}
             </DisclosurePanel>
