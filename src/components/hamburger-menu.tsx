@@ -78,12 +78,8 @@ export default function HamburgerMenu() {
           <div className="pb-4 font-semibold">Каталог</div>
           {headerLinks?.map((link) => {
             return (
-              <MenuItem>
-                <Link
-                  key={link.id}
-                  className="group relative block w-min py-4"
-                  href="#"
-                >
+              <MenuItem key={link.id}>
+                <Link className="group relative block w-min py-4" href="#">
                   {link.link}
                   <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
                 </Link>
@@ -104,8 +100,8 @@ export default function HamburgerMenu() {
             >
               {hamburgerLinksMain?.map((link) => {
                 return (
-                  <div key={link.id}>
-                    <MenuItem>
+                  <>
+                    <MenuItem key={link.id}>
                       {({ close }) => (
                         <Link
                           href="#"
@@ -117,7 +113,7 @@ export default function HamburgerMenu() {
                       )}
                     </MenuItem>
                     <MenuSeparator className="my-1 h-px bg-light_gray" />
-                  </div>
+                  </>
                 )
               })}
             </DisclosurePanel>
@@ -127,12 +123,8 @@ export default function HamburgerMenu() {
         <MenuSection className="px-8 pt-2">
           {hamburgerLinksOther?.map((link) => {
             return (
-              <MenuItem>
-                <Link
-                  key={link.id}
-                  href="#"
-                  className="group relative block w-min py-4"
-                >
+              <MenuItem key={link.id}>
+                <Link href="#" className="group relative block w-min py-4">
                   {link.link}
                   <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
                 </Link>
