@@ -55,22 +55,31 @@ export default function HamburgerMenu() {
       >
         <MenuSection className="grid grid-cols-[2fr_1fr_1fr_auto] items-center px-5">
           <MenuItem>
-            <button onClick={() => setIsScroll(false)}>
+            <button
+              onClick={() => setIsScroll(false)}
+              className="group relative w-fit"
+            >
               <Image src={closeIcon} alt="close icon" />
+              <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
             </button>
           </MenuItem>
           <MenuItem>
-            <Link href="/">
+            <Link href="/" className="group relative w-fit">
               <Image src={logo} alt="slice drus icon" width={39} height={46} />
+              <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
             </Link>
           </MenuItem>
           <MenuItem>
-            <div className="justify-self-center">
+            <div className="group relative w-fit justify-self-center">
               <Lang />
+              <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
             </div>
           </MenuItem>
           <MenuItem>
-            <CartIcon />
+            <div className="group relative w-fit">
+              <CartIcon />
+              <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
+            </div>
           </MenuItem>
         </MenuSection>
 
@@ -90,7 +99,7 @@ export default function HamburgerMenu() {
 
         <MenuSection className="px-8 pt-5">
           <Disclosure>
-            <DisclosureButton className="group flex items-center gap-x-3 pb-4 font-semibold">
+            <DisclosureButton className="group relative flex items-center gap-x-3 pb-4 font-semibold">
               Головна
               <ChevronDownIcon className="size-5 fill-black group-data-[open]:rotate-180" />
             </DisclosureButton>
@@ -106,9 +115,10 @@ export default function HamburgerMenu() {
                         <Link
                           href="#"
                           onClick={close}
-                          className="block px-3 py-4"
+                          className="group relative block w-fit px-3 py-4"
                         >
                           {link.link}
+                          <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
                         </Link>
                       )}
                     </MenuItem>
@@ -135,7 +145,7 @@ export default function HamburgerMenu() {
 
         <MenuSection className="flex justify-center gap-x-5 pt-5">
           <MenuItem>
-            <Link href="#">
+            <Link href="#" className="group relative w-fit">
               <Image
                 src={facebookIcon}
                 alt="facebook icon"
@@ -143,10 +153,11 @@ export default function HamburgerMenu() {
                 height={32}
                 className="cursor-pointer"
               />
+              <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link href="#">
+            <Link href="#" className="group relative w-fit">
               <Image
                 src={instagramIcon}
                 alt="insta icon"
@@ -154,6 +165,7 @@ export default function HamburgerMenu() {
                 height={32}
                 className="cursor-pointer"
               />
+              <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
             </Link>
           </MenuItem>
         </MenuSection>
@@ -161,8 +173,12 @@ export default function HamburgerMenu() {
         <MenuSection className="flex justify-center gap-x-3 pt-5">
           <Image src={telIcon} alt="tel icon" width={24} height={24} />
           <MenuItem>
-            <Link href="tel:+380123456789" className="font-medium">
+            <Link
+              href="tel:+380123456789"
+              className="group relative font-medium"
+            >
               +380123456789
+              <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
             </Link>
           </MenuItem>
         </MenuSection>
@@ -173,24 +189,26 @@ export default function HamburgerMenu() {
             method="post"
             className="flex justify-center gap-x-4"
           >
-            <Field className="relative">
+            <label className="group relative block">
               <Input
                 name="search"
                 type="text"
-                className="h-8 w-56 rounded-sm"
+                className="group block h-8 w-56 rounded-sm p-2"
               />
               <Image
                 src={searchIcon}
                 alt="search icon"
                 className="absolute right-1 top-0"
               />
-            </Field>
+            </label>
             <MenuItem>
-              <Button
+              <button
                 type="submit"
-                text="Шукати"
-                className="block h-8 w-[88px]"
-              ></Button>
+                className="group relative block h-8 w-[88px] bg-black text-white"
+              >
+                Шукати
+                <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
+              </button>
             </MenuItem>
           </form>
         </MenuSection>
