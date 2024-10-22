@@ -108,7 +108,7 @@ const Header: FC = () => {
             <Button
               type="button"
               text="Замовити"
-              className="mr-5 h-[50px] w-[180px] lap:mr-0 lap:h-[38px] lap:w-[100px]"
+              className="mr-5 h-[50px] w-[180px] hover:skew-x-[-10deg] hover:bg-red hover:font-semibold lap:mr-0 lap:h-[38px] lap:w-[88px]"
             ></Button>
           </div>
         </div>

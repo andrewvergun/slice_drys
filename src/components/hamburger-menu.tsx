@@ -6,14 +6,9 @@ import {
   MenuItem,
   MenuItems,
   MenuSection,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
   MenuSeparator,
   Input,
-  Field,
 } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import { useEffect, useState } from 'react'
 
 import Lang from './lang'
@@ -24,10 +19,8 @@ import instagramIcon from '/public/icons/instagram.svg'
 import telIcon from '/public/icons/tel.svg'
 import searchIcon from '/public/icons/search.svg'
 import burgerIcon from '/public/icons/burger.svg'
-import Button from './button'
 
 import { headerLinks } from '../data/header-links'
-import { hamburgerLinksMain } from '../data/header-links'
 import { hamburgerLinksOther } from '../data/header-links'
 import CartIcon from './cart-icon'
 
@@ -44,7 +37,10 @@ export default function HamburgerMenu() {
 
   return (
     <Menu>
-      <MenuButton className="hidden lap:fixed lap:left-5 lap:top-8 lap:z-50 lap:block">
+      <MenuButton
+        className="hidden lap:fixed lap:left-5 lap:top-8 lap:z-50 lap:block"
+        onClick={() => setIsScroll(true)}
+      >
         <Image src={burgerIcon} alt="burger icon" width={32} height={32} />
       </MenuButton>
 
@@ -97,38 +93,7 @@ export default function HamburgerMenu() {
           })}
         </MenuSection>
 
-        <MenuSection className="px-8 pt-5">
-          <Disclosure>
-            <DisclosureButton className="group relative flex items-center gap-x-3 pb-4 font-semibold">
-              Головна
-              <ChevronDownIcon className="size-5 fill-black group-data-[open]:rotate-180" />
-            </DisclosureButton>
-            <DisclosurePanel
-              transition
-              className="origin-top bg-white transition duration-300 ease-out data-[closed]:-translate-y-6 data-[closed]:opacity-0"
-            >
-              {hamburgerLinksMain?.map((link) => {
-                return (
-                  <>
-                    <MenuItem key={link.id}>
-                      {({ close }) => (
-                        <Link
-                          href="#"
-                          onClick={close}
-                          className="group relative block w-fit px-3 py-4"
-                        >
-                          {link.link}
-                          <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
-                        </Link>
-                      )}
-                    </MenuItem>
-                    <MenuSeparator className="my-1 h-px bg-light_gray" />
-                  </>
-                )
-              })}
-            </DisclosurePanel>
-          </Disclosure>
-        </MenuSection>
+        <MenuSeparator className="mx-8 my-4 h-px bg-black" />
 
         <MenuSection className="px-8 pt-2">
           {hamburgerLinksOther?.map((link) => {
@@ -189,11 +154,11 @@ export default function HamburgerMenu() {
             method="post"
             className="flex justify-center gap-x-4"
           >
-            <label className="group relative block">
+            <label className="group relative block max-w-56">
               <Input
                 name="search"
                 type="text"
-                className="group block h-8 w-56 rounded-sm p-2"
+                className="group block h-8 w-full rounded-sm p-2"
               />
               <Image
                 src={searchIcon}
@@ -204,7 +169,7 @@ export default function HamburgerMenu() {
             <MenuItem>
               <button
                 type="submit"
-                className="group relative block h-8 w-[88px] bg-black text-white"
+                className="group relative block h-8 w-[88px] bg-black text-sm text-white"
               >
                 Шукати
                 <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
