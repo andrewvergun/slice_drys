@@ -21,4 +21,7 @@ nav a {
 }
 
 @layer utilities {
+  .no-scroll {
+    @apply overflow-hidden
+  }
 }
