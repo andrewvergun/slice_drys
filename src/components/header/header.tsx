@@ -5,65 +5,89 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
-
 import facebookIcon from '/public/icons/facebook.svg'
 import instagramIcon from '/public/icons/instagram.svg'
 import logo from '/public/icons/logo.svg'
 import telIcon from '/public/icons/tel.svg'
 import searchIcon from '/public/icons/search.svg'
-import Lang from './lang'
 import Info from './header-info'
 import HamburgerMenu from './hamburger-menu'
-import Button from './button'
-import CartIcon from './cart-icon'
-
-import { headerLinks } from '../data/header-links'
+import Button from '@/components/ui/button'
+import LocaleChange from '@/components/locale-change/locale-change'
+import Cart from '@/components/card/cart'
+import { useLocale } from 'next-intl'
 
 gsap.registerPlugin(useGSAP)
 
-const Header: FC = () => {
+interface HeaderP {
+  headerLinks: ILink[]
+  hamburgerLinksOther: ILink[]
+}
+
+const Header: FC<HeaderP> = ({ headerLinks, hamburgerLinksOther }) => {
+  const local = useLocale()
   const headerRef = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
     gsap.fromTo(
       headerRef.current,
       { yPercent: -200, opacity: 0 },
-      { yPercent: 0, opacity: 1, delay: 0.1, duration: 0.5 },
+      {
+        yPercent: 0,
+        opacity: 1,
+        delay: 0.2,
+        duration: 0.8,
+        ease: 'power3.out',
+      },
     )
   })
 
   return (
     <header>
       <Info title="Безкоштовна доставка від 1000 грн." />
-      <div ref={headerRef} className="mx-auto mt-8 box-border max-w-[1240px]">
+      <div
+        ref={headerRef}
+        className="mx-auto mt-8 box-border max-w-[1240px] opacity-0"
+      >
         <div className="grid h-40 grid-cols-[auto_2fr_1fr_1fr] grid-rows-2 border-b border-[#e4e4e4] pb-6 lap:h-24 lap:grid-cols-3 lap:px-5 lap:pb-[10px]">
           <nav className="grid grid-cols-4 items-center justify-items-center gap-x-2 text-xl lap:hidden">
-            {headerLinks?.map((link) => {
+            {headerLinks?.map((link: ILink) => {
               return (
-                <Link key={link.id} href="#!" className="block px-5 py-2">
-                  {link.link}
+                <Link
+                  key={link.id}
+                  href={`${local}/${link.href}`}
+                  className="block px-5 py-2 duration-300 hover:text-red"
+                >
+                  {link.name}
                 </Link>
               )
             })}
           </nav>
 
-          <HamburgerMenu />
+          <HamburgerMenu
+            headerLinks={headerLinks}
+            hamburgerLinksOther={hamburgerLinksOther}
+          />
 
           <div className="row-start-2 flex justify-end gap-x-5 pr-6 lap:hidden">
-            <Image
-              src={facebookIcon}
-              alt="facebook icon"
-              width={32}
-              height={32}
-              className="cursor-pointer"
-            />
-            <Image
-              src={instagramIcon}
-              alt="insta icon"
-              width={32}
-              height={32}
-              className="cursor-pointer"
-            />
+            <Button variant={'icons'}>
+              <Image
+                src={facebookIcon}
+                alt="facebook icon"
+                width={32}
+                height={32}
+                className="cursor-pointer"
+              />
+            </Button>
+            <Button variant={'icons'}>
+              <Image
+                src={instagramIcon}
+                alt="insta icon"
+                width={32}
+                height={32}
+                className="cursor-pointer"
+              />
+            </Button>
           </div>
 
           <div className="row-start-1 row-end-3 mr-[22%] self-end justify-self-end lap:col-start-2 lap:mr-0 lap:w-[64px] lap:justify-self-center">
@@ -73,10 +97,10 @@ const Header: FC = () => {
           </div>
 
           <nav className="flex items-center gap-x-2 text-xl lap:hidden">
-            <Link href="#!" className="p-4">
+            <Link href="#!" className="p-4 duration-300 hover:text-red">
               Блог
             </Link>
-            <Link href="#!" className="p-4">
+            <Link href="#!" className="p-4 duration-300 hover:text-red">
               Контакти
             </Link>
           </nav>
@@ -91,25 +115,25 @@ const Header: FC = () => {
           </div>
           <div className="flex items-center gap-x-6 self-center justify-self-end lap:col-start-3 lap:justify-self-end">
             <div className="lap:hidden">
-              <Lang />
+              <LocaleChange />
             </div>
             <div className="mr-5 flex gap-x-6 lap:mr-0">
-              <Image
-                src={searchIcon}
-                alt="search"
-                width={32}
-                height={32}
-                className="cursor-pointer"
-              />
-              <CartIcon />
+              <Button variant={'icons'}>
+                <Image
+                  src={searchIcon}
+                  alt="search"
+                  width={32}
+                  height={32}
+                  className="cursor-pointer"
+                />
+              </Button>
+              <Cart />
             </div>
           </div>
           <div className="row-start-2 self-end justify-self-end lap:col-start-3 lap:justify-self-end">
-            <Button
-              type="button"
-              text="Замовити"
-              className="mr-5 h-[50px] w-[180px] hover:skew-x-[-10deg] hover:bg-red hover:font-semibold lap:mr-0 lap:h-[38px] lap:w-[88px]"
-            ></Button>
+            <Button type="button" variant="button">
+              Замовити
+            </Button>
           </div>
         </div>
       </div>

@@ -16,14 +16,20 @@ export default function Info({ title }: Props) {
     gsap.fromTo(
       infoRef.current,
       { yPercent: -100, opacity: 0 },
-      { yPercent: 0, opacity: 1, duration: 0.3 },
+      {
+        yPercent: 0,
+        opacity: 1,
+        duration: 0.6,
+        ease: 'power3.out',
+        delay: 0.6,
+      },
     )
   })
 
   return (
     <div
       ref={infoRef}
-      className="absolute left-0 top-0 z-40 h-8 w-full bg-black"
+      className="absolute left-0 top-0 z-40 h-8 w-full bg-black opacity-0"
     >
       <h1 className="text-center text-base font-medium leading-[180%] text-white">
         {title}

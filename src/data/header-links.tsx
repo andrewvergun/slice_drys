@@ -1,21 +1,23 @@
-export const headerLinks = [
-  { id: 1, link: 'М’ясо' },
-  { id: 2, link: 'Фрукти' },
-  { id: 3, link: 'Овочі' },
-  { id: 4, link: 'Мікси' },
+const headerLinksUk = [
+  { id: 1, name: 'М’ясо', href: 'myaso' },
+  { id: 2, name: 'Фрукти', href: 'frukty' },
+  { id: 3, name: 'Овочі', href: 'ovochi' },
+  { id: 4, name: 'Мікси', href: 'miksy' },
 ]
 
-export const hamburgerLinksMain = [
-  { id: 1, link: 'Популярне' },
-  { id: 2, link: 'Про нас' },
-  { id: 3, link: 'Акції' },
-  { id: 4, link: 'Відгуки' },
-  { id: 4, link: 'FAQ' },
+const hamburgerLinksOtherUk = [
+  { id: 1, name: 'Блог', href: 'blog' },
+  { id: 2, name: 'Опт', href: 'opt' },
+  { id: 3, name: 'Контакти', href: 'kontakty' },
+  { id: 4, name: 'Доставка', href: 'dostavka' },
 ]
 
-export const hamburgerLinksOther = [
-  { id: 1, link: 'Блог' },
-  { id: 2, link: 'Опт' },
-  { id: 3, link: 'Контакти' },
-  { id: 4, link: 'Доставка' },
-]
+export const headerLinks = {
+  en: headerLinksUk,
+  uk: headerLinksUk,
+}
+
+export const hamburgerLinksOther = {
+  en: hamburgerLinksOtherUk,
+  uk: hamburgerLinksOtherUk,
+}

@@ -5,7 +5,7 @@ import { gsap } from 'gsap'
 import { cn } from '@/utils/cn'
 import Image from 'next/image'
 
-export const Slider = () => {
+export const Hero = () => {
   const sliderLinks = [
     { name: 'М’ЯСО', link: '/products/meat.tsx#product' },
     { name: 'ФРУКТИ', link: '/products/fruits' },
@@ -101,14 +101,14 @@ export const Slider = () => {
 
                   <text
                     fill={hoveredIndex === index ? 'red' : 'black'}
-                    font-size="36"
-                    font-family="Arial"
-                    letter-spacing="2"
+                    fontSize="36"
+                    fontFamily="Arial"
+                    letterSpacing="2"
                   >
                     <textPath
                       href="#curve"
                       startOffset="50%"
-                      text-anchor="middle"
+                      textAnchor="middle"
                     >
                       {item.name}
                     </textPath>

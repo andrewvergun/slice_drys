@@ -2,26 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-  }
-}
-
 body {
   margin: 0;
   background-color: white;
   color: #0f0f0f;
 }
 
-nav a {
-  @apply hover:text-red duration-300;
-}
 
-@layer utilities {
-  .no-scroll {
-    @apply overflow-hidden
-  }
-}

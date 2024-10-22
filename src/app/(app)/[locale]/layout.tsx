@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import '../globals.css'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
-import { getTranslations } from 'next-intl/server'
-import Header from '@/components/header'
 import { Poppins } from 'next/font/google'
+import Header from '@/components/header/header'
+import { hamburgerLinksOther, headerLinks } from '@/data/header-links'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -23,17 +23,21 @@ export default async function LocaleLayout({
   params: { locale },
 }: {
   children: React.ReactNode
-  params: { locale: string }
+  params: { locale: LanguageType }
 }) {
   const messages = await getMessages()
-  //  const t = await getTranslations('HomePage')
+  const headerLinksData = headerLinks[locale]
+  const hamburgerLinksOtherData = hamburgerLinksOther[locale]
 
   return (
     <html lang={locale} className={`${poppins.variable}`}>
       <body>
         <div className="mx-auto max-w-[1440px]">
           <NextIntlClientProvider messages={messages}>
-            <Header />
+            <Header
+              headerLinks={headerLinksData}
+              hamburgerLinksOther={hamburgerLinksOtherData}
+            />
             {children}
           </NextIntlClientProvider>
         </div>
