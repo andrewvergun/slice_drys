@@ -9,15 +9,15 @@ export default async function LocaleLayout({
   params: { locale: LanguageType }
 }) {
   return (
-    <>
+    <div className="mx-auto max-w-[1248px]">
       <SidebarProvider>
         <AppSidebar />
-        <main>
+        <main className="w-full">
           <SidebarTrigger />
           {children}
         </main>
       </SidebarProvider>
       {children}
-    </>
+    </div>
   )
 }
