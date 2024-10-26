@@ -38,18 +38,18 @@ const productSchema = new mongoose.Schema(
           type: Number,
           required: true,
         },
-        statusLabel: {
-          type: String,
-          required: true,
-          minlength: 1,
-          maxlength: 255,
-        },
         sold: {
           type: Number,
           required: true,
         },
       },
     ],
+    statusLabel: {
+      type: String,
+      required: true,
+      minlength: 1,
+      maxlength: 255,
+    },
     category: {
       type: String,
       required: true,
