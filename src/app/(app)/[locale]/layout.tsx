@@ -3,8 +3,8 @@ import '../globals.css'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { Poppins } from 'next/font/google'
-import Header from '@/components/header/header'
 import { hamburgerLinksOther, headerLinks } from '@/data/header-links'
+import Header from '@/components/client/header/header'
 
 const poppins = Poppins({
   subsets: ['latin'],

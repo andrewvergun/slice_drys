@@ -5,17 +5,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
-import facebookIcon from '/public/icons/facebook.svg'
-import instagramIcon from '/public/icons/instagram.svg'
-import logo from '/public/icons/logo.svg'
-import telIcon from '/public/icons/tel.svg'
-import searchIcon from '/public/icons/search.svg'
 import Info from './header-info'
 import HamburgerMenu from './hamburger-menu'
-import Button from '@/components/ui/button'
-import LocaleChange from '@/components/locale-change/locale-change'
-import Cart from '@/components/card/cart'
 import { useLocale } from 'next-intl'
+import Button from '@/components/client/ui/button'
+import LocaleChange from '@/components/client/locale-change/locale-change'
+import Cart from '@/components/client/card/cart'
 
 gsap.registerPlugin(useGSAP)
 
@@ -72,7 +67,7 @@ const Header: FC<HeaderP> = ({ headerLinks, hamburgerLinksOther }) => {
           <div className="row-start-2 flex justify-end gap-x-5 pr-6 lap:hidden">
             <Button variant={'icons'}>
               <Image
-                src={facebookIcon}
+                src={'/icons/facebook.svg'}
                 alt="facebook icon"
                 width={32}
                 height={32}
@@ -81,7 +76,7 @@ const Header: FC<HeaderP> = ({ headerLinks, hamburgerLinksOther }) => {
             </Button>
             <Button variant={'icons'}>
               <Image
-                src={instagramIcon}
+                src={'/icons/instagram.svg'}
                 alt="insta icon"
                 width={32}
                 height={32}
@@ -92,7 +87,12 @@ const Header: FC<HeaderP> = ({ headerLinks, hamburgerLinksOther }) => {
 
           <div className="row-start-1 row-end-3 mr-[22%] self-end justify-self-end lap:col-start-2 lap:mr-0 lap:w-[64px] lap:justify-self-center">
             <Link href="/">
-              <Image src={logo} alt="slice drus icon" width={100} height={86} />
+              <Image
+                src={'/icons/logo.svg'}
+                alt="slice drus icon"
+                width={100}
+                height={86}
+              />
             </Link>
           </div>
 
@@ -105,7 +105,12 @@ const Header: FC<HeaderP> = ({ headerLinks, hamburgerLinksOther }) => {
             </Link>
           </nav>
           <div className="row-start-2 flex items-center gap-x-3 self-end pl-4 text-base font-medium lap:hidden">
-            <Image src={telIcon} alt="tel icon" width={24} height={24} />
+            <Image
+              src={'/icons/tel.svg'}
+              alt="tel icon"
+              width={24}
+              height={24}
+            />
             <Link
               href="tel:+380123456789"
               className="duration-300 hover:skew-x-[-10deg] hover:text-red"
@@ -120,7 +125,7 @@ const Header: FC<HeaderP> = ({ headerLinks, hamburgerLinksOther }) => {
             <div className="mr-5 flex gap-x-6 lap:mr-0">
               <Button variant={'icons'}>
                 <Image
-                  src={searchIcon}
+                  src={'/icons/search.svg'}
                   alt="search"
                   width={32}
                   height={32}

@@ -10,17 +10,10 @@ import {
   Input,
   Transition,
 } from '@headlessui/react'
-import closeIcon from '/public/icons/close.svg'
-import logo from '/public/icons/logo.svg'
-import facebookIcon from '/public/icons/facebook.svg'
-import instagramIcon from '/public/icons/instagram.svg'
-import telIcon from '/public/icons/tel.svg'
-import searchIcon from '/public/icons/search.svg'
-import burgerIcon from '/public/icons/burger.svg'
-import Cart from '@/components/card/cart'
-import LocaleChange from '@/components/locale-change/locale-change'
 import { useState } from 'react'
-import Button from '@/components/ui/button'
+import Button from '@/components/client/ui/button'
+import LocaleChange from '../locale-change/locale-change'
+import Cart from '@/components/client/card/cart'
 
 interface HamburgerMenu {
   headerLinks: ILink[]
@@ -41,7 +34,12 @@ export default function HamburgerMenu({
         onClick={() => setIsOpen(!isOpen)}
         className="hidden duration-300 hover:scale-110 lap:fixed lap:left-5 lap:top-8 lap:z-50 lap:block"
       >
-        <Image src={burgerIcon} alt="burger icon" width={32} height={32} />
+        <Image
+          src={'/icons/burger.svg'}
+          alt="burger icon"
+          width={32}
+          height={32}
+        />
       </MenuButton>
 
       <Transition
@@ -65,14 +63,19 @@ export default function HamburgerMenu({
                 className="w-fit"
                 variant={'icons'}
               >
-                <Image src={closeIcon} alt="close icon" />
+                <Image
+                  src={'/icons/close.svg'}
+                  width={40}
+                  height={40}
+                  alt="close icon"
+                />
                 <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
               </Button>
             </MenuItem>
             <MenuItem>
               <Link href="/" className="group relative w-fit">
                 <Image
-                  src={logo}
+                  src={'/icons/logo.svg'}
                   alt="slice drus icon"
                   width={39}
                   height={46}
@@ -130,7 +133,7 @@ export default function HamburgerMenu({
             <MenuItem>
               <Link href="#" className="group relative w-fit">
                 <Image
-                  src={facebookIcon}
+                  src={'/icons/facebook.svg'}
                   alt="facebook icon"
                   width={32}
                   height={32}
@@ -142,7 +145,7 @@ export default function HamburgerMenu({
             <MenuItem>
               <Link href="#" className="group relative w-fit">
                 <Image
-                  src={instagramIcon}
+                  src={'/icons/instagram.svg'}
                   alt="insta icon"
                   width={32}
                   height={32}
@@ -154,7 +157,12 @@ export default function HamburgerMenu({
           </MenuSection>
 
           <MenuSection className="flex justify-center gap-x-3 pt-5">
-            <Image src={telIcon} alt="tel icon" width={24} height={24} />
+            <Image
+              src={'/icons/tel.svg'}
+              alt="tel icon"
+              width={24}
+              height={24}
+            />
             <MenuItem>
               <Link
                 href="tel:+380123456789"
@@ -179,9 +187,11 @@ export default function HamburgerMenu({
                   className="group block h-8 w-full rounded-sm p-2"
                 />
                 <Image
-                  src={searchIcon}
+                  src={'/icons/search.svg'}
                   alt="search icon"
                   className="absolute right-1 top-0"
+                  width={32}
+                  height={32}
                 />
               </label>
               <MenuItem>
