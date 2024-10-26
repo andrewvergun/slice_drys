@@ -15,8 +15,11 @@ import {
 import { Input } from '@/components/admin/ui/input'
 import { Label } from '@/components/admin/ui/label'
 import { Textarea } from '@/components/admin/ui/textarea'
+import { Checkbox } from '@/components/admin/ui/checkbox'
 
 export default function Home() {
+  const [selectedStatus, setSelectedStatus] = useState<string[]>(["new"])
+
   const [variables, setVariables] = useState([
     {
       weight: '',
@@ -57,6 +60,14 @@ export default function Home() {
 
   const deleteVariable = (index: number) => {
     setVariables((prevVariables) => prevVariables.filter((_, i) => i !== index))
+  }
+
+  const handleCheckboxChange = (value: string) => {
+    setSelectedStatus((prev) =>
+      prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value],
+    )
   }
 
   return (
@@ -101,8 +112,30 @@ export default function Home() {
                   <Textarea id="description" name="description" />
                 </div>
                 <div>
-                  <Label htmlFor="statusLabel">Акційний статус</Label>
-                  <Input name="statusLabel" />
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="c1"
+                      checked={selectedStatus.includes('new')}
+                      onCheckedChange={() => handleCheckboxChange('new')}
+                    />
+                    <label htmlFor="c1">Новинка</label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="c2"
+                      checked={selectedStatus.includes('sale')}
+                      onCheckedChange={() => handleCheckboxChange('sale')}
+                    />
+                    <label htmlFor="c2">Акція</label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="c3"
+                      checked={selectedStatus.includes('top')}
+                      onCheckedChange={() => handleCheckboxChange('top')}
+                    />
+                    <label htmlFor="c3">Топ</label>
+                  </div>
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold">Вид</h2>
