@@ -18,7 +18,7 @@ import { Textarea } from '@/components/admin/ui/textarea'
 import { Checkbox } from '@/components/admin/ui/checkbox'
 
 export default function Home() {
-  const [selectedStatus, setSelectedStatus] = useState<string[]>(["new"])
+  const [selectedStatus, setSelectedStatus] = useState<string[]>(['new'])
 
   const [variables, setVariables] = useState([
     {
