@@ -28,3 +28,11 @@ interface IVariableProduct {
   count: number
   sold?: number
 }
+
+interface IRecommendations {
+  success: boolean
+  category: string[]
+  composition: string[]
+  menu: string[]
+  message: string
+}

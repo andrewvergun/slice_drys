@@ -34,142 +34,153 @@ import {
 } from '@/components/admin/ui/table'
 import Image from 'next/image'
 import { FC } from 'react'
-
-export const columns: ColumnDef<IProduct>[] = [
-  {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && 'indeterminate')
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    id: 'зображення',
-    header: 'зображення',
-    accessorKey: 'img',
-    cell: ({ row }) => {
-      const product = row.original
-      return (
-        <div className="flex items-center justify-center">
-          {product.img && (
-            <Image
-              width={50}
-              height={50}
-              src={'/meat.png'}
-              alt={product.name}
-              className="h-10 w-10 rounded object-cover"
-            />
-          )}
-        </div>
-      )
-    },
-  },
-  {
-    id: 'назва',
-    header: 'назва',
-    accessorKey: 'name',
-    cell: ({ row }) => {
-      const product = row.original
-      return <div>{product.name}</div>
-    },
-  },
-  {
-    id: 'лейбла',
-    header: 'лейбла',
-    accessorKey: 'label',
-    cell: ({ row }) => {
-      const product = row.original
-      return (
-        <div className="flex flex-col">
-          {product.statusLabel.map((label) => (
-            <div key={label}>{label}</div>
-          ))}
-        </div>
-      )
-    },
-  },
-  {
-    id: 'ціна',
-    header: 'ціна',
-    accessorKey: 'price',
-    cell: ({ row }) => {
-      const product = row.original as IProduct
-      const variables = product.variables as IVariableProduct[]
-      return (
-        <div>
-          {variables?.map((item: IVariableProduct) => (
-            <div key={item._id}>
-              {item.newPrice ? (
-                <div>
-                  <span className="line-through">{item.price} грн</span>{' '}
-                  <span>{item.newPrice} грн</span>
-                </div>
-              ) : (
-                <span>{item.price} грн</span>
-              )}
-            </div>
-          ))}
-        </div>
-      )
-    },
-  },
-  {
-    id: 'залишки',
-    header: 'залишки',
-    accessorKey: 'count',
-    cell: ({ row }) => {
-      const product = row.original as IProduct
-      const variables = product.variables as IVariableProduct[]
-      return (
-        <div>
-          {variables?.map((variable) => (
-            <div key={variable._id}>
-              {variable.count} шт. / {variable.weight} г
-            </div>
-          ))}
-        </div>
-      )
-    },
-  },
-  {
-    id: 'відвідувачі',
-    header: 'відвідувачі',
-    accessorKey: 'visited',
-    cell: ({ row }) => {
-      const product = row.original as IProduct
-      return <div>{`${product.visited} користувачів`}</div>
-    },
-  },
-  {
-    id: 'actions',
-    enableHiding: false,
-    header: '',
-    cell: ({ row }) => {
-      return <Button>Редагувати</Button>
-    },
-  },
-]
+import EditorProduct from '@/components/admin/editor-product/editor-product'
 
 interface IProductList {
   data: IProduct[]
+  recommendations: IRecommendations
 }
 
-export const ProductList: FC<IProductList> = ({ data }) => {
+export const ProductList: FC<IProductList> = ({ data, recommendations }) => {
+  const columns: ColumnDef<IProduct>[] = [
+    {
+      id: 'select',
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && 'indeterminate')
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      id: 'зображення',
+      header: 'зображення',
+      accessorKey: 'img',
+      cell: ({ row }) => {
+        const product = row.original
+        return (
+          <div className="flex items-center justify-center">
+            {product.img && (
+              <Image
+                width={50}
+                height={50}
+                src={'/meat.png'}
+                alt={product.name}
+                className="h-10 w-10 rounded object-cover"
+              />
+            )}
+          </div>
+        )
+      },
+    },
+    {
+      id: 'назва',
+      header: 'назва',
+      accessorKey: 'name',
+      cell: ({ row }) => {
+        const product = row.original
+        return <div>{product.name}</div>
+      },
+    },
+    {
+      id: 'лейбла',
+      header: 'лейбла',
+      accessorKey: 'label',
+      cell: ({ row }) => {
+        const product = row.original
+        return (
+          <div className="flex flex-col">
+            {product.statusLabel.map((label) => (
+              <div key={label}>{label}</div>
+            ))}
+          </div>
+        )
+      },
+    },
+    {
+      id: 'ціна',
+      header: 'ціна',
+      accessorKey: 'price',
+      cell: ({ row }) => {
+        const product = row.original as IProduct
+        const variables = product.variables as IVariableProduct[]
+        return (
+          <div>
+            {variables?.map((item: IVariableProduct) => (
+              <div key={item._id}>
+                {item.newPrice ? (
+                  <div>
+                    <span className="line-through">{item.price} грн</span>{' '}
+                    <span>{item.newPrice} грн</span>
+                  </div>
+                ) : (
+                  <span>{item.price} грн</span>
+                )}
+              </div>
+            ))}
+          </div>
+        )
+      },
+    },
+    {
+      id: 'залишки',
+      header: 'залишки',
+      accessorKey: 'count',
+      cell: ({ row }) => {
+        const product = row.original as IProduct
+        const variables = product.variables as IVariableProduct[]
+        return (
+          <div>
+            {variables?.map((variable) => (
+              <div key={variable._id}>
+                {variable.count} шт. / {variable.weight} г
+              </div>
+            ))}
+          </div>
+        )
+      },
+    },
+    {
+      id: 'відвідувачі',
+      header: 'відвідувачі',
+      accessorKey: 'visited',
+      cell: ({ row }) => {
+        const product = row.original as IProduct
+        return <div>{`${product.visited} користувачів`}</div>
+      },
+    },
+    {
+      id: 'actions',
+      enableHiding: false,
+      header: '',
+      cell: ({ row }) => {
+        const product = row.original as IProduct
+        return (
+          <>
+            <EditorProduct
+              buttonTitle="редагувати"
+              product={product}
+              recommendations={recommendations}
+            />
+          </>
+        )
+      },
+    },
+  ]
+
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],

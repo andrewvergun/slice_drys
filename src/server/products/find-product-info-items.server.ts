@@ -6,9 +6,9 @@ export async function findProductInfoItems() {
   'use server'
   try {
     await connectToDb()
-    const uniqueCompositions = await Product.distinct('composition')
-    const uniqueMenus = await Product.distinct('menu')
-    const uniqueCategories = await Product.distinct('category')
+    const uniqueCompositions: any[] = await Product.distinct('composition')
+    const uniqueMenus: any[] = await Product.distinct('menu')
+    const uniqueCategories: any[] = await Product.distinct('category')
 
     return {
       success: true,
@@ -18,6 +18,12 @@ export async function findProductInfoItems() {
       message: 'Product created',
     }
   } catch (error) {
-    return { success: false, message: "Can't create product" }
+    return {
+      success: false,
+      composition: [],
+      menu: [],
+      category: [],
+      message: "Can't create product",
+    }
   }
 }

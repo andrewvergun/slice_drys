@@ -17,7 +17,6 @@ export default async function LocaleLayout({
           {children}
         </main>
       </SidebarProvider>
-      {children}
     </div>
   )
 }

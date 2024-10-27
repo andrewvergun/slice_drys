@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -18,14 +18,32 @@ import { useFieldArray, useForm } from 'react-hook-form'
 import { createProduct } from '@/server/products/create-product.server'
 import { toast } from '@/hooks/use-toast'
 import Loading from '@/components/admin/ui/loading'
+import { editProduct } from '@/server/products/eddit-product.server'
 
-const CrateProduct = () => {
+interface ICrateProduct {
+  buttonTitle: string
+  product?: IProduct
+  recommendations: IRecommendations
+}
+
+interface IResult {
+  success: boolean
+  message: string
+}
+
+const EditorProduct: FC<ICrateProduct> = ({
+  buttonTitle,
+  product,
+  recommendations,
+}) => {
   const {
     register,
     handleSubmit,
     control,
+    setValue,
+    getValues,
     formState: { errors },
-  } = useForm({
+  } = useForm<IProduct>({
     defaultValues: {
       name: '',
       description: '',
@@ -36,11 +54,11 @@ const CrateProduct = () => {
       statusLabel: [],
       variables: [
         {
-          weight: '',
-          price: '',
-          newPrice: '',
+          weight: 0,
+          price: 0,
+          newPrice: 0,
           currency: '',
-          count: '',
+          count: 0,
         },
       ],
     },
@@ -49,23 +67,64 @@ const CrateProduct = () => {
   const [loading, setLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
-  const { fields, append, remove } = useFieldArray({
+  const [categoriesInput, setCategoriesInput] = useState<string>('')
+
+  const [categories, setCategories] = useState<string[]>(
+    product?.category || [],
+  )
+
+  const {
+    fields: variableFields,
+    append: appendVariable,
+    remove: removeVariable,
+    replace,
+  } = useFieldArray<IProduct, 'variables'>({
     control,
     name: 'variables',
   })
 
-  const onSubmit = async (data: any) => {
+  useEffect(() => {
+    if (product) {
+      setValue('name', product.name)
+      setValue('description', product.description)
+
+      if (product.variables && product.variables.length > 0) {
+        const variablesWithNumberWeights = product.variables.map(
+          (variable) => ({
+            ...variable,
+            weight: Number(variable.weight), // Конвертуємо строку в число
+            price: Number(variable.price), // Конвертуємо строку в число
+            newPrice: variable.newPrice ? Number(variable.newPrice) : 0, // Конвертуємо строку в число або залишаємо 0
+            count: Number(variable.count), // Конвертуємо строку в число
+          }),
+        )
+        replace(variablesWithNumberWeights)
+      }
+    }
+  }, [product, setValue, replace])
+
+  const onSubmit = async (data: IProduct) => {
     console.log('data', data)
     setLoading(true)
-    const result = await createProduct(data)
+    let result: IResult
+
+    const categoryStrings = data.category.map((cat) => cat)
+    const newData = { ...data, category: categoryStrings }
+
+    if (product?._id) {
+      result = await editProduct(product._id, newData)
+    } else {
+      result = await createProduct(newData)
+    }
 
     if (result.success) {
       console.log('Product created')
       setIsOpen(false)
       toast({
-        title: 'Product created',
+        title: result.message,
       })
     } else {
+      console.log('Product error')
       toast({
         title: result.message,
       })
@@ -75,18 +134,18 @@ const CrateProduct = () => {
 
   return (
     <>
-      <Loading />
+      {loading && <Loading />}
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialogTrigger asChild>
-          <Button>Створити</Button>
+          <Button>{buttonTitle}</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <form onSubmit={handleSubmit(onSubmit)}>
             <AlertDialogHeader>
-              <AlertDialogTitle>Створення товару</AlertDialogTitle>
+              <AlertDialogTitle>{buttonTitle} товар</AlertDialogTitle>
             </AlertDialogHeader>
             <AlertDialogDescription>
-              <div className="max-h-[80svh] space-y-4 overflow-auto px-2">
+              <div className="max-h-[80svh] space-y-4 overflow-auto p-2">
                 <div>
                   <Label htmlFor="name">Назва</Label>
                   <Input
@@ -96,36 +155,85 @@ const CrateProduct = () => {
                     })}
                   />
                   {errors.name && (
-                    <p className="text-red-500">{errors.name.message}</p>
+                    <p className="text-red">{errors.name.message}</p>
                   )}
                 </div>
-                <Button>Додати зображення</Button>
-                <div className="flex justify-between">
-                  <div>
-                    <Label htmlFor="category">Категорія</Label>
-                    <Input
-                      id="category"
-                      {...register('category', {
-                        required: 'Це поле є обов’язковим',
-                      })}
-                    />
-                    {errors.category && (
-                      <p className="text-red-500">{errors.category.message}</p>
-                    )}
+                <div>
+                  <Label htmlFor="picture">Додати зображення</Label>
+                  <Input id="picture" type="file" />
+                </div>
+
+                <div className="flex w-full items-start gap-4">
+                  <div className="flex items-center justify-center gap-2">
+                    <div>
+                      <Label htmlFor="categoryInput">Категорія</Label>
+                      <Input
+                        id="categoryInput"
+                        list="category-suggestions"
+                        value={categoriesInput}
+                        onChange={(e) => setCategoriesInput(e.target.value)}
+                      />
+                    </div>
+                    <Button
+                      className="mt-5"
+                      type="button"
+                      onClick={() => {
+                        setCategories((prev: string[]) => [
+                          ...prev,
+                          categoriesInput,
+                        ])
+                        setCategoriesInput('')
+                      }}
+                    >
+                      Додати
+                    </Button>
                   </div>
+                  <datalist id="category-suggestions">
+                    {recommendations.category.map((category: string) => (
+                      <option key={category} value={category} />
+                    ))}
+                  </datalist>
                   <div>
-                    <Label htmlFor="menu">Меню</Label>
-                    <Input
-                      id="menu"
-                      {...register('menu', {
-                        required: 'Це поле є обов’язковим',
-                      })}
-                    />
-                    {errors.menu && (
-                      <p className="text-red-500">{errors.menu.message}</p>
+                    {categories.length > 0 && (
+                      <div className="flex flex-col gap-2">
+                        {categories.map((category, index) => (
+                          <div
+                            key={category}
+                            className="flex items-center justify-between gap-2 rounded-md border p-2 py-1"
+                          >
+                            <div>{category}</div>
+                            <Button
+                              variant="destructive"
+                              type="button"
+                              size="sm"
+                              onClick={() =>
+                                setCategories((prev: string[]) =>
+                                  prev.filter((_, i) => i !== index),
+                                )
+                              }
+                            >
+                              Видалити
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
                     )}
                   </div>
                 </div>
+
+                <div>
+                  <Label htmlFor="menu">Меню</Label>
+                  <Input
+                    id="menu"
+                    {...register('menu', {
+                      required: 'Це поле є обов’язковим',
+                    })}
+                  />
+                  {errors.menu && (
+                    <p className="text-red-500">{errors.menu.message}</p>
+                  )}
+                </div>
+
                 <div>
                   <Label htmlFor="composition">Склад</Label>
                   <Input
@@ -179,14 +287,14 @@ const CrateProduct = () => {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold">Вид</h2>
-                  {fields.map((field, index) => (
+                  {variableFields.map((field, index) => (
                     <div key={field.id} className="mt-2 space-y-2 border p-4">
                       <div>
-                        <Label htmlFor={`variables[${index}].weight`}>
+                        <Label htmlFor={`variables.${index}.weight`}>
                           Вага
                         </Label>
                         <Input
-                          id={`variables[${index}].weight`}
+                          id={`variables.${index}.weight`}
                           {...register(`variables.${index}.weight`, {
                             required: 'Це поле є обов’язковим',
                           })}
@@ -198,11 +306,9 @@ const CrateProduct = () => {
                         )}
                       </div>
                       <div>
-                        <Label htmlFor={`variables[${index}].price`}>
-                          Ціна
-                        </Label>
+                        <Label htmlFor={`variables.${index}.price`}>Ціна</Label>
                         <Input
-                          id={`variables[${index}].price`}
+                          id={`variables.${index}.price`}
                           {...register(`variables.${index}.price`, {
                             required: 'Це поле є обов’язковим',
                           })}
@@ -214,20 +320,20 @@ const CrateProduct = () => {
                         )}
                       </div>
                       <div>
-                        <Label htmlFor={`variables[${index}].newPrice`}>
+                        <Label htmlFor={`variables.${index}.newPrice`}>
                           Нова ціна
                         </Label>
                         <Input
-                          id={`variables[${index}].newPrice`}
+                          id={`variables.${index}.newPrice`}
                           {...register(`variables.${index}.newPrice`)}
                         />
                       </div>
                       <div>
-                        <Label htmlFor={`variables[${index}].currency`}>
+                        <Label htmlFor={`variables.${index}.currency`}>
                           Валюта
                         </Label>
                         <Input
-                          id={`variables[${index}].currency`}
+                          id={`variables.${index}.currency`}
                           {...register(`variables.${index}.currency`, {
                             required: 'Це поле є обов’язковим',
                           })}
@@ -239,11 +345,11 @@ const CrateProduct = () => {
                         )}
                       </div>
                       <div>
-                        <Label htmlFor={`variables[${index}].count`}>
+                        <Label htmlFor={`variables.${index}.count`}>
                           Кількість
                         </Label>
                         <Input
-                          id={`variables[${index}].count`}
+                          id={`variables.${index}.count`}
                           {...register(`variables.${index}.count`, {
                             required: 'Це поле є обов’язковим',
                           })}
@@ -256,7 +362,8 @@ const CrateProduct = () => {
                       </div>
                       <Button
                         variant="destructive"
-                        onClick={() => remove(index)}
+                        type="button"
+                        onClick={() => removeVariable(index)}
                       >
                         Видалити вид
                       </Button>
@@ -264,13 +371,14 @@ const CrateProduct = () => {
                   ))}
                   <Button
                     variant="secondary"
+                    type="button"
                     onClick={() =>
-                      append({
-                        weight: '',
-                        price: '',
-                        newPrice: '',
+                      appendVariable({
+                        weight: 0,
+                        price: 0,
+                        newPrice: 0,
                         currency: '',
-                        count: '',
+                        count: 0,
                       })
                     }
                     className="mt-2"
@@ -281,10 +389,24 @@ const CrateProduct = () => {
               </div>
             </AlertDialogDescription>
             <AlertDialogFooter>
-              <Button variant="outline" onClick={() => setIsOpen(false)}>
-                Скасувати
-              </Button>
-              <Button type="submit">Створити</Button>
+              <div className="flex w-full justify-between">
+                {product ? (
+                  <Button
+                    variant="destructive"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Видалити
+                  </Button>
+                ) : (
+                  <div />
+                )}
+                <div className="flex gap-2">
+                  <Button variant="outline" onClick={() => setIsOpen(false)}>
+                    Скасувати
+                  </Button>
+                  <Button type="submit">{buttonTitle}</Button>
+                </div>
+              </div>
             </AlertDialogFooter>
           </form>
         </AlertDialogContent>
@@ -293,4 +415,4 @@ const CrateProduct = () => {
   )
 }
 
-export default CrateProduct
+export default EditorProduct
