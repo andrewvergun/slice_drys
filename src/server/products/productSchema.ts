@@ -8,6 +8,12 @@ const productSchema = new mongoose.Schema(
       minlength: 1,
       maxlength: 255,
     },
+    description: {
+      type: String,
+      required: true,
+      minlength: 1,
+      maxlength: 1000,
+    },
     img: {
       type: String,
       required: true,
@@ -44,14 +50,40 @@ const productSchema = new mongoose.Schema(
         },
       },
     ],
+    nutritionalValue: {
+      squirrels: {
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 10,
+      },
+      fats: {
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 10,
+      },
+      carbohydrates: {
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 10,
+      },
+      energyValue: {
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 10,
+      },
+    },
     statusLabel: {
-      type: String,
+      type: [String],
       required: true,
       minlength: 1,
       maxlength: 255,
     },
     category: {
-      type: String,
+      type: [String],
       required: true,
       minlength: 1,
       maxlength: 255,
@@ -62,7 +94,7 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
     menu: {
-      type: String,
+      type: [String],
       required: true,
       minlength: 1,
       maxlength: 255,
@@ -70,12 +102,6 @@ const productSchema = new mongoose.Schema(
     composition: {
       type: [String],
       required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-      minlength: 1,
-      maxlength: 1000,
     },
   },
   { timestamps: true },

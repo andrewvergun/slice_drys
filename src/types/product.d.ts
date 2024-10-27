@@ -1,22 +1,30 @@
 interface IProduct {
-  id: number
+  id?: string
   name: string
-  img: string
+  description: string
+  img?: string
   variables: IVariableProduct[]
-  category: string
-  visited: number
-  menu: string
+  category: string[]
+  menu: string[]
   composition: string[]
-  description: number
+  statusLabel: string[]
+  visited?: number
+  nutritionalValue: INutritionalValue
+}
+
+interface INutritionalValue {
+  squirrels: string
+  fats: string
+  carbohydrates: string
+  energyValue: string
 }
 
 interface IVariableProduct {
-  id: number
+  id?: number
   weight: number
   price: number
   newPrice: number
   currency: string
   count: number
-  statusLabel: string
-  sold: number
+  sold?: number
 }
