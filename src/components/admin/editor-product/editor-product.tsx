@@ -41,7 +41,6 @@ const EditorProduct: FC<ICrateProduct> = ({
     handleSubmit,
     control,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm<IProduct>({
     defaultValues: {
@@ -61,6 +60,12 @@ const EditorProduct: FC<ICrateProduct> = ({
           count: 0,
         },
       ],
+      nutritionalValue: {
+        squirrels: '',
+        fats: '',
+        carbohydrates: '',
+        energyValue: '',
+      },
     },
   })
 
@@ -68,9 +73,16 @@ const EditorProduct: FC<ICrateProduct> = ({
   const [isOpen, setIsOpen] = useState(false)
 
   const [categoriesInput, setCategoriesInput] = useState<string>('')
-
   const [categories, setCategories] = useState<string[]>(
     product?.category || [],
+  )
+
+  const [menuInput, setMenuInput] = useState<string>('')
+  const [menu, setMenu] = useState<string[]>(product?.menu || [])
+
+  const [compositionInput, setCompositionInput] = useState<string>('')
+  const [composition, setComposition] = useState<string[]>(
+    product?.composition || [],
   )
 
   const {
@@ -87,6 +99,11 @@ const EditorProduct: FC<ICrateProduct> = ({
     if (product) {
       setValue('name', product.name)
       setValue('description', product.description)
+      setValue('statusLabel', product.statusLabel)
+
+      if (product.nutritionalValue) {
+        setValue('nutritionalValue', product.nutritionalValue)
+      }
 
       if (product.variables && product.variables.length > 0) {
         const variablesWithNumberWeights = product.variables.map(
@@ -166,6 +183,61 @@ const EditorProduct: FC<ICrateProduct> = ({
                 <div className="flex w-full items-start gap-4">
                   <div className="flex items-center justify-center gap-2">
                     <div>
+                      <Label htmlFor="categoryInput">Меню</Label>
+                      <Input
+                        id="categoryInput"
+                        list="category-suggestions"
+                        value={menuInput}
+                        onChange={(e) => setMenuInput(e.target.value)}
+                      />
+                    </div>
+                    <Button
+                      className="mt-5"
+                      type="button"
+                      onClick={() => {
+                        setMenu((prev: string[]) => [...prev, menuInput])
+                        setMenuInput('')
+                      }}
+                    >
+                      Додати
+                    </Button>
+                  </div>
+                  <datalist id="category-suggestions">
+                    {recommendations.menu.map((category: string) => (
+                      <option key={category} value={category} />
+                    ))}
+                  </datalist>
+                  <div>
+                    {menu.length > 0 && (
+                      <div className="flex flex-col gap-2">
+                        {menu.map((category, index) => (
+                          <div
+                            key={category}
+                            className="flex items-center justify-between gap-2 rounded-md border p-2 py-1"
+                          >
+                            <div>{category}</div>
+                            <Button
+                              variant="destructive"
+                              type="button"
+                              size="sm"
+                              onClick={() =>
+                                setMenu((prev: string[]) =>
+                                  prev.filter((_, i) => i !== index),
+                                )
+                              }
+                            >
+                              Видалити
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex w-full items-start gap-4">
+                  <div className="flex items-center justify-center gap-2">
+                    <div>
                       <Label htmlFor="categoryInput">Категорія</Label>
                       <Input
                         id="categoryInput"
@@ -221,32 +293,130 @@ const EditorProduct: FC<ICrateProduct> = ({
                   </div>
                 </div>
 
-                <div>
-                  <Label htmlFor="menu">Меню</Label>
-                  <Input
-                    id="menu"
-                    {...register('menu', {
-                      required: 'Це поле є обов’язковим',
-                    })}
-                  />
-                  {errors.menu && (
-                    <p className="text-red-500">{errors.menu.message}</p>
-                  )}
+                <div className="flex w-full items-start gap-4">
+                  <div className="flex items-center justify-center gap-2">
+                    <div>
+                      <Label htmlFor="categoryInput">Склад</Label>
+                      <Input
+                        id="categoryInput"
+                        list="category-suggestions"
+                        value={compositionInput}
+                        onChange={(e) => setCategoriesInput(e.target.value)}
+                      />
+                    </div>
+                    <Button
+                      className="mt-5"
+                      type="button"
+                      onClick={() => {
+                        setComposition((prev: string[]) => [
+                          ...prev,
+                          compositionInput,
+                        ])
+                        setCompositionInput('')
+                      }}
+                    >
+                      Додати
+                    </Button>
+                  </div>
+                  <datalist id="category-suggestions">
+                    {recommendations.composition.map((category: string) => (
+                      <option key={category} value={category} />
+                    ))}
+                  </datalist>
+                  <div>
+                    {composition.length > 0 && (
+                      <div className="flex flex-col gap-2">
+                        {composition.map((category, index) => (
+                          <div
+                            key={category}
+                            className="flex items-center justify-between gap-2 rounded-md border p-2 py-1"
+                          >
+                            <div>{category}</div>
+                            <Button
+                              variant="destructive"
+                              type="button"
+                              size="sm"
+                              onClick={() =>
+                                setComposition((prev: string[]) =>
+                                  prev.filter((_, i) => i !== index),
+                                )
+                              }
+                            >
+                              Видалити
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="composition">Склад</Label>
-                  <Input
-                    id="composition"
-                    placeholder="Розділяйте комами"
-                    {...register('composition', {
-                      required: 'Це поле є обов’язковим',
-                    })}
-                  />
-                  {errors.composition && (
-                    <p className="text-red-500">{errors.composition.message}</p>
-                  )}
+                  <h2 className="text-lg font-semibold">Харчова цінність</h2>
+                  <div className="space-y-2">
+                    <div>
+                      <Label htmlFor="nutritionalValue.squirrels">Білки</Label>
+                      <Input
+                        id="nutritionalValue.squirrels"
+                        {...register('nutritionalValue.squirrels', {
+                          required: 'Це поле є обов’язковим',
+                        })}
+                      />
+                      {errors.nutritionalValue?.squirrels && (
+                        <p className="text-red-500">
+                          {errors.nutritionalValue.squirrels.message}
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor="nutritionalValue.fats">Жири</Label>
+                      <Input
+                        id="nutritionalValue.fats"
+                        {...register('nutritionalValue.fats', {
+                          required: 'Це поле є обов’язковим',
+                        })}
+                      />
+                      {errors.nutritionalValue?.fats && (
+                        <p className="text-red-500">
+                          {errors.nutritionalValue.fats.message}
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor="nutritionalValue.carbohydrates">
+                        Вуглеводи
+                      </Label>
+                      <Input
+                        id="nutritionalValue.carbohydrates"
+                        {...register('nutritionalValue.carbohydrates', {
+                          required: 'Це поле є обов’язковим',
+                        })}
+                      />
+                      {errors.nutritionalValue?.carbohydrates && (
+                        <p className="text-red-500">
+                          {errors.nutritionalValue.carbohydrates.message}
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor="nutritionalValue.energyValue">
+                        Енергетична цінність
+                      </Label>
+                      <Input
+                        id="nutritionalValue.energyValue"
+                        {...register('nutritionalValue.energyValue', {
+                          required: 'Це поле є обов’язковим',
+                        })}
+                      />
+                      {errors.nutritionalValue?.energyValue && (
+                        <p className="text-red-500">
+                          {errors.nutritionalValue.energyValue.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </div>
+
                 <div>
                   <Label htmlFor="description">Опис</Label>
                   <Textarea
