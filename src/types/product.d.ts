@@ -1,5 +1,5 @@
 interface IProduct {
-  id?: string
+  _id?: string
   name: string
   description: string
   img?: string
@@ -20,7 +20,7 @@ interface INutritionalValue {
 }
 
 interface IVariableProduct {
-  id?: number
+  _id?: number
   weight: number
   price: number
   newPrice: number

@@ -12,10 +12,10 @@ export async function getProducts(
   'use server'
   try {
     await connectToDb()
-    const product = await Product.find().lean()
+    const product: IProduct[] = await Product.find().lean<IProduct[]>()
 
     return { success: true, product: product, message: 'Product created' }
   } catch (error) {
-    return { success: false, message: "Can't create product" }
+    return { success: false, product: [], message: "Can't create product" }
   }
 }
