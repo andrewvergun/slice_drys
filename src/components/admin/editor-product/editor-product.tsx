@@ -19,6 +19,7 @@ import { createProduct } from '@/server/products/create-product.server'
 import { toast } from '@/hooks/use-toast'
 import Loading from '@/components/admin/ui/loading'
 import { editProduct } from '@/server/products/eddit-product.server'
+import { useRouter } from 'next/navigation'
 
 interface ICrateProduct {
   buttonTitle: string
@@ -69,6 +70,8 @@ const EditorProduct: FC<ICrateProduct> = ({
     },
   })
 
+  const router = useRouter()
+
   const [loading, setLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -109,10 +112,10 @@ const EditorProduct: FC<ICrateProduct> = ({
         const variablesWithNumberWeights = product.variables.map(
           (variable) => ({
             ...variable,
-            weight: Number(variable.weight), // Конвертуємо строку в число
-            price: Number(variable.price), // Конвертуємо строку в число
-            newPrice: variable.newPrice ? Number(variable.newPrice) : 0, // Конвертуємо строку в число або залишаємо 0
-            count: Number(variable.count), // Конвертуємо строку в число
+            weight: Number(variable.weight),
+            price: Number(variable.price),
+            newPrice: variable.newPrice ? Number(variable.newPrice) : 0,
+            count: Number(variable.count),
           }),
         )
         replace(variablesWithNumberWeights)
@@ -121,12 +124,12 @@ const EditorProduct: FC<ICrateProduct> = ({
   }, [product, setValue, replace])
 
   const onSubmit = async (data: IProduct) => {
-    console.log('data', data)
     setLoading(true)
     let result: IResult
 
-    const categoryStrings = data.category.map((cat) => cat)
-    const newData = { ...data, category: categoryStrings }
+    const newData = { ...data, category: categories, menu, composition }
+
+    console.log('newData', newData)
 
     if (product?._id) {
       result = await editProduct(product._id, newData)
@@ -135,22 +138,21 @@ const EditorProduct: FC<ICrateProduct> = ({
     }
 
     if (result.success) {
-      console.log('Product created')
       setIsOpen(false)
       toast({
         title: result.message,
       })
     } else {
-      console.log('Product error')
       toast({
         title: result.message,
       })
     }
+    router.refresh()
     setLoading(false)
   }
 
   return (
-    <>
+    <div>
       {loading && <Loading />}
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialogTrigger asChild>
@@ -172,7 +174,7 @@ const EditorProduct: FC<ICrateProduct> = ({
                     })}
                   />
                   {errors.name && (
-                    <p className="text-red">{errors.name.message}</p>
+                    <span className="text-red">{errors.name.message}</span>
                   )}
                 </div>
                 <div>
@@ -301,7 +303,7 @@ const EditorProduct: FC<ICrateProduct> = ({
                         id="categoryInput"
                         list="category-suggestions"
                         value={compositionInput}
-                        onChange={(e) => setCategoriesInput(e.target.value)}
+                        onChange={(e) => setCompositionInput(e.target.value)}
                       />
                     </div>
                     <Button
@@ -358,28 +360,40 @@ const EditorProduct: FC<ICrateProduct> = ({
                       <Label htmlFor="nutritionalValue.squirrels">Білки</Label>
                       <Input
                         id="nutritionalValue.squirrels"
+                        list="squirrels-suggestions"
                         {...register('nutritionalValue.squirrels', {
                           required: 'Це поле є обов’язковим',
                         })}
                       />
+                      <datalist id="squirrels-suggestions">
+                        {recommendations.squirrels.map((category: string) => (
+                          <option key={category} value={category} />
+                        ))}
+                      </datalist>
                       {errors.nutritionalValue?.squirrels && (
-                        <p className="text-red-500">
+                        <span className="text-red">
                           {errors.nutritionalValue.squirrels.message}
-                        </p>
+                        </span>
                       )}
                     </div>
                     <div>
                       <Label htmlFor="nutritionalValue.fats">Жири</Label>
                       <Input
                         id="nutritionalValue.fats"
+                        list="fats-suggestions"
                         {...register('nutritionalValue.fats', {
                           required: 'Це поле є обов’язковим',
                         })}
                       />
+                      <datalist id="fats-suggestions">
+                        {recommendations.fats.map((category: string) => (
+                          <option key={category} value={category} />
+                        ))}
+                      </datalist>
                       {errors.nutritionalValue?.fats && (
-                        <p className="text-red-500">
+                        <span className="text-red">
                           {errors.nutritionalValue.fats.message}
-                        </p>
+                        </span>
                       )}
                     </div>
                     <div>
@@ -388,14 +402,22 @@ const EditorProduct: FC<ICrateProduct> = ({
                       </Label>
                       <Input
                         id="nutritionalValue.carbohydrates"
+                        list="carbohydrates-suggestions"
                         {...register('nutritionalValue.carbohydrates', {
                           required: 'Це поле є обов’язковим',
                         })}
                       />
+                      <datalist id="carbohydrates-suggestions">
+                        {recommendations.carbohydrates.map(
+                          (category: string) => (
+                            <option key={category} value={category} />
+                          ),
+                        )}
+                      </datalist>
                       {errors.nutritionalValue?.carbohydrates && (
-                        <p className="text-red-500">
+                        <span className="text-red">
                           {errors.nutritionalValue.carbohydrates.message}
-                        </p>
+                        </span>
                       )}
                     </div>
                     <div>
@@ -404,14 +426,20 @@ const EditorProduct: FC<ICrateProduct> = ({
                       </Label>
                       <Input
                         id="nutritionalValue.energyValue"
+                        list="energyValue-suggestions"
                         {...register('nutritionalValue.energyValue', {
                           required: 'Це поле є обов’язковим',
                         })}
                       />
+                      <datalist id="energyValue-suggestions">
+                        {recommendations.energyValue.map((category: string) => (
+                          <option key={category} value={category} />
+                        ))}
+                      </datalist>
                       {errors.nutritionalValue?.energyValue && (
-                        <p className="text-red-500">
+                        <span className="text-red">
                           {errors.nutritionalValue.energyValue.message}
-                        </p>
+                        </span>
                       )}
                     </div>
                   </div>
@@ -426,7 +454,9 @@ const EditorProduct: FC<ICrateProduct> = ({
                     })}
                   />
                   {errors.description && (
-                    <p className="text-red-500">{errors.description.message}</p>
+                    <span className="text-red">
+                      {errors.description.message}
+                    </span>
                   )}
                 </div>
                 <div>
@@ -470,9 +500,9 @@ const EditorProduct: FC<ICrateProduct> = ({
                           })}
                         />
                         {errors.variables?.[index]?.weight && (
-                          <p className="text-red-500">
+                          <span className="text-red">
                             {errors.variables[index].weight.message}
-                          </p>
+                          </span>
                         )}
                       </div>
                       <div>
@@ -484,9 +514,9 @@ const EditorProduct: FC<ICrateProduct> = ({
                           })}
                         />
                         {errors.variables?.[index]?.price && (
-                          <p className="text-red-500">
+                          <span className="text-red">
                             {errors.variables[index].price.message}
-                          </p>
+                          </span>
                         )}
                       </div>
                       <div>
@@ -509,9 +539,9 @@ const EditorProduct: FC<ICrateProduct> = ({
                           })}
                         />
                         {errors.variables?.[index]?.currency && (
-                          <p className="text-red-500">
+                          <span className="text-red">
                             {errors.variables[index].currency.message}
-                          </p>
+                          </span>
                         )}
                       </div>
                       <div>
@@ -525,9 +555,9 @@ const EditorProduct: FC<ICrateProduct> = ({
                           })}
                         />
                         {errors.variables?.[index]?.count && (
-                          <p className="text-red-500">
+                          <span className="text-red">
                             {errors.variables[index].count.message}
-                          </p>
+                          </span>
                         )}
                       </div>
                       <Button
@@ -581,7 +611,7 @@ const EditorProduct: FC<ICrateProduct> = ({
           </form>
         </AlertDialogContent>
       </AlertDialog>
-    </>
+    </div>
   )
 }
 

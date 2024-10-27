@@ -6,15 +6,29 @@ export async function findProductInfoItems() {
   'use server'
   try {
     await connectToDb()
-    const uniqueCompositions: any[] = await Product.distinct('composition')
-    const uniqueMenus: any[] = await Product.distinct('menu')
-    const uniqueCategories: any[] = await Product.distinct('category')
+    const uniqueCompositions: string[] = await Product.distinct('composition')
+    const uniqueMenus: string[] = await Product.distinct('menu')
+    const uniqueCategories: string[] = await Product.distinct('category')
+    const squirrels: string[] = await Product.distinct(
+      'nutritionalValue.squirrels',
+    )
+    const fats: string[] = await Product.distinct('nutritionalValue.fats')
+    const carbohydrates: string[] = await Product.distinct(
+      'nutritionalValue.carbohydrates',
+    )
+    const energyValue: string[] = await Product.distinct(
+      'nutritionalValue.energyValue',
+    )
 
     return {
       success: true,
       composition: uniqueCompositions,
       menu: uniqueMenus,
       category: uniqueCategories,
+      squirrels,
+      fats,
+      carbohydrates,
+      energyValue,
       message: 'Product created',
     }
   } catch (error) {
@@ -23,6 +37,10 @@ export async function findProductInfoItems() {
       composition: [],
       menu: [],
       category: [],
+      squirrels: [],
+      fats: [],
+      carbohydrates: [],
+      energyValue: [],
       message: "Can't create product",
     }
   }

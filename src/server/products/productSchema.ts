@@ -78,7 +78,7 @@ const productSchema = new mongoose.Schema(
     },
     statusLabel: {
       type: [String],
-      required: true,
+      required: false,
       minlength: 1,
       maxlength: 255,
     },

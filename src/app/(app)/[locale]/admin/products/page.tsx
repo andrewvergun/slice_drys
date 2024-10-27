@@ -11,7 +11,7 @@ interface IGetProduct {
 }
 
 export default async function Home() {
-  const products: IGetProduct = await getProducts(1, 10, [], [], [])
+  const products: IGetProduct = await getProducts(1, 100, [], [], [])
   const recommendations: IRecommendations = await findProductInfoItems()
 
   return (

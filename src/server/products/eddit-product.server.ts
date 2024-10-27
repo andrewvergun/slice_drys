@@ -1,7 +1,6 @@
 'use server'
 import { connectToDb } from '@/server/connectToDb'
 import { Product } from '@/server/products/productSchema'
-import cloudinary from '@/server/cloudinaryConfig'
 
 export async function editProduct(id: string, formData: IProduct, image?: any) {
   'use server'
@@ -9,21 +8,18 @@ export async function editProduct(id: string, formData: IProduct, image?: any) {
     await connectToDb()
     let imageUrl = ''
 
-    if (image) {
-      const upload = await cloudinary.uploader.upload(image, {
-        folder: 'products',
-      })
-      imageUrl = upload.secure_url
+    const existingProduct = await Product.findById(id)
+    if (!existingProduct)
+      return { success: false, message: 'Product not found' }
+
+    const updatedData = {
+      ...formData,
     }
 
-    /*
-     const productData = { ...formData, img: imageUrl }
-     */
-    const product = new Product(formData)
-    await product.save()
+    await Product.findByIdAndUpdate(id, updatedData, { new: true })
 
-    return { success: true, product: product, message: 'Product created' }
+    return { success: true, message: 'Product updated successfully' }
   } catch (error) {
-    return { success: false, message: "Can't create product" }
+    return { success: false, message: "Can't update product" }
   }
 }

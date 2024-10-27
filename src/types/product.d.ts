@@ -33,6 +33,10 @@ interface IRecommendations {
   success: boolean
   category: string[]
   composition: string[]
+  squirrels: string[]
+  fats: string[]
+  carbohydrates: string[]
+  energyValue: string[]
   menu: string[]
   message: string
 }
