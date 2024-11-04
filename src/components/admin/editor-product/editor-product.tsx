@@ -14,7 +14,7 @@ import { Label } from '@/components/admin/ui/label'
 import { Input } from '@/components/admin/ui/input'
 import { Textarea } from '@/components/admin/ui/textarea'
 import { Checkbox } from '@/components/admin/ui/checkbox'
-import { useFieldArray, useForm } from 'react-hook-form'
+import { useFieldArray, useForm, Controller } from 'react-hook-form'
 import { createProduct } from '@/server/products/create-product.server'
 import { toast } from '@/hooks/use-toast'
 import Loading from '@/components/admin/ui/loading'
@@ -127,14 +127,27 @@ const EditorProduct: FC<ICrateProduct> = ({
     setLoading(true)
     let result: IResult
 
-    const newData = { ...data, category: categories, menu, composition }
-
-    console.log('newData', newData)
+    const newData = {
+      ...data,
+      category: categories,
+      menu,
+      composition,
+      visited: 0,
+      variables: data.variables.map((variable) => ({
+        ...variable,
+        weight: Number(variable.weight),
+        price: Number(variable.price),
+        newPrice: variable.newPrice ? Number(variable.newPrice) : 0,
+        count: Number(variable.count),
+        sold: 0,
+      })),
+    }
 
     if (product?._id) {
       result = await editProduct(product._id, newData)
     } else {
-      result = await createProduct(newData)
+      console.log('work', newData)
+      result = await createProduct(newData, null)
     }
 
     if (result.success) {
@@ -459,32 +472,69 @@ const EditorProduct: FC<ICrateProduct> = ({
                     </span>
                   )}
                 </div>
-                <div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="new"
-                      value="new"
-                      {...register('statusLabel')}
-                    />
-                    <label htmlFor="new">Новинка</label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="sale"
-                      value="sale"
-                      {...register('statusLabel')}
-                    />
-                    <label htmlFor="sale">Акція</label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="top"
-                      value="top"
-                      {...register('statusLabel')}
-                    />
-                    <label htmlFor="top">Топ</label>
-                  </div>
-                </div>
+                <Controller
+                  name="statusLabel"
+                  control={control}
+                  defaultValue={product?.statusLabel || []}
+                  render={({ field }) => (
+                    <>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="new"
+                          value="new"
+                          checked={field.value?.includes('new') || false}
+                          onCheckedChange={(checked) => {
+                            const value = 'new'
+                            if (checked) {
+                              field.onChange([...field.value, value])
+                            } else {
+                              field.onChange(
+                                field.value.filter((v) => v !== value),
+                              )
+                            }
+                          }}
+                        />
+                        <label htmlFor="new">Новинка</label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="sale"
+                          value="sale"
+                          checked={field.value?.includes('sale') || false}
+                          onCheckedChange={(checked) => {
+                            const value = 'sale'
+                            if (checked) {
+                              field.onChange([...field.value, value])
+                            } else {
+                              field.onChange(
+                                field.value.filter((v) => v !== value),
+                              )
+                            }
+                          }}
+                        />
+                        <label htmlFor="sale">Акція</label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="top"
+                          value="top"
+                          checked={field.value?.includes('top') || false}
+                          onCheckedChange={(checked) => {
+                            const value = 'top'
+                            if (checked) {
+                              field.onChange([...field.value, value])
+                            } else {
+                              field.onChange(
+                                field.value.filter((v) => v !== value),
+                              )
+                            }
+                          }}
+                        />
+                        <label htmlFor="top">Топ</label>
+                      </div>
+                    </>
+                  )}
+                />
                 <div>
                   <h2 className="text-lg font-semibold">Вид</h2>
                   {variableFields.map((field, index) => (
@@ -494,6 +544,7 @@ const EditorProduct: FC<ICrateProduct> = ({
                           Вага
                         </Label>
                         <Input
+                          type={'number'}
                           id={`variables.${index}.weight`}
                           {...register(`variables.${index}.weight`, {
                             required: 'Це поле є обов’язковим',
@@ -508,6 +559,7 @@ const EditorProduct: FC<ICrateProduct> = ({
                       <div>
                         <Label htmlFor={`variables.${index}.price`}>Ціна</Label>
                         <Input
+                          type={'number'}
                           id={`variables.${index}.price`}
                           {...register(`variables.${index}.price`, {
                             required: 'Це поле є обов’язковим',
@@ -524,6 +576,7 @@ const EditorProduct: FC<ICrateProduct> = ({
                           Нова ціна
                         </Label>
                         <Input
+                          type={'number'}
                           id={`variables.${index}.newPrice`}
                           {...register(`variables.${index}.newPrice`)}
                         />
@@ -549,6 +602,7 @@ const EditorProduct: FC<ICrateProduct> = ({
                           Кількість
                         </Label>
                         <Input
+                          type={'number'}
                           id={`variables.${index}.count`}
                           {...register(`variables.${index}.count`, {
                             required: 'Це поле є обов’язковим',

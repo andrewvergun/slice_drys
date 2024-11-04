@@ -46,7 +46,7 @@ const productSchema = new mongoose.Schema(
         },
         sold: {
           type: Number,
-          required: true,
+          required: false,
         },
       },
     ],
@@ -90,7 +90,7 @@ const productSchema = new mongoose.Schema(
     },
     visited: {
       type: Number,
-      required: true,
+      required: false,
       default: 0,
     },
     menu: {

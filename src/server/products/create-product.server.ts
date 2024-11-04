@@ -16,13 +16,14 @@ export async function createProduct(formData: IProduct, image?: any) {
       imageUrl = upload.secure_url
     }
 
-    /*
-     const productData = { ...formData, img: imageUrl }
-     */
-    const product = new Product(formData)
+    const productData = { ...formData, img: 'test' }
+
+    const product = new Product(productData)
+    // const productSON = product.toObject()
+    console.log(product)
     await product.save()
 
-    return { success: true, product: product, message: 'Product created' }
+    return { success: true, message: 'Product created' }
   } catch (error) {
     return { success: false, message: "Can't create product" }
   }
