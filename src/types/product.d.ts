@@ -12,6 +12,30 @@ interface IProduct {
   nutritionalValue: INutritionalValue
 }
 
+interface IProductLocal {
+  _id?: string
+  name: ILocalizedString
+  description: ILocalizedString
+  img?: string
+  variables: IVariableProduct[]
+  category: ILocalizedStringArray
+  menu: ILocalizedStringArray
+  composition: ILocalizedStringArray
+  statusLabel: string[]
+  visited?: number
+  nutritionalValue: INutritionalValue
+}
+
+interface ILocalizedString {
+  en: string
+  uk: string
+}
+
+interface ILocalizedStringArray {
+  en: string[]
+  uk: string[]
+}
+
 interface INutritionalValue {
   squirrels: string
   fats: string
@@ -23,7 +47,7 @@ interface IVariableProduct {
   _id?: number
   weight: number
   price: number
-  newPrice: number
+  newPrice?: number
   currency: string
   count: number
   sold?: number
@@ -31,12 +55,30 @@ interface IVariableProduct {
 
 interface IRecommendations {
   success: boolean
-  category: string[]
-  composition: string[]
+  composition: {
+    en: string[]
+    uk: string[]
+  }
+  menu: {
+    en: string[]
+    uk: string[]
+  }
+  category: {
+    en: string[]
+    uk: string[]
+  }
+  currency: string[]
+  weight: string[]
   squirrels: string[]
   fats: string[]
   carbohydrates: string[]
   energyValue: string[]
-  menu: string[]
+  message: string
+}
+
+interface IGetProduct {
+  product: IProduct[]
+  productAll: IProductLocal[]
+  success: boolean
   message: string
 }

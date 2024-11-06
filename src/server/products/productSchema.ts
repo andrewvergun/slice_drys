@@ -3,16 +3,32 @@ import mongoose from 'mongoose'
 const productSchema = new mongoose.Schema(
   {
     name: {
-      type: String,
-      required: true,
-      minlength: 1,
-      maxlength: 255,
+      en: {
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 255,
+      },
+      uk: {
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 255,
+      },
     },
     description: {
-      type: String,
-      required: true,
-      minlength: 1,
-      maxlength: 1000,
+      en: {
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 255,
+      },
+      uk: {
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 255,
+      },
     },
     img: {
       type: String,
@@ -78,15 +94,24 @@ const productSchema = new mongoose.Schema(
     },
     statusLabel: {
       type: [String],
+      enum: ['new', 'sale', 'top'],
       required: false,
       minlength: 1,
       maxlength: 255,
     },
     category: {
-      type: [String],
-      required: true,
-      minlength: 1,
-      maxlength: 255,
+      en: {
+        type: [String],
+        required: true,
+        minlength: 1,
+        maxlength: 255,
+      },
+      uk: {
+        type: [String],
+        required: true,
+        minlength: 1,
+        maxlength: 255,
+      },
     },
     visited: {
       type: Number,
@@ -94,14 +119,32 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
     menu: {
-      type: [String],
-      required: true,
-      minlength: 1,
-      maxlength: 255,
+      en: {
+        type: [String],
+        required: true,
+        minlength: 1,
+        maxlength: 255,
+      },
+      uk: {
+        type: [String],
+        required: true,
+        minlength: 1,
+        maxlength: 255,
+      },
     },
     composition: {
-      type: [String],
-      required: true,
+      en: {
+        type: [String],
+        required: true,
+        minlength: 1,
+        maxlength: 255,
+      },
+      uk: {
+        type: [String],
+        required: true,
+        minlength: 1,
+        maxlength: 255,
+      },
     },
   },
   { timestamps: true },

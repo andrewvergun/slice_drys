@@ -4,14 +4,16 @@ import { getProducts } from '@/server/products/get-products.server'
 import { ProductList } from '@/components/admin/product-list/product-list'
 import { findProductInfoItems } from '@/server/products/find-product-info-items.server'
 
-interface IGetProduct {
-  product: IProduct[]
-  success: boolean
-  message: string
-}
-
-export default async function Home() {
-  const products: IGetProduct = await getProducts(1, 100, [], [], [])
+export default async function Home({ params: { locale } }: IPage) {
+  const products: IGetProduct = await getProducts(
+    1,
+    100,
+    [],
+    [],
+    [],
+    locale,
+    true,
+  )
   const recommendations: IRecommendations = await findProductInfoItems()
 
   return (
@@ -23,7 +25,7 @@ export default async function Home() {
           recommendations={recommendations}
         />
       </div>
-      <ProductList data={products.product} recommendations={recommendations} />
+      <ProductList data={products} recommendations={recommendations} />
     </div>
   )
 }

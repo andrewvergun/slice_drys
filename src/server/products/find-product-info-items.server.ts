@@ -6,9 +6,18 @@ export async function findProductInfoItems() {
   'use server'
   try {
     await connectToDb()
-    const uniqueCompositions: string[] = await Product.distinct('composition')
-    const uniqueMenus: string[] = await Product.distinct('menu')
-    const uniqueCategories: string[] = await Product.distinct('category')
+
+    const uniqueCompositionsEn: string[] =
+      await Product.distinct('composition.en')
+    const uniqueCompositionsUk: string[] =
+      await Product.distinct('composition.en')
+
+    const uniqueMenusEn: string[] = await Product.distinct('menu.en')
+    const uniqueMenusUk: string[] = await Product.distinct('menu.uk')
+
+    const uniqueCategoriesEn: string[] = await Product.distinct('category.en')
+    const uniqueCategoriesUk: string[] = await Product.distinct('category.uk')
+
     const squirrels: string[] = await Product.distinct(
       'nutritionalValue.squirrels',
     )
@@ -20,11 +29,26 @@ export async function findProductInfoItems() {
       'nutritionalValue.energyValue',
     )
 
+    const currency: string[] = await Product.distinct('currency')
+
+    const weight: string[] = await Product.distinct('weight')
+
     return {
       success: true,
-      composition: uniqueCompositions,
-      menu: uniqueMenus,
-      category: uniqueCategories,
+      composition: {
+        en: uniqueCompositionsEn,
+        uk: uniqueCompositionsUk,
+      },
+      menu: {
+        en: uniqueMenusEn,
+        uk: uniqueMenusUk,
+      },
+      category: {
+        en: uniqueCategoriesEn,
+        uk: uniqueCategoriesUk,
+      },
+      currency,
+      weight,
       squirrels,
       fats,
       carbohydrates,
@@ -34,9 +58,20 @@ export async function findProductInfoItems() {
   } catch (error) {
     return {
       success: false,
-      composition: [],
-      menu: [],
-      category: [],
+      composition: {
+        en: [],
+        uk: [],
+      },
+      menu: {
+        en: [],
+        uk: [],
+      },
+      category: {
+        en: [],
+        uk: [],
+      },
+      currency: [],
+      weight: [],
       squirrels: [],
       fats: [],
       carbohydrates: [],

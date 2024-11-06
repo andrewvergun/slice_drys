@@ -23,7 +23,7 @@ import { useRouter } from 'next/navigation'
 
 interface ICrateProduct {
   buttonTitle: string
-  product?: IProduct
+  product?: IProductLocal
   recommendations: IRecommendations
 }
 
@@ -43,13 +43,13 @@ const EditorProduct: FC<ICrateProduct> = ({
     control,
     setValue,
     formState: { errors },
-  } = useForm<IProduct>({
+  } = useForm<IProductLocal>({
     defaultValues: {
-      name: '',
-      description: '',
-      category: [],
-      menu: [],
-      composition: [],
+      name: { en: '', uk: '' },
+      description: { en: '', uk: '' },
+      category: { en: [], uk: [] },
+      menu: { en: [], uk: [] },
+      composition: { en: [], uk: [] },
       img: '',
       statusLabel: [],
       variables: [
@@ -75,25 +75,30 @@ const EditorProduct: FC<ICrateProduct> = ({
   const [loading, setLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
-  const [categoriesInput, setCategoriesInput] = useState<string>('')
-  const [categories, setCategories] = useState<string[]>(
-    product?.category || [],
-  )
+  const [categoriesInput, setCategoriesInput] = useState({ en: '', uk: '' })
+  const [categories, setCategories] = useState({
+    en: product?.category?.en || [],
+    uk: product?.category?.uk || [],
+  })
 
-  const [menuInput, setMenuInput] = useState<string>('')
-  const [menu, setMenu] = useState<string[]>(product?.menu || [])
+  const [menuInput, setMenuInput] = useState({ en: '', uk: '' })
+  const [menu, setMenu] = useState({
+    en: product?.menu?.en || [],
+    uk: product?.menu?.uk || [],
+  })
 
-  const [compositionInput, setCompositionInput] = useState<string>('')
-  const [composition, setComposition] = useState<string[]>(
-    product?.composition || [],
-  )
+  const [compositionInput, setCompositionInput] = useState({ en: '', uk: '' })
+  const [composition, setComposition] = useState({
+    en: product?.composition?.en || [],
+    uk: product?.composition?.uk || [],
+  })
 
   const {
     fields: variableFields,
     append: appendVariable,
     remove: removeVariable,
     replace,
-  } = useFieldArray<IProduct, 'variables'>({
+  } = useFieldArray<IProductLocal, 'variables'>({
     control,
     name: 'variables',
   })
@@ -123,7 +128,7 @@ const EditorProduct: FC<ICrateProduct> = ({
     }
   }, [product, setValue, replace])
 
-  const onSubmit = async (data: IProduct) => {
+  const onSubmit = async (data: IProductLocal) => {
     setLoading(true)
     let result: IResult
 
@@ -178,68 +183,115 @@ const EditorProduct: FC<ICrateProduct> = ({
             </AlertDialogHeader>
             <AlertDialogDescription>
               <div className="max-h-[80svh] space-y-4 overflow-auto p-2">
-                <div>
-                  <Label htmlFor="name">Назва</Label>
-                  <Input
-                    id="name"
-                    {...register('name', {
-                      required: 'Це поле є обов’язковим',
-                    })}
-                  />
-                  {errors.name && (
-                    <span className="text-red">{errors.name.message}</span>
-                  )}
+                <div className="flex justify-between">
+                  <div>
+                    <Label htmlFor="name-uk">Назва (UK)</Label>
+                    <Input
+                      id="name-uk"
+                      {...register('name.uk', {
+                        required: 'Це поле є обов’язковим',
+                      })}
+                    />
+                    {errors.name?.uk && (
+                      <span className="text-red">{errors.name.uk.message}</span>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="name-en">Назва (EN)</Label>
+                    <Input
+                      id="name-en"
+                      {...register('name.en', {
+                        required: 'Це поле є обов’язковим',
+                      })}
+                    />
+                    {errors.name?.en && (
+                      <span className="text-red">{errors.name.en.message}</span>
+                    )}
+                  </div>
                 </div>
+
                 <div>
                   <Label htmlFor="picture">Додати зображення</Label>
                   <Input id="picture" type="file" />
                 </div>
 
-                <div className="flex w-full items-start gap-4">
-                  <div className="flex items-center justify-center gap-2">
-                    <div>
-                      <Label htmlFor="categoryInput">Меню</Label>
-                      <Input
-                        id="categoryInput"
-                        list="category-suggestions"
-                        value={menuInput}
-                        onChange={(e) => setMenuInput(e.target.value)}
-                      />
+                <div>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex gap-2">
+                      <div>
+                        <Label htmlFor="menuInputUk">Меню (UK)</Label>
+                        <Input
+                          id="menuInputUk"
+                          list="menu-suggestions-uk"
+                          value={menuInput.uk}
+                          onChange={(e) =>
+                            setMenuInput((prev) => ({
+                              ...prev,
+                              uk: e.target.value,
+                            }))
+                          }
+                        />
+                        <datalist id="menu-suggestions-uk">
+                          {recommendations.menu.uk.map((item: string) => (
+                            <option key={item} value={item} />
+                          ))}
+                        </datalist>
+                      </div>
+                      <div>
+                        <Label htmlFor="menuInputEn">Menu (EN)</Label>
+                        <Input
+                          id="menuInputEn"
+                          list="menu-suggestions-en"
+                          value={menuInput.en}
+                          onChange={(e) =>
+                            setMenuInput((prev) => ({
+                              ...prev,
+                              en: e.target.value,
+                            }))
+                          }
+                        />
+                        <datalist id="menu-suggestions-en">
+                          {recommendations.menu.en.map((item: string) => (
+                            <option key={item} value={item} />
+                          ))}
+                        </datalist>
+                      </div>
+                      <Button
+                        className="mt-5"
+                        type="button"
+                        onClick={() => {
+                          setMenu((prev) => ({
+                            en: [...prev.en, menuInput.en],
+                            uk: [...prev.uk, menuInput.uk],
+                          }))
+                          setMenuInput({ en: '', uk: '' })
+                        }}
+                      >
+                        Додати
+                      </Button>
                     </div>
-                    <Button
-                      className="mt-5"
-                      type="button"
-                      onClick={() => {
-                        setMenu((prev: string[]) => [...prev, menuInput])
-                        setMenuInput('')
-                      }}
-                    >
-                      Додати
-                    </Button>
-                  </div>
-                  <datalist id="category-suggestions">
-                    {recommendations.menu.map((category: string) => (
-                      <option key={category} value={category} />
-                    ))}
-                  </datalist>
-                  <div>
-                    {menu.length > 0 && (
-                      <div className="flex flex-col gap-2">
-                        {menu.map((category, index) => (
+
+                    {menu.uk.length > 0 && (
+                      <div className="mt-4">
+                        {menu.uk.map((itemUk, index) => (
                           <div
-                            key={category}
+                            key={index}
                             className="flex items-center justify-between gap-2 rounded-md border p-2 py-1"
                           >
-                            <div>{category}</div>
+                            <div>
+                              uk: {itemUk} / en: {menu.en[index]}
+                            </div>
                             <Button
                               variant="destructive"
                               type="button"
                               size="sm"
-                              onClick={() =>
-                                setMenu((prev: string[]) =>
-                                  prev.filter((_, i) => i !== index),
-                                )
-                              }
+                              onClick={() => {
+                                setMenu((prev) => ({
+                                  en: prev.en.filter((_, i) => i !== index),
+                                  uk: prev.uk.filter((_, i) => i !== index),
+                                }))
+                              }}
                             >
                               Видалити
                             </Button>
@@ -250,54 +302,83 @@ const EditorProduct: FC<ICrateProduct> = ({
                   </div>
                 </div>
 
-                <div className="flex w-full items-start gap-4">
-                  <div className="flex items-center justify-center gap-2">
-                    <div>
-                      <Label htmlFor="categoryInput">Категорія</Label>
-                      <Input
-                        id="categoryInput"
-                        list="category-suggestions"
-                        value={categoriesInput}
-                        onChange={(e) => setCategoriesInput(e.target.value)}
-                      />
+                <div>
+                  <h3>Категорії</h3>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex gap-2">
+                      <div>
+                        <Label htmlFor="categoryInputUk">Категорія (UK)</Label>
+                        <Input
+                          id="categoryInputUk"
+                          list="category-suggestions-uk"
+                          value={categoriesInput.uk}
+                          onChange={(e) =>
+                            setCategoriesInput((prev) => ({
+                              ...prev,
+                              uk: e.target.value,
+                            }))
+                          }
+                        />
+                        <datalist id="category-suggestions-uk">
+                          {recommendations.category.uk.map((item: string) => (
+                            <option key={item} value={item} />
+                          ))}
+                        </datalist>
+                      </div>
+                      <div>
+                        <Label htmlFor="categoryInputEn">Category (EN)</Label>
+                        <Input
+                          id="categoryInputEn"
+                          list="category-suggestions-en"
+                          value={categoriesInput.en}
+                          onChange={(e) =>
+                            setCategoriesInput((prev) => ({
+                              ...prev,
+                              en: e.target.value,
+                            }))
+                          }
+                        />
+                        <datalist id="category-suggestions-en">
+                          {recommendations.category.en.map((item: string) => (
+                            <option key={item} value={item} />
+                          ))}
+                        </datalist>
+                      </div>
+                      <Button
+                        className="mt-6"
+                        type="button"
+                        onClick={() => {
+                          setCategories((prev) => ({
+                            en: [...prev.en, categoriesInput.en],
+                            uk: [...prev.uk, categoriesInput.uk],
+                          }))
+                          setCategoriesInput({ en: '', uk: '' })
+                        }}
+                      >
+                        Додати
+                      </Button>
                     </div>
-                    <Button
-                      className="mt-5"
-                      type="button"
-                      onClick={() => {
-                        setCategories((prev: string[]) => [
-                          ...prev,
-                          categoriesInput,
-                        ])
-                        setCategoriesInput('')
-                      }}
-                    >
-                      Додати
-                    </Button>
-                  </div>
-                  <datalist id="category-suggestions">
-                    {recommendations.category.map((category: string) => (
-                      <option key={category} value={category} />
-                    ))}
-                  </datalist>
-                  <div>
-                    {categories.length > 0 && (
-                      <div className="flex flex-col gap-2">
-                        {categories.map((category, index) => (
+
+                    {categories.uk.length > 0 && (
+                      <div className="mt-4">
+                        {categories.uk.map((itemUk, index) => (
                           <div
-                            key={category}
+                            key={index}
                             className="flex items-center justify-between gap-2 rounded-md border p-2 py-1"
                           >
-                            <div>{category}</div>
+                            <div>
+                              uk: {itemUk} / en: {categories.en[index]}
+                            </div>
                             <Button
                               variant="destructive"
                               type="button"
                               size="sm"
-                              onClick={() =>
-                                setCategories((prev: string[]) =>
-                                  prev.filter((_, i) => i !== index),
-                                )
-                              }
+                              onClick={() => {
+                                setCategories((prev) => ({
+                                  en: prev.en.filter((_, i) => i !== index),
+                                  uk: prev.uk.filter((_, i) => i !== index),
+                                }))
+                              }}
                             >
                               Видалити
                             </Button>
@@ -308,54 +389,89 @@ const EditorProduct: FC<ICrateProduct> = ({
                   </div>
                 </div>
 
-                <div className="flex w-full items-start gap-4">
-                  <div className="flex items-center justify-center gap-2">
-                    <div>
-                      <Label htmlFor="categoryInput">Склад</Label>
-                      <Input
-                        id="categoryInput"
-                        list="category-suggestions"
-                        value={compositionInput}
-                        onChange={(e) => setCompositionInput(e.target.value)}
-                      />
+                <div>
+                  <h3>Склад</h3>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex gap-2">
+                      <div>
+                        <Label htmlFor="compositionInputUk">Склад (UK)</Label>
+                        <Input
+                          id="compositionInputUk"
+                          list="composition-suggestions-uk"
+                          value={compositionInput.uk}
+                          onChange={(e) =>
+                            setCompositionInput((prev) => ({
+                              ...prev,
+                              uk: e.target.value,
+                            }))
+                          }
+                        />
+                        <datalist id="composition-suggestions-uk">
+                          {recommendations.composition.uk.map(
+                            (item: string) => (
+                              <option key={item} value={item} />
+                            ),
+                          )}
+                        </datalist>
+                      </div>
+                      <div>
+                        <Label htmlFor="compositionInputEn">
+                          Composition (EN)
+                        </Label>
+                        <Input
+                          id="compositionInputEn"
+                          list="composition-suggestions-en"
+                          value={compositionInput.en}
+                          onChange={(e) =>
+                            setCompositionInput((prev) => ({
+                              ...prev,
+                              en: e.target.value,
+                            }))
+                          }
+                        />
+                        <datalist id="composition-suggestions-en">
+                          {recommendations.composition.en.map(
+                            (item: string) => (
+                              <option key={item} value={item} />
+                            ),
+                          )}
+                        </datalist>
+                      </div>
+                      <Button
+                        className="mt-6"
+                        type="button"
+                        onClick={() => {
+                          setComposition((prev) => ({
+                            en: [...prev.en, compositionInput.en],
+                            uk: [...prev.uk, compositionInput.uk],
+                          }))
+                          setCompositionInput({ en: '', uk: '' })
+                        }}
+                      >
+                        Додати
+                      </Button>
                     </div>
-                    <Button
-                      className="mt-5"
-                      type="button"
-                      onClick={() => {
-                        setComposition((prev: string[]) => [
-                          ...prev,
-                          compositionInput,
-                        ])
-                        setCompositionInput('')
-                      }}
-                    >
-                      Додати
-                    </Button>
-                  </div>
-                  <datalist id="category-suggestions">
-                    {recommendations.composition.map((category: string) => (
-                      <option key={category} value={category} />
-                    ))}
-                  </datalist>
-                  <div>
-                    {composition.length > 0 && (
-                      <div className="flex flex-col gap-2">
-                        {composition.map((category, index) => (
+
+                    {composition.uk.length > 0 && (
+                      <div className="mt-4">
+                        {composition.uk.map((itemUk, index) => (
                           <div
-                            key={category}
+                            key={index}
                             className="flex items-center justify-between gap-2 rounded-md border p-2 py-1"
                           >
-                            <div>{category}</div>
+                            <div>
+                              uk: {itemUk} / en: {composition.en[index]}
+                            </div>
                             <Button
                               variant="destructive"
                               type="button"
                               size="sm"
-                              onClick={() =>
-                                setComposition((prev: string[]) =>
-                                  prev.filter((_, i) => i !== index),
-                                )
-                              }
+                              onClick={() => {
+                                setComposition((prev) => ({
+                                  en: prev.en.filter((_, i) => i !== index),
+                                  uk: prev.uk.filter((_, i) => i !== index),
+                                }))
+                              }}
                             >
                               Видалити
                             </Button>
@@ -459,19 +575,35 @@ const EditorProduct: FC<ICrateProduct> = ({
                 </div>
 
                 <div>
-                  <Label htmlFor="description">Опис</Label>
+                  <Label htmlFor="description-uk">Опис (UK)</Label>
                   <Textarea
-                    id="description"
-                    {...register('description', {
+                    id="description-uk"
+                    {...register('description.uk', {
                       required: 'Це поле є обов’язковим',
                     })}
                   />
-                  {errors.description && (
+                  {errors.description?.uk && (
                     <span className="text-red">
-                      {errors.description.message}
+                      {errors.description.uk.message}
                     </span>
                   )}
                 </div>
+
+                <div>
+                  <Label htmlFor="description-en">Description (EN)</Label>
+                  <Textarea
+                    id="description-en"
+                    {...register('description.en', {
+                      required: 'This field is required',
+                    })}
+                  />
+                  {errors.description?.en && (
+                    <span className="text-red">
+                      {errors.description.en.message}
+                    </span>
+                  )}
+                </div>
+
                 <Controller
                   name="statusLabel"
                   control={control}

@@ -3,7 +3,7 @@ import { connectToDb } from '@/server/connectToDb'
 import { Product } from '@/server/products/productSchema'
 import cloudinary from '@/server/cloudinaryConfig'
 
-export async function createProduct(formData: IProduct, image?: any) {
+export async function createProduct(formData: IProductLocal, image?: any) {
   'use server'
   try {
     await connectToDb()

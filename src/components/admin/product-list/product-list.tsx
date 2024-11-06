@@ -37,7 +37,7 @@ import { FC } from 'react'
 import EditorProduct from '@/components/admin/editor-product/editor-product'
 
 interface IProductList {
-  data: IProduct[]
+  data: IGetProduct
   recommendations: IRecommendations
 }
 
@@ -168,11 +168,13 @@ export const ProductList: FC<IProductList> = ({ data, recommendations }) => {
       header: '',
       cell: ({ row }) => {
         const product = row.original as IProduct
+        const id = product._id
+        const fineProduct = data.productAll.find((item) => item._id === id)
         return (
           <>
             <EditorProduct
               buttonTitle="редагувати"
-              product={product}
+              product={fineProduct}
               recommendations={recommendations}
             />
           </>
@@ -190,7 +192,7 @@ export const ProductList: FC<IProductList> = ({ data, recommendations }) => {
   const [rowSelection, setRowSelection] = React.useState({})
 
   const table = useReactTable({
-    data,
+    data: data.product,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

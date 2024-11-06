@@ -2,7 +2,11 @@
 import { connectToDb } from '@/server/connectToDb'
 import { Product } from '@/server/products/productSchema'
 
-export async function editProduct(id: string, formData: IProduct, image?: any) {
+export async function editProduct(
+  id: string,
+  formData: IProductLocal,
+  image?: any,
+) {
   'use server'
   try {
     await connectToDb()
