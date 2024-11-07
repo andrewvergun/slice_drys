@@ -7,7 +7,6 @@ import {
   MenuItems,
   MenuSection,
   MenuSeparator,
-  Input,
   Transition,
 } from '@headlessui/react'
 import { useState } from 'react'
@@ -59,7 +58,10 @@ export default function HamburgerMenu({
         leaveFrom="translate-x-0 rotate-y-0"
         leaveTo="-translate-x-full rotate-y-90"
       >
-        <MenuItems className="absolute -top-[30px] left-0 z-50 min-h-screen w-full bg-[#E4E4E4] px-[12px] py-[32px]">
+        <MenuItems
+          anchor="bottom"
+          className="absolute !top-[30px] left-0 !z-50 min-h-screen w-full bg-[#E4E4E4] px-[12px] py-[32px]"
+        >
           <MenuSection className="grid grid-cols-[2fr_1fr_1fr_auto] items-center px-5">
             <MenuItem>
               <Button onClick={closeMenu} type={'button'} variant={'icons'}>

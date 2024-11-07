@@ -1,7 +1,5 @@
 import type { Config } from 'tailwindcss'
 
-import colors from 'tailwindcss/colors'
-
 const constants = {
   white: '#FBFBFB',
   black: '#0F0F0F',

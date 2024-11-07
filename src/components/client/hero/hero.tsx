@@ -61,8 +61,8 @@ export const Hero = () => {
   })
 
   return (
-    <div className="hidden">
-      <h1 ref={titleRef} className="mt-11 text-[64px] font-bold">
+    <div className="mx-auto max-w-[1280px] px-[20px]">
+      <h1 className="mt-11 text-[64px] font-bold">
         {sliders[currentIndex].title}
       </h1>
       <nav className="mt-[50px] flex justify-around">
@@ -71,7 +71,7 @@ export const Hero = () => {
             <Link
               href={item.link}
               className={cn(
-                'relative z-20 flex size-[180px] items-center justify-center rounded-full text-[20px] text-[#9B9B9B] transition-colors duration-300',
+                'relative z-10 flex size-[180px] items-center justify-center rounded-full text-[20px] text-[#9B9B9B] transition-colors duration-300',
                 index === 0 && 'absolute -ml-[12px] mt-[50px] rotate-[-42deg]',
                 index === 1 &&
                   'absolute -ml-[102px] -mt-[75px] rotate-[-17deg]',
@@ -135,10 +135,15 @@ export const Hero = () => {
         ))}
       </nav>
       <div className="relative mx-auto h-[552px] w-full max-w-[1104px]">
-        <Image src="/icons/slider-line.svg" fill={true} alt="slider" />
+        <Image
+          src="/icons/slider-line.svg"
+          fill={true}
+          alt="slider"
+          className="-z-20"
+        />
         <Image
           src="/icons/slider-line-down.svg"
-          className="mt-[33px] px-[62px]"
+          className="-z-20 mt-[33px] px-[62px]"
           fill={true}
           alt="slider"
         />
