@@ -32,7 +32,7 @@ export default function HamburgerMenu({
     <Menu>
       <MenuButton
         onClick={() => setIsOpen(!isOpen)}
-        className="hidden duration-300 hover:scale-110 lap:fixed lap:left-5 lap:top-8 lap:z-50 lap:block"
+        className="block duration-300 hover:scale-110 lg:hidden lap:fixed lap:left-5 lap:top-8 lap:z-50"
       >
         <Image
           src={'/icons/burger.svg'}

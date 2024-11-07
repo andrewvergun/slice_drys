@@ -2,32 +2,42 @@
 import { FC } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { cn } from '@/utils/cn'
+import { useLocale } from 'next-intl'
 
-const LocaleChange: FC = () => {
-  const path: string = usePathname()
+interface LocaleChangeP {
+  className?: string
+}
+
+const LocaleChange: FC<LocaleChangeP> = ({ className }) => {
+  const locale = useLocale()
+  const path = usePathname()
+
+  const getLocalizedPath = (newLocale: string) => {
+    const pathWithoutLocale = path.replace(/^\/(uk|en)/, '')
+    return `/${newLocale}${pathWithoutLocale}`
+  }
 
   return (
-    <div className="text-sm">
+    <div className={cn('flex items-center text-sm', className)}>
       <Link
-        href="/uk"
-        className={
-          path === '/uk'
-            ? 'text-red'
-            : 'inline-block font-normal duration-300 hover:scale-110'
-        }
+        href={getLocalizedPath('uk')}
+        className={cn(
+          'inline-block text-[16px] font-normal duration-300 hover:scale-110',
+          locale === 'uk' && 'text-red',
+        )}
       >
         UK
       </Link>
 
-      <span className="text-xl font-semibold">&#8201;/&#8201;</span>
+      <span className="-mt-[2px] text-xl font-semibold">&#8201;/&#8201;</span>
 
       <Link
-        href="/en"
-        className={
-          path === '/en'
-            ? 'text-red'
-            : 'inline-block font-normal duration-300 hover:scale-110'
-        }
+        href={getLocalizedPath('en')}
+        className={cn(
+          'inline-block text-[16px] font-normal duration-300 hover:scale-110',
+          locale === 'en' && 'text-red',
+        )}
       >
         EN
       </Link>

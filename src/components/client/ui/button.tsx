@@ -9,7 +9,7 @@ const buttonStyles = cva(
       variant: {
         default: 'bg-black text-white',
         button:
-          'bg-black text-white mr-5 h-[50px] w-[180px] hover:skew-x-[-10deg] hover:bg-red hover:font-semibold lap:mr-0 lap:h-[38px] lap:w-[88px]',
+          'bg-black text-white lg:h-[50px] lg:w-[180px] lg:!text-[20px] hover:skew-x-[-10deg] hover:bg-red hover:font-semibold h-[30px] w-[88px] !text-[14px] font-medium',
         icons:
           'flex items-center bg-transparent hover:scale-110 transition-transform duration-300 ease-in-out hover:bg-gray-200 max-w-max',
       },

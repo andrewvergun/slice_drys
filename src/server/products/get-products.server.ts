@@ -64,7 +64,7 @@ export async function getProducts(
     const allProducts: IProductLocal[] = fetchAll
       ? ((await Product.find()
           .sort({ createdAt: -1 })
-          .lean()) as IProductLocal[])
+          .lean()) as unknown as IProductLocal[])
       : []
 
     return {

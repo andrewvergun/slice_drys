@@ -31,17 +31,15 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={`${poppins.variable}`}>
-      <body>
-        <div className="mx-auto max-w-[1440px]">
-          <NextIntlClientProvider messages={messages}>
-            <Header
-              headerLinks={headerLinksData}
-              hamburgerLinksOther={hamburgerLinksOtherData}
-            />
-            {children}
-          </NextIntlClientProvider>
-        </div>
-      </body>
+      <NextIntlClientProvider messages={messages}>
+        <body>
+          <Header
+            headerLinks={headerLinksData}
+            hamburgerLinksOther={hamburgerLinksOtherData}
+          />
+          {children}
+        </body>
+      </NextIntlClientProvider>
     </html>
   )
 }

@@ -11,8 +11,8 @@ import { useLocale } from 'next-intl'
 import Button from '@/components/client/ui/button'
 import LocaleChange from '@/components/client/locale-change/locale-change'
 import Cart from '@/components/client/card/cart'
-
-gsap.registerPlugin(useGSAP)
+import Search from '@/components/client/search/search'
+import NumberCall from '@/components/client/number-call/number-call'
 
 interface HeaderP {
   headerLinks: ILink[]
@@ -30,8 +30,7 @@ const Header: FC<HeaderP> = ({ headerLinks, hamburgerLinksOther }) => {
       {
         yPercent: 0,
         opacity: 1,
-        delay: 0.2,
-        duration: 0.8,
+        duration: 0.5,
         ease: 'power3.out',
       },
     )
@@ -42,29 +41,22 @@ const Header: FC<HeaderP> = ({ headerLinks, hamburgerLinksOther }) => {
       <Info title="Безкоштовна доставка від 1000 грн." />
       <div
         ref={headerRef}
-        className="mx-auto mt-8 box-border max-w-[1240px] opacity-0"
+        className="mx-auto mt-6 box-border flex max-w-[1280px] justify-between px-5 opacity-0"
       >
-        <div className="grid h-40 grid-cols-[auto_2fr_1fr_1fr] grid-rows-2 border-b border-[#e4e4e4] pb-6 lap:h-24 lap:grid-cols-3 lap:px-5 lap:pb-[10px]">
-          <nav className="grid grid-cols-4 items-center justify-items-center gap-x-2 text-xl lap:hidden">
-            {headerLinks?.map((link: ILink) => {
-              return (
-                <Link
-                  key={link.id}
-                  href={`${local}/${link.href}`}
-                  className="block px-5 py-2 duration-300 hover:text-red"
-                >
-                  {link.name}
-                </Link>
-              )
-            })}
+        <div>
+          <nav className="hidden gap-3 lg:flex">
+            {headerLinks?.map((link: ILink) => (
+              <Link
+                key={link.id}
+                href={`/${local}/${link.href}`}
+                className="p-3 text-[20px] transition-all duration-300 ease-in-out hover:scale-105 hover:text-red"
+              >
+                {link.name}
+              </Link>
+            ))}
           </nav>
-
-          <HamburgerMenu
-            headerLinks={headerLinks}
-            hamburgerLinksOther={hamburgerLinksOther}
-          />
-
-          <div className="row-start-2 flex justify-end gap-x-5 pr-6 lap:hidden">
+          <HamburgerMenu headerLinks={headerLinks} hamburgerLinksOther={[]} />
+          <div className="mt-5 hidden justify-end gap-x-5 pr-3 lg:flex">
             <Button variant={'icons'}>
               <Image
                 src={'/icons/facebook.svg'}
@@ -84,64 +76,52 @@ const Header: FC<HeaderP> = ({ headerLinks, hamburgerLinksOther }) => {
               />
             </Button>
           </div>
-
-          <div className="row-start-1 row-end-3 mr-[22%] self-end justify-self-end lap:col-start-2 lap:mr-0 lap:w-[64px] lap:justify-self-center">
-            <Link href="/">
-              <Image
-                src={'/icons/logo.svg'}
-                alt="slice drus icon"
-                width={100}
-                height={86}
-              />
-            </Link>
-          </div>
-
-          <nav className="flex items-center gap-x-2 text-xl lap:hidden">
-            <Link href="#!" className="p-4 duration-300 hover:text-red">
-              Блог
-            </Link>
-            <Link href="#!" className="p-4 duration-300 hover:text-red">
-              Контакти
-            </Link>
-          </nav>
-          <div className="row-start-2 flex items-center gap-x-3 self-end pl-4 text-base font-medium lap:hidden">
-            <Image
-              src={'/icons/tel.svg'}
-              alt="tel icon"
-              width={24}
-              height={24}
-            />
-            <Link
-              href="tel:+380123456789"
-              className="duration-300 hover:skew-x-[-10deg] hover:text-red"
-            >
-              +380123456789
-            </Link>
-          </div>
-          <div className="flex items-center gap-x-6 self-center justify-self-end lap:col-start-3 lap:justify-self-end">
-            <div className="lap:hidden">
-              <LocaleChange />
-            </div>
-            <div className="mr-5 flex gap-x-6 lap:mr-0">
-              <Button variant={'icons'}>
-                <Image
-                  src={'/icons/search.svg'}
-                  alt="search"
-                  width={32}
-                  height={32}
-                  className="cursor-pointer"
-                />
-              </Button>
+        </div>
+        <Link href={`/${local}`} className="ml-[55px]">
+          <Image
+            src={'/icons/logo.svg'}
+            alt="slice drus icon"
+            width={100}
+            height={86}
+          />
+        </Link>
+        <div>
+          <div className="flex justify-center lg:justify-end">
+            <nav className="mr-[52px] hidden gap-x-3 text-[20px] lg:flex">
+              <Link
+                href={`/${local}/blog`}
+                className="p-3 text-[20px] transition-all duration-300 ease-in-out hover:scale-105 hover:text-red"
+              >
+                Блог
+              </Link>
+              <Link
+                href={`/${local}/opt`}
+                className="p-3 text-[20px] transition-all duration-300 ease-in-out hover:scale-105 hover:text-red"
+              >
+                Опт
+              </Link>
+              <Link
+                href={`/${local}/contacts`}
+                className="p-3 text-[20px] transition-all duration-300 ease-in-out hover:scale-105 hover:text-red"
+              >
+                Контакти
+              </Link>
+            </nav>
+            <div className="flex items-center gap-x-4">
+              <LocaleChange className="hidden lg:block" />
+              <Search />
               <Cart />
             </div>
           </div>
-          <div className="row-start-2 self-end justify-self-end lap:col-start-3 lap:justify-self-end">
+          <div className="mt-3 flex justify-between">
+            <NumberCall className="hidden lg:block" />
             <Button type="button" variant="button">
               Замовити
             </Button>
           </div>
         </div>
       </div>
+      <div className="mx-auto mt-6 h-[1px] w-full max-w-[1240px] justify-between bg-[#E4E4E4]" />
     </header>
   )
 }
