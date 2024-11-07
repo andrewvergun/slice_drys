@@ -11,7 +11,7 @@ const NumberCall: FC<NumberCallProps> = ({ className }) => {
   return (
     <div
       className={cn(
-        'group flex cursor-pointer items-end gap-x-3 font-medium lap:hidden',
+        'group flex cursor-pointer items-end gap-x-3 font-medium',
         className,
       )}
     >
@@ -20,7 +20,7 @@ const NumberCall: FC<NumberCallProps> = ({ className }) => {
       </div>
       <Link
         href="tel:+380123456789"
-        className="duration-300 group-hover:skew-x-[-10deg] group-hover:text-red"
+        className="block duration-300 group-hover:skew-x-[-10deg] group-hover:text-red"
       >
         +380123456789
       </Link>

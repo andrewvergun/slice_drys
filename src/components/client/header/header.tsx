@@ -115,7 +115,7 @@ const Header: FC<HeaderP> = ({ headerLinks, hamburgerLinksOther }) => {
             </div>
           </div>
           <div className="mt-3 flex justify-between">
-            <NumberCall className="hidden lg:block" />
+            <NumberCall className="hidden lg:flex" />
             <Button type="button" variant="button">
               Замовити
             </Button>
