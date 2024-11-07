@@ -4,8 +4,11 @@ import Link from 'next/link'
 import { gsap } from 'gsap'
 import { cn } from '@/utils/cn'
 import Image from 'next/image'
+import { useGSAP } from '@gsap/react'
 
 export const Hero = () => {
+  const { contextSafe } = useGSAP()
+
   const sliderLinks = [
     { name: 'М’ЯСО', link: '/products/meat.tsx#product' },
     { name: 'ФРУКТИ', link: '/products/fruits' },
@@ -24,7 +27,7 @@ export const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(0)
 
-  const handleMouseEnter = (index: number) => {
+  const handleMouseEnter = contextSafe((index: number) => {
     if (index === currentIndex) return
 
     const tl = gsap.timeline()
@@ -55,10 +58,10 @@ export const Hero = () => {
     })
 
     setHoveredIndex(index)
-  }
+  })
 
   return (
-    <>
+    <div className="hidden">
       <h1 ref={titleRef} className="mt-11 text-[64px] font-bold">
         {sliders[currentIndex].title}
       </h1>
@@ -140,6 +143,6 @@ export const Hero = () => {
           alt="slider"
         />
       </div>
-    </>
+    </div>
   )
 }

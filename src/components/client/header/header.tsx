@@ -41,7 +41,7 @@ const Header: FC<HeaderP> = ({ headerLinks, hamburgerLinksOther }) => {
       <Info title="Безкоштовна доставка від 1000 грн." />
       <div
         ref={headerRef}
-        className="mx-auto mt-6 box-border flex max-w-[1280px] justify-between px-5 opacity-0"
+        className="mx-auto mt-6 box-border flex max-w-[1280px] items-center justify-between px-5 opacity-0"
       >
         <div>
           <nav className="hidden gap-3 lg:flex">
@@ -81,8 +81,9 @@ const Header: FC<HeaderP> = ({ headerLinks, hamburgerLinksOther }) => {
           <Image
             src={'/icons/logo.svg'}
             alt="slice drus icon"
-            width={100}
-            height={86}
+            className="h-[70px] w-[59px] lg:h-[100px] lg:w-[86px]"
+            width={86}
+            height={100}
           />
         </Link>
         <div>

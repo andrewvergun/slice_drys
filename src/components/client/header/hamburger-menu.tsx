@@ -14,6 +14,7 @@ import { useState } from 'react'
 import Button from '@/components/client/ui/button'
 import LocaleChange from '../locale-change/locale-change'
 import Cart from '@/components/client/card/cart'
+import Search from '@/components/client/search/search'
 
 interface HamburgerMenu {
   headerLinks: ILink[]
@@ -26,52 +27,50 @@ export default function HamburgerMenu({
 }: HamburgerMenu) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const closeMenu = () => setIsOpen(false)
+  const closeMenu = () => setIsOpen(!isOpen)
+
+  const containerClasses = `tham tham-e-squeeze tham-w-6  ${isOpen ? 'tham-active' : ''}`
 
   return (
     <Menu>
+      {isOpen && (
+        <div
+          className="fixed -top-[100px] z-50 h-screen w-full bg-black/50"
+          onClick={() => setIsOpen(!isOpen)}
+        ></div>
+      )}
       <MenuButton
         onClick={() => setIsOpen(!isOpen)}
         className="block duration-300 hover:scale-110 lg:hidden lap:fixed lap:left-5 lap:top-8 lap:z-50"
       >
-        <Image
-          src={'/icons/burger.svg'}
-          alt="burger icon"
-          width={32}
-          height={32}
-        />
+        <div className={containerClasses}>
+          <div className="tham-box">
+            <div className="tham-inner" />
+          </div>
+        </div>
       </MenuButton>
-
       <Transition
-        enter="transition-transform duration-500 ease-out"
-        enterFrom="transform -translate-x-full rotate-y-90"
-        enterTo="transform translate-x-0 rotate-y-0"
-        leave="transition-transform duration-500 ease-in"
-        leaveFrom="transform translate-x-0 rotate-y-0"
-        leaveTo="transform -translate-x-full rotate-y-90"
+        appear
+        show={isOpen}
+        enter="transform transition duration-500 ease-out"
+        enterFrom="-translate-x-full rotate-y-90"
+        enterTo="translate-x-0 rotate-y-0"
+        leave="transform transition duration-500 ease-in"
+        leaveFrom="translate-x-0 rotate-y-0"
+        leaveTo="-translate-x-full rotate-y-90"
       >
-        <MenuItems
-          anchor="bottom"
-          transition
-          className="bottom-0 right-0 z-40 origin-top bg-light_gray pb-6 pt-3 transition duration-200 ease-out [--anchor-gap:-64px] data-[closed]:scale-95 data-[closed]:opacity-0"
-        >
+        <MenuItems className="absolute -top-[30px] left-0 z-50 min-h-screen w-full bg-[#E4E4E4] px-[12px] py-[32px]">
           <MenuSection className="grid grid-cols-[2fr_1fr_1fr_auto] items-center px-5">
             <MenuItem>
-              <Button
-                onClick={closeMenu}
-                type={'button'}
-                className="w-fit"
-                variant={'icons'}
-              >
-                <Image
-                  src={'/icons/close.svg'}
-                  width={40}
-                  height={40}
-                  alt="close icon"
-                />
-                <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
+              <Button onClick={closeMenu} type={'button'} variant={'icons'}>
+                <div className={containerClasses}>
+                  <div className="tham-box">
+                    <div className="tham-inner" />
+                  </div>
+                </div>
               </Button>
             </MenuItem>
+
             <MenuItem>
               <Link href="/" className="group relative w-fit">
                 <Image
@@ -175,35 +174,16 @@ export default function HamburgerMenu({
           </MenuSection>
 
           <MenuSection className="px-8 pt-5">
-            <form
-              action="/logout"
-              method="post"
-              className="flex justify-center gap-x-4"
-            >
-              <label className="group relative block max-w-56">
-                <Input
-                  name="search"
-                  type="text"
-                  className="group block h-8 w-full rounded-sm p-2"
-                />
-                <Image
-                  src={'/icons/search.svg'}
-                  alt="search icon"
-                  className="absolute right-1 top-0"
-                  width={32}
-                  height={32}
-                />
-              </label>
-              <MenuItem>
-                <button
-                  type="submit"
-                  className="group relative block h-8 w-[88px] bg-black text-sm text-white"
-                >
-                  Шукати
-                  <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
-                </button>
-              </MenuItem>
-            </form>
+            <Search />
+            <MenuItem>
+              <button
+                type="submit"
+                className="group relative block h-8 w-[88px] bg-black text-sm text-white"
+              >
+                Шукати
+                <div className="absolute bottom-0 left-0 right-0 top-0 group-data-[focus]:bg-red group-data-[focus]:blur-2xl"></div>
+              </button>
+            </MenuItem>
           </MenuSection>
         </MenuItems>
       </Transition>
