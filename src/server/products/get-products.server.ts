@@ -43,6 +43,7 @@ export async function getProducts(
         createdAt: 1,
         updatedAt: 1,
       })
+      .sort({ createdAt: -1 })
       .lean()
       .skip((page - 1) * limit)
       .limit(limit)
@@ -61,7 +62,9 @@ export async function getProducts(
     }))
 
     const allProducts: IProductLocal[] = fetchAll
-      ? ((await Product.find().lean()) as IProductLocal[])
+      ? ((await Product.find()
+          .sort({ createdAt: -1 })
+          .lean()) as IProductLocal[])
       : []
 
     return {

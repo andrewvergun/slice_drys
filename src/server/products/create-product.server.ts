@@ -3,24 +3,18 @@ import { connectToDb } from '@/server/connectToDb'
 import { Product } from '@/server/products/productSchema'
 import cloudinary from '@/server/cloudinaryConfig'
 
-export async function createProduct(formData: IProductLocal, image?: any) {
+export async function createProduct(formData: IProductLocal, image: string) {
   'use server'
   try {
     await connectToDb()
-    let imageUrl = ''
 
-    if (image) {
-      const upload = await cloudinary.uploader.upload(image, {
-        folder: 'products',
-      })
-      imageUrl = upload.secure_url
-    }
+    const upload = await cloudinary.uploader.upload(image, {
+      folder: 'products-slice',
+    })
 
-    const productData = { ...formData, img: 'test' }
+    const productData = { ...formData, img: upload.secure_url }
 
     const product = new Product(productData)
-    // const productSON = product.toObject()
-    console.log(product)
     await product.save()
 
     return { success: true, message: 'Product created' }

@@ -20,6 +20,8 @@ import { toast } from '@/hooks/use-toast'
 import Loading from '@/components/admin/ui/loading'
 import { editProduct } from '@/server/products/eddit-product.server'
 import { useRouter } from 'next/navigation'
+import { convertToBase64 } from '@/utils/convertToBase64'
+import Image from 'next/image'
 
 interface ICrateProduct {
   buttonTitle: string
@@ -75,6 +77,9 @@ const EditorProduct: FC<ICrateProduct> = ({
   const [loading, setLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
 
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null)
+
   const [categoriesInput, setCategoriesInput] = useState({ en: '', uk: '' })
   const [categories, setCategories] = useState({
     en: product?.category?.en || [],
@@ -104,6 +109,19 @@ const EditorProduct: FC<ICrateProduct> = ({
   })
 
   useEffect(() => {
+    let url: string | null = null
+
+    if (imageFile) {
+      url = URL.createObjectURL(imageFile)
+      setImagePreviewUrl(url)
+    } else if (product?.img) {
+      setImagePreviewUrl(product.img)
+    } else {
+      setImagePreviewUrl(null)
+    }
+  }, [imageFile, product?.img])
+
+  useEffect(() => {
     if (product) {
       setValue('name', product.name)
       setValue('description', product.description)
@@ -128,9 +146,18 @@ const EditorProduct: FC<ICrateProduct> = ({
     }
   }, [product, setValue, replace])
 
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      setImageFile(file)
+    }
+  }
+
   const onSubmit = async (data: IProductLocal) => {
     setLoading(true)
     let result: IResult
+
+    const image = imageFile ? await convertToBase64(imageFile) : ''
 
     const newData = {
       ...data,
@@ -149,10 +176,10 @@ const EditorProduct: FC<ICrateProduct> = ({
     }
 
     if (product?._id) {
-      result = await editProduct(product._id, newData)
+      result = await editProduct(product._id, newData, image)
     } else {
       console.log('work', newData)
-      result = await createProduct(newData, null)
+      result = await createProduct(newData, image)
     }
 
     if (result.success) {
@@ -168,6 +195,8 @@ const EditorProduct: FC<ICrateProduct> = ({
     router.refresh()
     setLoading(false)
   }
+
+  const handleDelete = async () => {}
 
   return (
     <div>
@@ -213,8 +242,25 @@ const EditorProduct: FC<ICrateProduct> = ({
 
                 <div>
                   <Label htmlFor="picture">Додати зображення</Label>
-                  <Input id="picture" type="file" />
+                  <Input
+                    id="picture"
+                    type="file"
+                    onChange={handleImageChange}
+                  />
                 </div>
+
+                {imagePreviewUrl && (
+                  <div>
+                    <Label>Попередній перегляд зображення</Label>
+                    <Image
+                      src={imagePreviewUrl}
+                      width={100}
+                      height={100}
+                      alt="Зображення продукту"
+                      className="rounded-md"
+                    />
+                  </div>
+                )}
 
                 <div>
                   <div className="flex flex-col gap-4">
@@ -780,6 +826,7 @@ const EditorProduct: FC<ICrateProduct> = ({
                   <Button
                     variant="destructive"
                     onClick={() => setIsOpen(false)}
+                    disabled={loading}
                   >
                     Видалити
                   </Button>
@@ -790,7 +837,9 @@ const EditorProduct: FC<ICrateProduct> = ({
                   <Button variant="outline" onClick={() => setIsOpen(false)}>
                     Скасувати
                   </Button>
-                  <Button type="submit">{buttonTitle}</Button>
+                  <Button type="submit" disabled={loading}>
+                    {buttonTitle}
+                  </Button>
                 </div>
               </div>
             </AlertDialogFooter>

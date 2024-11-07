@@ -77,7 +77,7 @@ export const ProductList: FC<IProductList> = ({ data, recommendations }) => {
               <Image
                 width={50}
                 height={50}
-                src={'/meat.png'}
+                src={product.img}
                 alt={product.name}
                 className="h-10 w-10 rounded object-cover"
               />
