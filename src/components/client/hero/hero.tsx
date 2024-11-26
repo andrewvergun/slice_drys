@@ -5,6 +5,7 @@ import { gsap } from 'gsap'
 import { cn } from '@/utils/cn'
 import Image from 'next/image'
 import { useGSAP } from '@gsap/react'
+import Slider from '@/components/client/slider/slider'
 
 export const Hero = () => {
   const { contextSafe } = useGSAP()
@@ -134,7 +135,7 @@ export const Hero = () => {
           </div>
         ))}
       </nav>
-      <div className="relative mx-auto h-[552px] w-full max-w-[1104px]">
+      <div className="relative mx-auto mb-20 md:mb-24 lg:mb-28 xl:mb-32 h-[552px] w-full max-w-[1104px]">
         <Image
           src="/icons/slider-line.svg"
           fill={true}
@@ -148,6 +149,7 @@ export const Hero = () => {
           alt="slider"
         />
       </div>
+      <Slider />
     </div>
   )
 }

@@ -1,17 +1,14 @@
+@import url('../../components/client/slider/slider.css');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-    margin: 0;
-    background-color: white;
-    color: #0f0f0f;
-}
 
 @layer base {
     :root {
         --background: 0 0% 100%;
         --foreground: 0 0% 3.9%;
+        --fontFamily: "Poppins", sans-serif;
         --card: 0 0% 100%;
         --card-foreground: 0 0% 3.9%;
         --popover: 0 0% 100%;
@@ -81,3 +78,6 @@ body {
     }
 }
 
+body {
+  font-family: var(--fontFamily);
+}
