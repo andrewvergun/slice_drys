@@ -62,7 +62,7 @@ export const Hero = () => {
 
   return (
     <div className="mx-auto max-w-[1280px] px-[20px]">
-      <h1 className="mt-11 text-[64px] font-bold">
+      <h1 ref={titleRef} className="mt-11 text-[64px] font-bold">
         {sliders[currentIndex].title}
       </h1>
       <nav className="mt-[50px] flex justify-around">
