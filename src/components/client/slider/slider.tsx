@@ -11,15 +11,15 @@ const Slider: React.FC = () => {
     <>
       <div className="mx-auto mb-12 mt-10 max-w-6xl">
         <div className="pb-[51px] sm:pb-16 md:pb-20 lg:pb-24 xl:pb-[147px]">
-          <h2 className="rubik-doodle-shadow-regular mb-2 sm:mb-4 md:mb-6 lg:mb-8 xl:mb-12 text-[32px] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+          <h2 className="rubik-doodle-shadow-regular mb-2 text-[32px] sm:mb-4 sm:text-5xl md:mb-6 md:text-6xl lg:mb-8 lg:text-7xl xl:mb-12 xl:text-8xl">
             ТОПОВІ СУШЕНИКИ
           </h2>
-          <div className="swiper-label relative grid place-content-start sm:place-content-end text-base md:text-lg lg:text-xl xl:text-2xl">
+          <div className="swiper-label relative grid place-content-start text-base sm:place-content-end md:text-lg lg:text-xl xl:text-2xl">
             найсмачніші кусь-топчики
           </div>
         </div>
         <Swiper
-          modules={[Navigation, Pagination/*, Autoplay*/]}
+          modules={[Navigation, Pagination, Autoplay]}
           navigation={{
             prevEl: '.custom-prev, .swiper-button-prev',
             nextEl: '.custom-next, .swiper-button-next',
@@ -32,7 +32,7 @@ const Slider: React.FC = () => {
           spaceBetween={50}
           slidesPerView={3}
           loop={true}
-          // autoplay={{ delay: 3000, pauseOnMouseEnter: true }}
+          autoplay={{ delay: 3000, pauseOnMouseEnter: true }}
           breakpoints={{
             0: {
               slidesPerView: 2.2,
