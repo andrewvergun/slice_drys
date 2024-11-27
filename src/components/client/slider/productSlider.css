@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap');
+
+.rubik-doodle-shadow-regular {
+  font-family: "Rubik Doodle Shadow", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  color: #0f0f0f;
+}
+
+.swiper-label::after {
+  content: '';
+  position: relative;
+  background: url('/icons/underline.svg') center / cover no-repeat;
+  width: auto;
+  height: 15px;
+  bottom: 0;
+  left: 10px;
+}
+
+@media (min-width: 768px) {
+  .swiper-label::after {
+    bottom: -5px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .swiper-label::after {
+    bottom: -10px;
+  }
+}
+
+.icon-top::before,
+.icon-new::before,
+.icon-sale::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+
+.icon-top::before {
+  background: url('/icons/top.svg') center / contain no-repeat;
+}
+
+.icon-new::before {
+  background: url('/icons/new.svg') center / contain no-repeat;
+}
+
+.icon-sale::before {
+  background: url('/icons/sale.svg') center / contain no-repeat;
+}
+
+@media (min-width: 768px) {
+  .icon-top::before,
+  .icon-new::before,
+  .icon-sale::before {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .icon-top::before,
+  .icon-new::before,
+  .icon-sale::before {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.icon-arrow-down::after {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url('/icons/arrow-down.svg') center / contain no-repeat;
+  margin-left: 5px;
+}
+
+@media (min-width: 768px) {
+  .icon-arrow-down::after {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .icon-arrow-down::after {
+    margin-left: 10px;
+  }
+}
+
+.splide__slide {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.splide__pagination.product__pagination {
+  display: flex;
+  gap: 5px;
+  bottom: -150px;
+}
+
+.splide__pagination__page.product__pagination-page {
+  width: 15px;
+  height: 13px;
+  border-radius: 0;
+  opacity: 1;
+  background: url('/icons/swiper-bullet.svg') center / cover no-repeat;
+}
+
+.splide__pagination__page.product__pagination-page.is-active {
+  background: url('/icons/swiper-bullet-active.svg') center / cover no-repeat;
+  transform: scale(1);
+}
+
+.splide__arrow.product__arrow {
+  border-radius: 0;
+  background-color: transparent;
+  top: auto;
+  bottom: -115px;
+  transform: translateY(100%);
+  max-width: 33px;
+  width: 100%;
+  height: 44px;
+}
+
+.splide__arrow.product__arrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+.splide__arrow--prev.product__arrow-prev {
+  left: 50%;
+  transform: translateX(-150px) translateY(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.splide__arrow--next.product__arrow-next {
+  right: 50%;
+  transform: translateX(140px) translateY(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+
+
+@media (min-width: 640px) {
+  .splide__arrow--next.product__arrow-next {
+    transform: translateX(150px) translateY(100%);
+  }
+
+  @media (any-hover: hover) {
+    .splide__arrow--prev.product__arrow-prev:hover {
+      transform: translateX(-155px) translateY(100%);
+    }
+    .splide__arrow--next.product__arrow-next:hover {
+      transform: translateX(155px) translateY(100%);
+    }
+    .splide__pagination__page.product__pagination-page:hover {
+      transition: transform 0.3s ease-in-out;
+      transform: scale(1.2);
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .splide__pagination__page.product__pagination-page {
+    width: 20px;
+    height: 17px;
+  }
+  .splide__arrow.product__arrow {
+    max-width: 45px;
+    height: 57px;
+    bottom: -105px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .splide__pagination__page.product__pagination-page {
+    width: 24px;
+    height: 21px;
+  }
+  .splide__arrow.product__arrow {
+    max-width: 50px;
+    height: 65px;
+    bottom: -100px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .splide__pagination__page.product__pagination-page {
+    width: 29px;
+    height: 25px;
+  }
+  .splide__arrow.product__arrow {
+
+  }
+}

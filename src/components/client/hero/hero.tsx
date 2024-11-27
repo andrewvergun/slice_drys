@@ -5,7 +5,6 @@ import { gsap } from 'gsap'
 import { cn } from '@/utils/cn'
 import Image from 'next/image'
 import { useGSAP } from '@gsap/react'
-import Slider from '@/components/client/slider/slider'
 
 export const Hero = () => {
   const { contextSafe } = useGSAP()
@@ -149,7 +148,6 @@ export const Hero = () => {
           alt="slider"
         />
       </div>
-      <Slider />
     </div>
   )
 }
