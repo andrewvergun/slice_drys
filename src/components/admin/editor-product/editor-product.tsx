@@ -77,6 +77,7 @@ const EditorProduct: FC<ICrateProduct> = ({
 
   const [loading, setLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = React.useState(false)
 
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null)
@@ -155,6 +156,10 @@ const EditorProduct: FC<ICrateProduct> = ({
   }
 
   const onSubmit = async (data: IProductLocal) => {
+    // Prevent submit if ConfirmDeletePopup is opened,
+    // Otherwise it refreshes a page, which closes all popups.
+    if (isConfirmDeleteOpen) return
+
     setLoading(true)
     let result: IResult
 
@@ -207,7 +212,7 @@ const EditorProduct: FC<ICrateProduct> = ({
     const result = await deleteProduct(product._id)
 
     if (result.success) {
-      setIsOpen(false)
+      setIsConfirmDeleteOpen(false)
     }
 
     toast({
@@ -218,9 +223,48 @@ const EditorProduct: FC<ICrateProduct> = ({
     setLoading(false)
   }
 
+  const ConfirmDeletePopup = () => (
+    <AlertDialog
+      open={isConfirmDeleteOpen}
+      onOpenChange={setIsConfirmDeleteOpen}
+    >
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Видалення</AlertDialogTitle>
+        </AlertDialogHeader>
+        <AlertDialogDescription>
+          Дійсно хочете видалити цей товар?
+        </AlertDialogDescription>
+
+        <AlertDialogFooter>
+          <div className="flex w-full justify-end gap-3">
+            <Button
+              variant="destructive"
+              onClick={handleDelete}
+              disabled={loading}
+            >
+              Так
+            </Button>
+
+            <Button
+              variant="default"
+              onClick={() => setIsConfirmDeleteOpen(false)}
+              disabled={loading}
+            >
+              Ні
+            </Button>
+          </div>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+
   return (
     <div>
       {loading && <Loading />}
+
+      <ConfirmDeletePopup />
+
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialogTrigger asChild>
           <Button>{buttonTitle}</Button>
@@ -845,7 +889,7 @@ const EditorProduct: FC<ICrateProduct> = ({
                 {product ? (
                   <Button
                     variant="destructive"
-                    onClick={handleDelete}
+                    onClick={() => setIsConfirmDeleteOpen(true)}
                     disabled={loading}
                   >
                     Видалити
