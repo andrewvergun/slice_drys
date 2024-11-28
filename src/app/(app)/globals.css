@@ -1,14 +1,19 @@
-@import url('../../components/client/slider/productSlider.css');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@import url('../../components/client/slider/productSlider.css');
+
+body {
+    margin: 0;
+    background-color: white;
+    color: #0f0f0f;
+}
 
 @layer base {
     :root {
         --background: 0 0% 100%;
         --foreground: 0 0% 3.9%;
-        --fontFamily: "Poppins", sans-serif;
         --card: 0 0% 100%;
         --card-foreground: 0 0% 3.9%;
         --popover: 0 0% 100%;
@@ -76,8 +81,4 @@
         --sidebar-border: 240 3.7% 15.9%;
         --sidebar-ring: 217.2 91.2% 59.8%;
     }
-}
-
-body {
-  font-family: var(--fontFamily);
 }
