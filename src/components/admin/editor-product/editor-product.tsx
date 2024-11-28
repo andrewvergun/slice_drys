@@ -18,7 +18,7 @@ import { useFieldArray, useForm, Controller } from 'react-hook-form'
 import { createProduct } from '@/server/products/create-product.server'
 import { toast } from '@/hooks/use-toast'
 import Loading from '@/components/admin/ui/loading'
-import { editProduct } from '@/server/products/eddit-product.server'
+import { editProduct } from '@/server/products/edit-product.server'
 import { useRouter } from 'next/navigation'
 import { convertToBase64 } from '@/utils/convertToBase64'
 import Image from 'next/image'
@@ -196,7 +196,9 @@ const EditorProduct: FC<ICrateProduct> = ({
     setLoading(false)
   }
 
-  const handleDelete = async () => {}
+  const handleDelete = async () => {
+    setIsOpen(false)
+  }
 
   return (
     <div>
@@ -825,7 +827,7 @@ const EditorProduct: FC<ICrateProduct> = ({
                 {product ? (
                   <Button
                     variant="destructive"
-                    onClick={() => setIsOpen(false)}
+                    onClick={handleDelete}
                     disabled={loading}
                   >
                     Видалити
