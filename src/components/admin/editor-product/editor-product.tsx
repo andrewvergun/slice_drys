@@ -22,6 +22,7 @@ import { editProduct } from '@/server/products/edit-product.server'
 import { useRouter } from 'next/navigation'
 import { convertToBase64 } from '@/utils/convertToBase64'
 import Image from 'next/image'
+import { deleteProduct } from '@/server/products/delete-product.server'
 
 interface ICrateProduct {
   buttonTitle: string
@@ -197,7 +198,24 @@ const EditorProduct: FC<ICrateProduct> = ({
   }
 
   const handleDelete = async () => {
-    setIsOpen(false)
+    if (!product || !product._id) {
+      return toast({ title: 'Product is not defined' })
+    }
+
+    setLoading(true)
+
+    const result = await deleteProduct(product._id)
+
+    if (result.success) {
+      setIsOpen(false)
+    }
+
+    toast({
+      title: result.message,
+    })
+
+    router.refresh()
+    setLoading(false)
   }
 
   return (
