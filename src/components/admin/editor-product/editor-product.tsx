@@ -22,6 +22,7 @@ import { editProduct } from '@/server/products/eddit-product.server'
 import { useRouter } from 'next/navigation'
 import { convertToBase64 } from '@/utils/convertToBase64'
 import Image from 'next/image'
+import { IProductLocal, IRecommendations } from '@/types/product'
 
 interface ICrateProduct {
   buttonTitle: string

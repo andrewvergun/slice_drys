@@ -1,6 +1,6 @@
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import Product from '../product/product'
-import { IProduct } from '@/types/IProduct'
+import { IProductCard } from '@/types/product'
 import '@splidejs/react-splide/css/core'
 import '@splidejs/react-splide/css'
 import { Rubik_Doodle_Shadow } from 'next/font/google'
@@ -13,7 +13,7 @@ const rubikDoodleShadow = Rubik_Doodle_Shadow({
 })
 
 type SplideSliderProps = {
-  products: IProduct[]
+  products: IProductCard[]
 }
 
 export default function ProductSlider({ products }: SplideSliderProps) {
@@ -25,7 +25,7 @@ export default function ProductSlider({ products }: SplideSliderProps) {
     perMove: 1,
     gap: '40px',
     pagination: true,
-    autoplay: true,
+    // autoplay: true,
     arrows: true,
     breakpoints: {
       320: {
