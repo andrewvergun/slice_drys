@@ -8,7 +8,7 @@ import { Rubik_Doodle_Shadow } from 'next/font/google'
 const rubikDoodleShadow = Rubik_Doodle_Shadow({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-rubik-doodle-shadow',
+  variable: '--font-rubik-doole-shadow',
   weight: ['400'],
 })
 
@@ -61,7 +61,7 @@ export default function ProductSlider({ products }: SplideSliderProps) {
     },
   }
   return (
-    <div className="mx-auto mb-12 mt-10 max-w-6xl pl-4 pr-0 md:pr-4">
+    <div className="mx-auto mb-12 mt-10 max-w-6xl px-0 lg:px-4">
       <div className="pb-[51px] pr-4 sm:pb-16 md:pb-20 lg:pb-24 xl:pb-[147px]">
         <h2
           className={`${rubikDoodleShadow.className} mb-2 text-[32px] sm:mb-4 sm:text-5xl md:mb-6 md:text-6xl lg:mb-8 lg:text-7xl xl:mb-12 xl:text-8xl`}
@@ -74,7 +74,7 @@ export default function ProductSlider({ products }: SplideSliderProps) {
       </div>
       <Splide options={splideOptions} className="mb-48 mt-10 max-w-6xl">
         {products.map((product) => (
-          <SplideSlide key={product._id} className="px-2 py-8">
+          <SplideSlide key={product._id} className="px-2 py-8 md:px-4 md:px-8">
             <Product product={product} />
           </SplideSlide>
         ))}
