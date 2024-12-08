@@ -22,55 +22,48 @@ const Product = ({ product }: ProductProps) => {
   const selectedNewPrice = product.newPrice?.[selectedWeightIndex] ?? 0
 
   const containerRef = useRef<HTMLDivElement>(null)
-  const glareRef = useRef(null);
   const imgRef = useRef<HTMLImageElement>(null)
   const nameRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLDivElement>(null)
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - left) / width - 0.5;
-    const y = (e.clientY - top) / height - 0.5;
-  
-    const shadowOffsetX = x * 5;
-    const shadowOffsetY = y * 5;
-  
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect()
+    const x = (e.clientX - left) / width - 0.5
+    const y = (e.clientY - top) / height - 0.5
+    const shadowOffsetX = x * 5
+    const shadowOffsetY = y * 5
     gsap.to(containerRef.current, {
       rotationY: -25 * x,
       rotationX: 25 * y,
       transformPerspective: 800,
       duration: 0.3,
       boxShadow: `${shadowOffsetX}px ${shadowOffsetY}px 10px 6px rgba(169, 9, 9, 0.7)`,
-    });
+    })
 
     gsap.to(imgRef.current, {
       rotationY: -25 * x,
       rotationX: 25 * y,
-      transformPerspective: 1000
-    });
-  };
-  
-
+      transformPerspective: 1000,
+    })
+  }
   const handleMouseEnter = () => {
-    gsap.to(imgRef.current, { 
+    gsap.to(imgRef.current, {
       scale: 1.05,
       translateY: 10,
-      zIndex: 12, 
-      ease: 'power1.inOut'
-    });
+      zIndex: 12,
+      ease: 'power1.inOut',
+    })
     gsap.to(nameRef.current, {
       scale: 1.05,
       translateY: -10,
       transformOrigin: 'left bottom',
-      ease: 'power1.inOut'
-    });
-    gsap.to(buttonRef.current, { 
-      translateY: -10, 
-      ease: 'power1.inOut'
-    });
-  };
-  
-
+      ease: 'power1.inOut',
+    })
+    gsap.to(buttonRef.current, {
+      translateY: -10,
+      ease: 'power1.inOut',
+    })
+  }
   const handleMouseLeave = () => {
     gsap.to(containerRef.current, {
       rotationY: 0,
@@ -83,29 +76,27 @@ const Product = ({ product }: ProductProps) => {
         gsap.to(containerRef.current, {
           boxShadow: '0px 0px 0px 0 rgba(0, 0, 0, 0)',
           duration: 1.2,
-        });
+        })
       },
     })
-
-    gsap.to(imgRef.current, { 
+    gsap.to(imgRef.current, {
       scale: 1,
       rotationY: 0,
       rotationX: 0,
       translateY: 0,
-      zIndex: 1, 
-      ease: 'power1.inOut' 
+      zIndex: 1,
+      ease: 'power1.inOut',
     })
-    gsap.to(nameRef.current, { 
-      scale: 1, 
-      translateY: 0, 
-      ease: 'power1.inOut'
+    gsap.to(nameRef.current, {
+      scale: 1,
+      translateY: 0,
+      ease: 'power1.inOut',
     })
-    gsap.to(buttonRef.current, { 
-      translateY: 0, 
-      ease: 'power1.inOut'
+    gsap.to(buttonRef.current, {
+      translateY: 0,
+      ease: 'power1.inOut',
     })
   }
-
   return (
     <div
       ref={containerRef}
@@ -122,8 +113,8 @@ const Product = ({ product }: ProductProps) => {
               badge.type === 'top'
                 ? 'bg-[#EC9006]'
                 : badge.type === 'new'
-                ? 'bg-[#07C70D]'
-                : 'bg-[#A90909]'
+                  ? 'bg-[#07C70D]'
+                  : 'bg-[#A90909]'
             }`}
           >
             {badge.label}
@@ -154,8 +145,9 @@ const Product = ({ product }: ProductProps) => {
       <div className="flex w-full grow flex-col gap-[40px]">
         <div className="flex items-center justify-between gap-2">
           <h3
-          ref={nameRef as React.Ref<HTMLDivElement>}
-          className="text-xs font-medium uppercase sm:text-sm md:text-base lg:text-lg xl:text-xl">
+            ref={nameRef as React.Ref<HTMLDivElement>}
+            className="text-xs font-medium uppercase sm:text-sm md:text-base lg:text-lg xl:text-xl"
+          >
             {product.name}
           </h3>
           <div className="sm:text-md flex w-[80px] shrink-0 items-center text-nowrap text-base font-medium sm:w-[90px] md:w-[100px] md:text-lg xl:text-xl">
@@ -199,10 +191,7 @@ const Product = ({ product }: ProductProps) => {
             )}
           </div>
           <div ref={buttonRef as React.Ref<HTMLDivElement>}>
-            <Button 
-              type="button" 
-              variant="button"
-            >
+            <Button type="button" variant="button">
               До кошика
             </Button>
           </div>
