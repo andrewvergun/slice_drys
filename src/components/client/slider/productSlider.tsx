@@ -1,6 +1,6 @@
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import Product from '../product/product'
-import { IProductCard } from '@/types/product'
+import { IProduct } from '@/types/product'
 import '@splidejs/react-splide/css/core'
 import '@splidejs/react-splide/css'
 import { Rubik_Doodle_Shadow } from 'next/font/google'
@@ -8,12 +8,12 @@ import { Rubik_Doodle_Shadow } from 'next/font/google'
 const rubikDoodleShadow = Rubik_Doodle_Shadow({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-rubik-doole-shadow',
+  variable: '--font-rubik-doodle-shadow',
   weight: ['400'],
 })
 
 type SplideSliderProps = {
-  products: IProductCard[]
+  products: IProduct[]
 }
 
 export default function ProductSlider({ products }: SplideSliderProps) {
@@ -23,14 +23,14 @@ export default function ProductSlider({ products }: SplideSliderProps) {
     type: 'loop',
     perPage: 3,
     perMove: 1,
-    gap: '40px',
+    gap: '18px',
     pagination: true,
-    // autoplay: true,
+    autoplay: true,
     arrows: true,
     breakpoints: {
       320: {
         perPage: 1.1,
-        gap: '4px',
+        gap: '0px',
       },
       768: {
         perPage: 2.2,
@@ -38,15 +38,15 @@ export default function ProductSlider({ products }: SplideSliderProps) {
       },
       992: {
         perPage: 2.2,
-        gap: '24px',
+        gap: '14px',
       },
       1024: {
         perPage: 3,
-        gap: '29px',
+        gap: '14px',
       },
       1280: {
         perPage: 3,
-        gap: '34px',
+        gap: '18px',
       },
     },
     omitEnd: true,
@@ -62,7 +62,7 @@ export default function ProductSlider({ products }: SplideSliderProps) {
   }
   return (
     <div className="mx-auto mb-12 mt-10 max-w-6xl px-0 lg:px-4">
-      <div className="pb-[51px] pr-4 sm:pb-16 md:pb-20 lg:pb-24 xl:pb-[147px]">
+      <div className="py-[51px] pr-4 sm:py-16 md:py-20 lg:py-24 xl:py-[147px]">
         <h2
           className={`${rubikDoodleShadow.className} mb-2 text-[32px] sm:mb-4 sm:text-5xl md:mb-6 md:text-6xl lg:mb-8 lg:text-7xl xl:mb-12 xl:text-8xl`}
         >
@@ -72,9 +72,9 @@ export default function ProductSlider({ products }: SplideSliderProps) {
           найсмачніші кусь-топчики
         </div>
       </div>
-      <Splide options={splideOptions} className="mb-48 mt-10 max-w-6xl">
+      <Splide options={splideOptions} className="mb-48 mt-10 h-full max-w-6xl">
         {products.map((product) => (
-          <SplideSlide key={product._id} className="px-2 py-8 md:px-4 md:px-8">
+          <SplideSlide key={product._id} className="px-2 py-8 sm:px-3 md:px-4">
             <Product product={product} />
           </SplideSlide>
         ))}

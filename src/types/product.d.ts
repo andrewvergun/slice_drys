@@ -1,4 +1,4 @@
-interface IProduct {
+export interface IProduct {
   _id?: string
   name: string
   description: string
@@ -10,6 +10,11 @@ interface IProduct {
   statusLabel: string[]
   visited?: number
   nutritionalValue: INutritionalValue
+  available: boolean
+  weight: number[]
+  newPrice?: number[]
+  price: number[]
+  badges: { type: string; label: string }[]
 }
 
 interface IProductLocal {
@@ -81,14 +86,4 @@ interface IGetProduct {
   productAll: IProductLocal[]
   success: boolean
   message: string
-}
-export interface IProductCard {
-  _id?: IProduct['_id']
-  name: IProduct['name']
-  img: string
-  available: boolean
-  newPrice?: number[]
-  price: number[]
-  weight: IRecommendations['weight']
-  badges: { type: string; label: string }[]
 }
