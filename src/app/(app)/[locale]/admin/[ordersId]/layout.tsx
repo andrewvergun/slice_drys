@@ -13,7 +13,6 @@ export default function LocaleLayout({
 }) {
   const pathname = usePathname()
 
-  // Дані для прикладу
   const getNewOrders = [{ id: '1', status: 'new' }]
   const getAwaitingPaymentOrders = [{ id: '2', status: 'awaiting-payment' }]
   const getAwaitingShipmentOrders = [{ id: '3', status: 'awaiting-shipment' }]
@@ -28,7 +27,6 @@ export default function LocaleLayout({
     'awaiting-return': 'bg-orange-500 text-white',
   }
 
-  // 2. Аналогічно мапі кількостей, робимо мапу для лічильників.
   const orderCountByStatus: Record<string, number> = {
     new: getNewOrders.length,
     'awaiting-payment': getAwaitingPaymentOrders.length,
@@ -39,11 +37,10 @@ export default function LocaleLayout({
 
   return (
     <>
-      <div className="border-gray-300 flex flex-wrap justify-between gap-1 bg-transparent">
+      <div className="flex flex-wrap justify-between gap-1 border-gray-300 bg-transparent">
         {tabsOrder.map((tab) => {
           const isActive = pathname.includes(tab.value)
           const count = orderCountByStatus[tab.value] || 0
-          // 3. Застосовуємо стилі до бейджа залежно від статусу.
           const badgeStyles = statusStyles[tab.value] || ''
 
           return (

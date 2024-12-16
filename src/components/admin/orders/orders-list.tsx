@@ -54,111 +54,6 @@ const statusIcons = {
   failedDelivery: <AlertCircle className="text-red-500" />,
 }
 
-const columns: ColumnDef<IOrder>[] = [
-  {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && 'indeterminate')
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    id: 'id',
-    header: 'ID',
-    accessorFn: (row) => row.id,
-    cell: ({ row }) => <div>{row.original.id}</div>,
-  },
-  {
-    accessorKey: 'status',
-    header: 'Статус',
-    cell: ({ row }) => {
-      const status = row.getValue('status') as keyof typeof statusIcons
-      return (
-        <div className="flex items-center gap-2 capitalize">
-          {statusIcons[status] || <AlertCircle className="text-gray-500" />}
-        </div>
-      )
-    },
-  },
-  {
-    id: 'name',
-    header: "Ім'я користувача",
-    accessorFn: (row) => `${row.user.name} ${row.user.surname}`,
-    cell: ({ row }) => (
-      <div>
-        {row.original.user.name} {row.original.user.surname}
-      </div>
-    ),
-  },
-  {
-    id: 'phone',
-    header: 'Телефон',
-    accessorFn: (row) => row.user.phone,
-    cell: ({ row }) => <div>{row.original.user.phone}</div>,
-  },
-  {
-    id: 'total',
-    header: 'Сума',
-    accessorFn: (row) => row.total,
-    cell: ({ row }) => <div>{row.original.total} грн</div>,
-  },
-  {
-    id: 'city',
-    header: 'Місто',
-    accessorFn: (row) => row.delivery.city,
-    cell: ({ row }) => <div>{row.original.delivery.city}</div>,
-  },
-  {
-    id: 'comment',
-    header: 'Коментар',
-    accessorFn: (row) => row.comment,
-    cell: ({ row }) => <div>{row.original.comment}</div>,
-  },
-  {
-    id: 'actions',
-    header: 'Дії',
-    accessorKey: 'actions',
-    cell: ({ row }) => {
-      const order = row.original
-      const router = useRouter()
-
-      return (
-        <div className="flex flex-col gap-2">
-          <Button onClick={() => router.push(`/admin/orders/${order.id}`)}>
-            Деталі
-          </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">Дії</Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Дії</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Насупний статус</DropdownMenuItem>
-              <DropdownMenuItem>Попередній статус</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      )
-    },
-  },
-]
-
 function DataTable<TData>({
   columns,
   data,
@@ -232,7 +127,7 @@ function DataTable<TData>({
         </DropdownMenu>
       </div>
 
-      <div className="border-gray-200 overflow-x-auto rounded-md border">
+      <div className="overflow-x-auto rounded-md border border-gray-200">
         <Table className="w-full border-collapse">
           <TableHeader className="bg-gray-50">
             {table.getHeaderGroups().map((headerGroup) => (
@@ -240,7 +135,7 @@ function DataTable<TData>({
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
-                    className="text-gray-700 px-4 py-2 text-left text-sm font-medium"
+                    className="px-4 py-2 text-left text-sm font-medium text-gray-700"
                   >
                     {header.isPlaceholder
                       ? null
@@ -253,7 +148,7 @@ function DataTable<TData>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="divide-gray-100 divide-y">
+          <TableBody className="divide-y divide-gray-100">
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
@@ -264,7 +159,7 @@ function DataTable<TData>({
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className="text-gray-900 px-4 py-2 text-sm"
+                      className="px-4 py-2 text-sm text-gray-900"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -317,6 +212,112 @@ function DataTable<TData>({
 }
 
 export default function OrdersList({ data }: { data: IOrder[] }) {
+  const router = useRouter()
+
+  const columns: ColumnDef<IOrder>[] = [
+    {
+      id: 'select',
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && 'indeterminate')
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      id: 'id',
+      header: 'ID',
+      accessorFn: (row) => row.id,
+      cell: ({ row }) => <div>{row.original.id}</div>,
+    },
+    {
+      accessorKey: 'status',
+      header: 'Статус',
+      cell: ({ row }) => {
+        const status = row.getValue('status') as keyof typeof statusIcons
+        return (
+          <div className="flex items-center gap-2 capitalize">
+            {statusIcons[status] || <AlertCircle className="text-gray-500" />}
+          </div>
+        )
+      },
+    },
+    {
+      id: 'name',
+      header: "Ім'я користувача",
+      accessorFn: (row) => `${row.user.name} ${row.user.surname}`,
+      cell: ({ row }) => (
+        <div>
+          {row.original.user.name} {row.original.user.surname}
+        </div>
+      ),
+    },
+    {
+      id: 'phone',
+      header: 'Телефон',
+      accessorFn: (row) => row.user.phone,
+      cell: ({ row }) => <div>{row.original.user.phone}</div>,
+    },
+    {
+      id: 'total',
+      header: 'Сума',
+      accessorFn: (row) => row.total,
+      cell: ({ row }) => <div>{row.original.total} грн</div>,
+    },
+    {
+      id: 'city',
+      header: 'Місто',
+      accessorFn: (row) => row.delivery.city,
+      cell: ({ row }) => <div>{row.original.delivery.city}</div>,
+    },
+    {
+      id: 'comment',
+      header: 'Коментар',
+      accessorFn: (row) => row.comment,
+      cell: ({ row }) => <div>{row.original.comment}</div>,
+    },
+    {
+      id: 'actions',
+      header: 'Дії',
+      accessorKey: 'actions',
+      cell: ({ row }) => {
+        const order = row.original
+
+        return (
+          <div className="flex flex-col gap-2">
+            <Button onClick={() => router.push(`/admin/orders/${order.id}`)}>
+              Деталі
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">Дії</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Дії</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Насупний статус</DropdownMenuItem>
+                <DropdownMenuItem>Попередній статус</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )
+      },
+    },
+  ]
+
   return (
     <div>
       <DataTable columns={columns} data={data} />
