@@ -15,10 +15,6 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    colors: {
-      transparent: 'colors.transparent',
-      ...constants,
-    },
     extend: {
       screens: {
         lap: {
@@ -39,6 +35,8 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        transparent: 'colors.transparent',
+        ...constants,
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
