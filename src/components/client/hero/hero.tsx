@@ -5,18 +5,32 @@ import { gsap } from 'gsap'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRef, useState } from 'react'
-import { sliderLinks, sliders } from './consts'
 import SliderItem from './slider-item'
 import Arcs from './arcs'
+import { sliders, sliderLinks } from '@/data/hero-links'
+import { useLocale } from 'next-intl'
 
 export const Hero = () => {
   const { contextSafe } = useGSAP()
 
-  const titleRef = useRef(null)
-
   const [currentIndex, setCurrentIndex] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number>(0)
 
+  const locale = useLocale()
+  let sliderLinksLocale
+  let slidersLocale
+
+  if (locale === 'uk' || locale === 'en') {
+    sliderLinksLocale = sliderLinks[locale]
+    slidersLocale = sliders[locale]
+  } else {
+    sliderLinksLocale = sliderLinks['uk']
+    slidersLocale = sliders['uk']
+  }
+
+  const hoverHexColor = slidersLocale[hoveredIndex].color
+
+  const titleRef = useRef(null)
   const handleMouseEnter = contextSafe((index: number) => {
     if (index === currentIndex) return
 
@@ -52,7 +66,6 @@ export const Hero = () => {
   })
 
   const imgRef = useRef(null)
-
   useGSAP(
     () =>
       gsap.fromTo(
@@ -75,8 +88,6 @@ export const Hero = () => {
     { scope: imgRef, dependencies: [hoveredIndex] },
   )
 
-  const hoverHexColor = sliders[hoveredIndex].color
-
   return (
     <div className="mx-auto max-w-[1280px] overflow-x-clip sm:pt-9 xl:overflow-x-visible">
       <div className="px-[20px]">
@@ -88,7 +99,7 @@ export const Hero = () => {
           ref={titleRef}
         >
           <h1 className="mt-11 bg-black px-2.5 text-white lg:px-9">
-            {sliders[hoveredIndex].title}
+            {slidersLocale[hoveredIndex].title}
           </h1>
 
           <div
@@ -99,7 +110,7 @@ export const Hero = () => {
       </div>
 
       <nav className="relative -mx-0.5 mt-16 flex justify-around lg:mt-20">
-        {sliderLinks.map((item, index) => (
+        {sliderLinksLocale.map((item, index) => (
           <div
             key={item.name}
             className={cn(
@@ -121,9 +132,9 @@ export const Hero = () => {
               onMouseEnter={() => handleMouseEnter(index)}
             >
               <SliderItem
-                index={index}
-                item={item}
-                hoveredIndex={hoveredIndex}
+                title={item.name}
+                hoverHexColor={hoverHexColor}
+                isHovered={hoveredIndex === index}
               />
             </Link>
           </div>
@@ -135,7 +146,7 @@ export const Hero = () => {
           <div className="absolute -bottom-2 right-1/2 h-4/5 w-2/3 translate-x-1/2 md:-bottom-16">
             <Image
               ref={imgRef}
-              src={sliders[hoveredIndex].image}
+              src={slidersLocale[hoveredIndex].image}
               alt="slider image"
               fill
               className="object-contain"

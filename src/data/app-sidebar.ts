@@ -12,7 +12,7 @@ export const appSidebarData = [
     id: 1,
     name: 'Замовлення',
     icon: Home,
-    link: 'admin',
+    link: 'admin/new',
   },
   {
     id: 2,

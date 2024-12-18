@@ -1,22 +1,19 @@
 import { cn } from '@/utils/cn'
-import { sliders } from './consts'
 
 const SliderItem = ({
-  item,
-  index,
-  hoveredIndex,
+  title,
+  hoverHexColor,
+  isHovered,
 }: {
-  index: number
-  item: { name: string }
-  hoveredIndex: number
+  title: string
+  hoverHexColor: string
+  isHovered: boolean
 }) => {
-  const hoverColor = sliders[hoveredIndex].color
-
   const Text = () => (
     <div
       className={cn(
         'z-20 -translate-y-4 text-[36px] font-semibold sm:-translate-y-8 md:-translate-y-10',
-        hoveredIndex === index && 'font-bold',
+        isHovered && 'font-bold',
       )}
     >
       <svg
@@ -33,16 +30,14 @@ const SliderItem = ({
 
         <text
           className={cn(
-            hoveredIndex === index
-              ? 'text-[2.3rem]'
-              : 'fill-mid_gray text-[1.75rem]',
+            isHovered ? 'text-[2.3rem]' : 'fill-mid_gray text-[1.75rem]',
           )}
           fontFamily="Arial"
           letterSpacing="5"
-          fill={hoveredIndex === index ? hoverColor : 'black'}
+          fill={isHovered ? hoverHexColor : 'black'}
         >
           <textPath href="#curve" startOffset="50%" textAnchor="middle">
-            {item.name}
+            {title}
           </textPath>
         </text>
       </svg>
@@ -53,18 +48,18 @@ const SliderItem = ({
     <div
       className={cn(
         'absolute mt-5 size-1 bg-black sm:size-2',
-        hoveredIndex === index && 'size-2 sm:size-5',
+        isHovered && 'size-2 sm:size-5',
       )}
-      style={hoveredIndex === index ? { background: hoverColor } : {}}
+      style={isHovered ? { background: hoverHexColor } : {}}
     />
   )
 
   const Blur = () => (
     <div
-      style={{ background: hoverColor }}
+      style={{ background: hoverHexColor }}
       className={cn(
         `absolute aspect-[1/1] w-[5rem] rounded opacity-0 md:w-[10rem]`,
-        hoveredIndex === index && 'opacity-30 blur-xl md:blur-3xl',
+        isHovered && 'opacity-30 blur-xl md:blur-3xl',
       )}
     />
   )
