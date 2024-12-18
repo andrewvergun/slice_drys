@@ -32,7 +32,7 @@ export const CardContainer = ({
     const x = (e.clientX - left - width / 2) / 25
     const y = (e.clientY - top - height / 2) / 25
     containerRef.current.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`
-    containerRef.current.style.boxShadow = `0px 5px 15px 1px #A90909`
+    containerRef.current.style.boxShadow = `0px 5px 15px 1px rgba(0, 0, 0, 0.2)`
   }
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
