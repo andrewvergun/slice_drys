@@ -2,7 +2,6 @@
 import { connectToDb } from '@/server/connectToDb'
 import { Product } from '@/server/products/productSchema'
 import cloudinary from '@/server/cloudinaryConfig'
-import { IProductLocal } from '@/types/product'
 
 export async function createProduct(formData: IProductLocal, image: string) {
   'use server'
