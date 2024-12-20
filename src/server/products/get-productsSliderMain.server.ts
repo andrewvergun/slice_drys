@@ -1,7 +1,6 @@
 'use server'
 import { connectToDb } from '@/server/connectToDb'
 import { Product } from '@/server/products/productSchema'
-import { IProductLocal, IVariableProduct } from '@/types/product'
 
 export async function getProductsSliderMain(products: IProductLocal[]) {
   try {

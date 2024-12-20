@@ -1,4 +1,4 @@
-export interface IProduct {
+interface IProduct {
   _id?: string
   name: string
   description: string

@@ -26,7 +26,7 @@ const Product: React.FC<ProductProps> = ({ product, products }) => {
   const selectedNewPrice = product?.variables[selectedWeightIndex].newPrice ?? 0
   const selectedCount = product.variables[selectedWeightIndex].count
 
-  const productName: string =
+  const productName =
     product.name?.[locale as keyof typeof product.name] || 'Назва недоступна'
 
   const handleAddToCart = () => {
@@ -83,7 +83,7 @@ const Product: React.FC<ProductProps> = ({ product, products }) => {
           >
             <Image
               src={product.img ?? ''}
-              alt={productName}
+              alt={String(productName)}
               width={229}
               height={229}
               className="relative aspect-square h-full w-full object-contain"
@@ -108,7 +108,7 @@ const Product: React.FC<ProductProps> = ({ product, products }) => {
           <div className="flex w-full items-center justify-between gap-2">
             <CardItem translateZ={50}>
               <h3 className="text-xs font-medium uppercase sm:text-sm md:text-base lg:text-lg xl:text-xl">
-                {productName}
+                {String(productName)}
               </h3>
             </CardItem>
             <CardItem
