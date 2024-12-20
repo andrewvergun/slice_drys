@@ -78,7 +78,12 @@ interface IRecommendations {
 
 interface IGetProduct {
   product: IProduct[]
-  productAll: IProductLocal[]
+  productAll?: IProductLocal[]
+  success: boolean
+  message: string
+}
+interface IGetProducts {
+  products: IProduct[]
   success: boolean
   message: string
 }

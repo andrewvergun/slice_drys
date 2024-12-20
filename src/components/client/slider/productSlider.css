@@ -2,23 +2,6 @@
   @apply relative content-[''] bg-[url('/icons/underline.svg')] bg-center bg-cover bg-no-repeat h-[15px] w-full bottom-0 left-[10px] md:bottom-[-5px] lg:bottom-[-10px];
 }
 
-.icon-top::before,
-.icon-new::before,
-.icon-sale::before {
-  @apply relative content-[''] inline-block w-[16px] h-[16px] mr-[10px] bg-center bg-cover bg-no-repeat md:w-[20px] md:h-[20px] lg:w-[24px] lg:h-[24px];
-}
-
-.icon-top::before {
-  @apply bg-[url('/icons/top.svg')];
-}
-
-.icon-new::before {
-  @apply bg-[url('/icons/new.svg')];
-}
-
-.icon-sale::before {
-  @apply bg-[url('/icons/sale.svg')];
-}
 
 .icon-available::after,
 .icon-non-available::after {

@@ -1,13 +1,11 @@
 'use client'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
-import { getProductsSliderMain } from '@/server/products/get-productsSliderMain.server'
-import Product from '@/components/client/product/product'
 import '@splidejs/react-splide/css/core'
 import '@splidejs/react-splide/css'
 import { Rubik_Doodle_Shadow } from 'next/font/google'
-import { useEffect, useState } from 'react'
 import { Arrow } from '@/components/client/ui/arrow'
 import './productSlider.css'
+import Product from '@/components/client/product/product'
 
 const rubikDoodleShadow = Rubik_Doodle_Shadow({
   subsets: ['latin'],
@@ -16,10 +14,19 @@ const rubikDoodleShadow = Rubik_Doodle_Shadow({
   weight: ['400'],
 })
 
-export default function ProductSlider() {
+interface ProductSlider {
+  products: IProduct[]
+  title: string
+  message: string
+}
+
+export default function ProductSlider({
+  products,
+  title,
+  message,
+}: ProductSlider) {
   const splideOptions = {
     arrowPath: Arrow(),
-    type: 'loop',
     autoplay: true,
     omitEnd: true,
     perPage: 3,
@@ -59,45 +66,22 @@ export default function ProductSlider() {
     },
   }
 
-  const [products, setProducts] = useState<IProductLocal[]>([])
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getProductsSliderMain([])
-        setProducts(data)
-      } catch (err) {
-        setError('Не вдалося завантажити продукти')
-      }
-    }
-    fetchData().then((r) => r)
-  }, [])
-
-  if (error) return <div>{error}</div>
-  if (!products.length)
-    return <div className="py-24 text-center text-2xl">Завантаження...</div>
-
   return (
     <div className="mx-auto mb-12 mt-10 max-w-6xl px-0 lg:px-4">
       <div className="px-[20px] py-16 md:py-20 lg:py-24 xl:py-[130px]">
         <h2
           className={`${rubikDoodleShadow.className} mb-2 text-[32px] sm:mb-4 sm:text-5xl md:mb-6 md:text-6xl lg:mb-8 lg:text-7xl xl:mb-12 xl:text-8xl`}
         >
-          ТОПОВІ СУШЕНИКИ
+          {title}
         </h2>
         <div className="slider-label relative grid place-content-start text-base sm:place-content-end md:text-lg lg:text-xl xl:text-2xl">
-          найсмачніші кусь-топчики
+          {message}
         </div>
       </div>
-      <Splide options={splideOptions} className="mb-48 h-full max-w-6xl">
+      <Splide options={splideOptions} className="mb-28 h-full max-w-6xl">
         {products.map((product) => (
           <SplideSlide key={product._id} className="px-2 py-8 sm:px-3 md:px-4">
-            <Product
-              key={product._id}
-              product={product}
-              variables={product.variables}
-            />
+            <Product product={product} />
           </SplideSlide>
         ))}
       </Splide>

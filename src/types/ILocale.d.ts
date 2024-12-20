@@ -1,0 +1,1 @@
+type ILocale = 'en' | 'uk'
