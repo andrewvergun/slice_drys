@@ -14,7 +14,7 @@ import { useLocale } from 'next-intl'
 import Link from 'next/link'
 
 interface ProductProps {
-  product: IProduct
+  product: IProductLocal
   variables: IVariableProduct[]
   products?: IProductLocal[]
 }
