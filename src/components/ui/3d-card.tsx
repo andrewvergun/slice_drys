@@ -1,6 +1,5 @@
 'use client'
 
-import { cn } from '@/lib/utils'
 import React, {
   createContext,
   useState,
@@ -8,6 +7,7 @@ import React, {
   useRef,
   useEffect,
 } from 'react'
+import { cn } from '@/utils/cn'
 
 const MouseEnterContext = createContext<
   [boolean, React.Dispatch<React.SetStateAction<boolean>>] | undefined
